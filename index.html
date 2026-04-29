@@ -1,0 +1,2755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chicago · May 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #09090F;
+      --bg-card: #111118;
+      --bg-card-2: #16161F;
+      --border: rgba(255,255,255,0.07);
+      --border-strong: rgba(255,255,255,0.13);
+      --text-1: #EEEEF2;
+      --text-2: #8A8A9A;
+      --text-3: #52526A;
+      --blue: #3D8EF0;
+      --blue-dim: rgba(61,142,240,0.13);
+      --red: #E8402A;
+      --red-dim: rgba(232,64,42,0.13);
+      --gold: #F5A82A;
+      --gold-dim: rgba(245,168,42,0.13);
+      --purple: #9B5DE5;
+      --purple-dim: rgba(155,93,229,0.13);
+      --green: #00C57A;
+      --green-dim: rgba(0,197,122,0.13);
+      --orange: #FF6B35;
+      --orange-dim: rgba(255,107,53,0.13);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-condensed: 'Barlow Condensed', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 48px 0 52px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(9,9,15,0.55) 0%, rgba(9,9,15,0.85) 100%),
+        url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-stripes {
+      position: absolute;
+      left: 0; right: 0;
+      top: 48%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0.05;
+      z-index: 0;
+    }
+    .hero-stripes span { display: block; height: 2px; background: var(--blue); }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 28px;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 100px;
+      line-height: 0.82;
+      color: var(--text-1);
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0;
+      width: 100%;
+      visibility: hidden;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-condensed);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 28px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .hero-travelers {
+      font-family: var(--font-condensed);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text-2);
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-pill {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      color: var(--text-3);
+    }
+
+    /* ── TAB NAV ──────────────────────────────── */
+    .tab-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9,9,15,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tab-nav-inner::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      font-family: var(--font-condensed);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 15px 18px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tab-btn:hover { color: var(--text-2); }
+    .tab-btn.active { color: var(--text-1); border-bottom-color: var(--blue); }
+
+    /* ── MAIN ─────────────────────────────────── */
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 36px 28px 80px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── CHECKLIST ────────────────────────────── */
+    .checklist-card {
+      background: rgba(245,168,42,0.05);
+      border: 1px solid rgba(245,168,42,0.22);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 32px;
+    }
+
+    .checklist-title {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checklist-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 3px;
+      accent-color: var(--gold);
+    }
+
+    .check-item label {
+      font-size: 13px;
+      color: var(--text-2);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .check-item label em {
+      font-style: normal;
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .check-item.done label {
+      color: var(--text-3);
+      text-decoration: line-through;
+    }
+
+    /* ── DAY CARDS ────────────────────────────── */
+    .day-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .day-header:hover { background: var(--bg-card-2); }
+
+    .day-number {
+      font-family: var(--font-condensed);
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--text-3);
+      min-width: 52px;
+      flex-shrink: 0;
+    }
+
+    .day-info { flex: 1; min-width: 0; }
+
+    .day-label {
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 1px;
+    }
+
+    .day-title {
+      font-family: var(--font-condensed);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+      line-height: 1.2;
+    }
+
+    .day-area {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 3px;
+    }
+
+    .day-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .day-chevron {
+      font-size: 18px;
+      color: var(--text-3);
+      transition: transform 0.2s;
+      line-height: 1;
+    }
+    .day-card.open .day-chevron { transform: rotate(180deg); }
+
+    .day-body {
+      display: none;
+      padding: 0 24px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .day-card.open .day-body { display: block; }
+
+    /* ── TIMELINE ─────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding-top: 8px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 20px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 14px 0 0 28px;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border-strong);
+    }
+
+    .tl-item.type-citypass .tl-dot { border-color: var(--blue); background: var(--blue-dim); }
+    .tl-item.type-food .tl-dot { border-color: var(--gold); background: var(--gold-dim); }
+    .tl-item.type-bar .tl-dot { border-color: var(--purple); background: var(--purple-dim); }
+    .tl-item.type-shopping .tl-dot { border-color: var(--green); background: var(--green-dim); }
+    .tl-item.type-activity .tl-dot { border-color: var(--orange); background: var(--orange-dim); }
+    .tl-item.type-free .tl-dot { border-color: var(--green); background: var(--green-dim); }
+    .tl-item.type-transit .tl-dot { border-color: var(--text-3); }
+
+    .tl-time {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 2px;
+    }
+
+    .tl-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-1);
+      line-height: 1.3;
+    }
+
+    .tl-address {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 1px;
+    }
+
+    .tl-note {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    .tl-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    /* ── BADGES ───────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-family: var(--font-condensed);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .b-citypass { background: var(--blue-dim); color: var(--blue); }
+    .b-food     { background: var(--gold-dim); color: var(--gold); }
+    .b-bar      { background: var(--purple-dim); color: var(--purple); }
+    .b-shopping { background: var(--green-dim); color: var(--green); }
+    .b-activity { background: var(--orange-dim); color: var(--orange); }
+    .b-free     { background: var(--green-dim); color: var(--green); }
+    .b-reserve  { background: var(--red-dim); color: var(--red); }
+    .b-mustdo   { background: rgba(245,168,42,0.18); color: var(--gold); }
+    .b-optional { background: rgba(90,90,107,0.2); color: var(--text-3); }
+
+    /* ── SECTION HEADER ───────────────────────── */
+    .section-hd {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-hd-eyebrow {
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+
+    .section-hd-title {
+      font-family: var(--font-condensed);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    /* ── CATEGORY GROUP ───────────────────────── */
+    .cat-group { margin-bottom: 36px; }
+
+    .cat-label {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cat-label .cat-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
+
+    /* ── PLACE CARDS ──────────────────────────── */
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 10px;
+    }
+
+    .place-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .place-card:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
+
+    .place-card-img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9);
+      transition: filter 0.2s, transform 0.3s;
+    }
+    .place-card:hover .place-card-img {
+      filter: brightness(1);
+      transform: scale(1.03);
+    }
+
+    .place-card-body {
+      padding: 12px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .place-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 3px;
+    }
+
+    .place-address {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 7px;
+    }
+
+    .place-rating {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .place-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .place-price {
+      font-family: var(--font-condensed);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-2);
+    }
+
+    .place-hours {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .place-note {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .place-links {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    .place-link {
+      font-size: 11px;
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      color: var(--blue);
+      background: var(--blue-dim);
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
+      cursor: pointer;
+    }
+    .place-link:hover {
+      box-shadow: 0 0 12px rgba(61,142,240,0.4);
+      background: rgba(61,142,240,0.22);
+    }
+    .place-link:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 6px rgba(61,142,240,0.3);
+    }
+    .place-link.maps {
+      color: var(--green);
+      background: var(--green-dim);
+    }
+    .place-link.maps:hover {
+      box-shadow: 0 0 12px rgba(0,197,122,0.4);
+      background: rgba(0,197,122,0.22);
+    }
+    .place-link.maps:active {
+      box-shadow: 0 0 6px rgba(0,197,122,0.3);
+    }
+
+    /* ── NEIGHBORHOOD CARDS ───────────────────── */
+    .hood-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .hood-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-2);
+    }
+
+    .hood-name {
+      font-family: var(--font-condensed);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: 0.04em;
+    }
+
+    .hood-note {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    .shop-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .shop-item:last-child { border-bottom: none; }
+    .shop-item:hover { background: var(--bg-card-2); }
+
+    .shop-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .shop-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+
+    .shop-address { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+    .shop-note { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+
+    /* ── ATTRACTION CARDS ─────────────────────── */
+    .attr-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .attr-card:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
+    .attr-card.citypass { border-left: 3px solid var(--blue); }
+    .attr-card.free-item { border-left: 3px solid var(--green); }
+
+    .attr-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .attr-card.citypass .attr-icon { background: var(--blue-dim); }
+    .attr-card.free-item .attr-icon { background: var(--green-dim); }
+    .attr-card.activity .attr-icon { background: var(--orange-dim); }
+
+    .attr-info { flex: 1; }
+
+    .attr-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .attr-address { font-size: 12px; color: var(--text-3); margin-bottom: 7px; }
+    .attr-note { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+
+    /* ── FLIGHTS ──────────────────────────────── */
+    .flight-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .flight-conf {
+      padding: 12px 20px;
+      background: var(--bg-card-2);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .flight-conf span {
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.1em;
+    }
+
+    .flight-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .flight-row:last-child { border-bottom: none; }
+
+    .flight-dir {
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      min-width: 64px;
+    }
+
+    .flight-route {
+      font-family: var(--font-condensed);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: 0.04em;
+      flex: 1;
+    }
+
+    .flight-details {
+      font-size: 12px;
+      color: var(--text-2);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* ── LOGISTICS MODERN ─────────────────────────── */
+    .flights-section { position: relative; }
+    .flights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .flight-segment {
+      background: linear-gradient(135deg, rgba(17,17,24,0.7), rgba(22,22,31,0.65));
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid rgba(61,142,240,0.15);
+      border-radius: 20px;
+      padding: 28px 26px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .flight-segment:hover {
+      border-color: rgba(61,142,240,0.3);
+      box-shadow: 0 8px 32px rgba(61,142,240,0.08);
+      transform: translateY(-2px);
+    }
+    .flight-segment::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      border-radius: 0 0 4px 4px;
+    }
+    .flight-segment-dir {
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    .flight-segment-route {
+      font-family: var(--font-display);
+      font-size: 42px;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--text-1) 30%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .flight-segment-time {
+      font-family: var(--font-condensed);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .flight-segment-meta {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+    .flight-segment-meta span {
+      color: var(--text-2);
+      font-weight: 500;
+    }
+    .flight-details-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .flight-detail-card {
+      background: linear-gradient(135deg, rgba(17,17,24,0.65), rgba(22,22,31,0.6));
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .flight-detail-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+    .flight-detail-label {
+      font-family: var(--font-condensed);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 6px;
+    }
+    .flight-detail-val {
+      font-family: var(--font-condensed);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: 0.04em;
+    }
+    .flight-detail-val.highlight { color: var(--blue); }
+    .flight-map-wrapper {
+      margin-bottom: 16px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .flight-label {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      font-family: var(--font-condensed);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-2);
+    }
+
+    /* ── BUDGET ───────────────────────────────── */
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .budget-item {
+      background: linear-gradient(135deg, rgba(17,17,24,0.65), rgba(22,22,31,0.6));
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .budget-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .budget-label { font-size: 12px; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; font-family: var(--font-condensed); letter-spacing: 0.08em; font-weight: 600; }
+
+    .budget-val {
+      font-family: var(--font-condensed);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .budget-target {
+      background: linear-gradient(135deg, rgba(61,142,240,0.08), rgba(61,142,240,0.15));
+      border: 1px solid rgba(61,142,240,0.25);
+    }
+
+    .budget-target .budget-val { color: var(--blue); }
+
+    /* ── TIPS ─────────────────────────────────── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .tip-card {
+      background: linear-gradient(135deg, rgba(17,17,24,0.65), rgba(22,22,31,0.6));
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tip-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .tip-title {
+      font-family: var(--font-condensed);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 7px;
+    }
+
+    .tip-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+
+    /* ── HOTEL ALERT ──────────────────────────── */
+    .hotel-alert {
+      background: linear-gradient(135deg, rgba(0,197,122,0.06), rgba(0,197,122,0.12));
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      border: 1px solid rgba(0,197,122,0.2);
+      border-radius: 20px;
+      padding: 22px 26px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .hotel-alert-icon { font-size: 24px; flex-shrink: 0; }
+
+    .hotel-alert-title {
+      font-family: var(--font-condensed);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+
+    .hotel-alert-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+    /* ── MAP LEGEND ───────────────────────────── */
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+    .map-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .hotel-label {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* ── MAP PINS ────────────────────────────── */
+    .map-pin {
+      position: relative;
+      width: 28px;
+      height: 36px;
+    }
+    .map-pin-head {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 3px solid currentColor;
+      background: rgba(9,9,15,0.85);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-pin-head::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .map-pin-tail {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 10px solid currentColor;
+    }
+    .map-pin-img-wrap {
+      position: absolute;
+      top: -52px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid currentColor;
+      background: var(--bg-card);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+    .map-pin:hover .map-pin-img-wrap {
+      transform: translateX(-50%) scale(1);
+    }
+    .map-pin-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    /* ── LOGISTICS ENTRANCE ANIMATIONS ──────────── */
+    @keyframes logisticsFadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logistics-animate .hotel-alert,
+    .logistics-animate .flight-segment,
+    .logistics-animate .flight-detail-card,
+    .logistics-animate .budget-item,
+    .logistics-animate .tip-card,
+    .logistics-animate .flight-map-wrapper,
+    .logistics-animate .section-hd {
+      opacity: 0;
+      animation: logisticsFadeUp 0.5s ease-out forwards;
+    }
+
+    /* ── DIVIDER ──────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 640px) {
+      .hero-content { padding: 0 20px; }
+      .main { padding: 28px 20px 60px; }
+      .day-header { padding: 15px 18px; gap: 14px; }
+      .day-number { font-size: 42px; min-width: 40px; }
+      .day-title { font-size: 18px; }
+      .day-body { padding: 0 18px 20px; }
+      .tab-btn { padding: 13px 14px; font-size: 13px; }
+      .place-grid { grid-template-columns: 1fr; }
+      .budget-grid { grid-template-columns: repeat(2, 1fr); }
+      .tips-grid { grid-template-columns: 1fr; }
+      .checklist-items { grid-template-columns: 1fr; }
+      .flight-details { display: none; }
+      .flights-grid { grid-template-columns: 1fr; }
+      .flight-details-grid { grid-template-columns: repeat(2, 1fr); }
+      #main-map { height: 500px !important; max-width: 100% !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-stripes">
+    <span></span>
+    <span></span>
+  </div>
+  <h1 class="hero-title">CHICAGO</h1>
+  <div class="hero-subtitle">May 12 – 16, 2026</div>
+  <div class="hero-content">
+    <div class="hero-meta">
+      <span class="hero-travelers">Garrett · Andrew · Nathan</span>
+    </div>
+    <div class="hero-pills">
+      <span class="hero-pill">5 Days</span>
+      <span class="hero-pill">Central Loop Hotel</span>
+      <span class="hero-pill">AA 1114 / 1038</span>
+      <span class="hero-pill">CityPASS · 5 Attractions</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     TAB NAV
+════════════════════════════════════════════════ -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="itinerary">Itinerary</button>
+    <button class="tab-btn" data-tab="food">Food &amp; Drink</button>
+    <button class="tab-btn" data-tab="shopping">Shopping</button>
+    <button class="tab-btn" data-tab="attractions">Attractions</button>
+    <button class="tab-btn" data-tab="map">Map</button>
+    <button class="tab-btn" data-tab="logistics">Logistics</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ─── ITINERARY ─────────────────────────── -->
+  <section id="tab-itinerary" class="tab-content active">
+
+    <!-- Pre-trip checklist -->
+    <div class="checklist-card">
+      <div class="checklist-title">⚡ Pre-Trip Checklist</div>
+      <div class="checklist-items">
+        <label class="check-item done" id="ci-hotel">
+          <input type="checkbox" id="chk-hotel" checked>
+          <span>Central Loop Hotel — Confirmed &amp; Paid</span>
+        </label>
+        <label class="check-item" id="ci-citypass">
+          <input type="checkbox" id="chk-citypass">
+          <span>Buy CityPASS — citypass.com ($142/person)</span>
+        </label>
+        <label class="check-item" id="ci-tao">
+          <input type="checkbox" id="chk-tao">
+          <span>Reserve Tao Chicago (Friday dinner, strongly recommended)</span>
+        </label>
+        <label class="check-item" id="ci-deliz">
+          <input type="checkbox" id="chk-deliz">
+          <span>Reserve Deliz Italian Steakhouse (Wednesday dinner)</span>
+        </label>
+        <label class="check-item" id="ci-archtour">
+          <input type="checkbox" id="chk-archtour">
+          <span>Book Architecture River Tour through CityPASS app</span>
+        </label>
+        <label class="check-item" id="ci-shedd">
+          <input type="checkbox" id="chk-shedd">
+          <span>Book Shedd Aquarium time slot through CityPASS app</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day-card open" id="day1">
+      <div class="day-header" onclick="toggleDay('day1')">
+        <div class="day-number">01</div>
+        <div class="day-info">
+          <div class="day-label">Tuesday, May 12</div>
+          <div class="day-title">Arrival + The Loop</div>
+          <div class="day-area">Downtown Loop · Riverwalk · Millennium Park</div>
+        </div>
+        <div class="day-right">
+          <div class="day-chevron">▾</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="timeline">
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~1:00 PM</div>
+            <div class="tl-name">Check in — Central Loop Hotel</div>
+            <div class="tl-address">111 W Adams St</div>
+            <div class="tl-note">Room may not be ready — they can hold bags</div>
+          </div>
+          <div class="tl-item type-free">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:00 PM</div>
+            <div class="tl-name">Chicago Riverwalk</div>
+            <div class="tl-address">Along Wacker Dr</div>
+            <div class="tl-note">Walk, grab drinks at the water bars</div>
+            <div class="tl-badges"><span class="badge b-free">Free</span></div>
+          </div>
+          <div class="tl-item type-free">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~3:30 PM</div>
+            <div class="tl-name">Millennium Park + The Bean</div>
+            <div class="tl-address">Michigan Ave & Monroe</div>
+            <div class="tl-badges"><span class="badge b-free">Free</span></div>
+          </div>
+          <div class="tl-item type-citypass">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~5:00 PM</div>
+            <div class="tl-name">Skydeck Chicago</div>
+            <div class="tl-address">233 S Wacker Dr — 103rd floor</div>
+            <div class="tl-note">Go at golden hour · 0.4 mi from hotel</div>
+            <div class="tl-badges">
+              <span class="badge b-citypass">CityPASS</span>
+              <span class="badge b-mustdo">⭐ Must Do</span>
+            </div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~7:30 PM</div>
+            <div class="tl-name">Gino's East — Deep Dish</div>
+            <div class="tl-address">162 E Superior St</div>
+            <div class="tl-note">$$  ·  45 min cook time — order early</div>
+            <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
+          </div>
+          <div class="tl-item type-bar">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~9:30 PM</div>
+            <div class="tl-name">London House Rooftop</div>
+            <div class="tl-address">85 E Wacker Dr</div>
+            <div class="tl-note">Upscale rooftop · $15–18/drink · Near hotel</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-card" id="day2">
+      <div class="day-header" onclick="toggleDay('day2')">
+        <div class="day-number">02</div>
+        <div class="day-info">
+          <div class="day-label">Wednesday, May 13</div>
+          <div class="day-title">Art Institute + Wicker Park + Topgolf</div>
+          <div class="day-area">Loop → Wicker Park → West Loop</div>
+        </div>
+        <div class="day-right">
+          <div class="day-chevron">▾</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="timeline">
+          <div class="tl-item type-citypass">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~9:00 AM</div>
+            <div class="tl-name">Art Institute of Chicago</div>
+            <div class="tl-address">111 S Michigan Ave</div>
+            <div class="tl-note">Plan 2–3 hrs · 10 min walk from hotel</div>
+            <div class="tl-badges">
+              <span class="badge b-citypass">CityPASS</span>
+              <span class="badge b-mustdo">⭐ Must Do</span>
+            </div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~12:00 PM</div>
+            <div class="tl-name">Wildberry Pancakes &amp; Cafe</div>
+            <div class="tl-address">130 E Randolph St</div>
+            <div class="tl-note">$$ · Near hotel · Expect a wait</div>
+            <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~1:30 PM</div>
+            <div class="tl-name">Uber to Wicker Park</div>
+            <div class="tl-note">~$15</div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:00 PM</div>
+            <div class="tl-name">Layers Chicago</div>
+            <div class="tl-address">1437 N Milwaukee Ave</div>
+            <div class="tl-note">Vintage streetwear · Opens 12pm</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:30 PM</div>
+            <div class="tl-name">Round Two</div>
+            <div class="tl-address">1501 N Milwaukee Ave</div>
+            <div class="tl-note">Vintage/hypebeast · 2 floors · Opens 12pm</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~3:00 PM</div>
+            <div class="tl-name">Supreme Chicago</div>
+            <div class="tl-address">1438 N Milwaukee Ave</div>
+            <div class="tl-note">Opens 11am</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~3:45 PM</div>
+            <div class="tl-name">Boneyard</div>
+            <div class="tl-address">1102 N Ashland Ave</div>
+            <div class="tl-note">Sneakers + streetwear</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-activity">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~5:00 PM</div>
+            <div class="tl-name">Topgolf Chicago</div>
+            <div class="tl-address">West Loop / on the river</div>
+            <div class="tl-note">~2 hrs · $30–50/hr per bay</div>
+            <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~7:30 PM</div>
+            <div class="tl-name">Deliz Italian Steakhouse</div>
+            <div class="tl-address">1840 W North Ave</div>
+            <div class="tl-note">$$$ · Italian steakhouse</div>
+            <div class="tl-badges">
+              <span class="badge b-food">Dinner</span>
+              <span class="badge b-reserve">📅 Reserve Ahead</span>
+            </div>
+          </div>
+          <div class="tl-item type-bar">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~10:00 PM</div>
+            <div class="tl-name">The Violet Hour</div>
+            <div class="tl-address">1520 N Damen Ave · Wicker Park</div>
+            <div class="tl-note">Craft cocktail speakeasy · No sign on door · Slow and chill vibe</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day-card" id="day3">
+      <div class="day-header" onclick="toggleDay('day3')">
+        <div class="day-number">03</div>
+        <div class="day-info">
+          <div class="day-label">Thursday, May 14</div>
+          <div class="day-title">Shedd + Lakefront + Lincoln Park</div>
+          <div class="day-area">Museum Campus → Lakefront → Lincoln Park</div>
+        </div>
+        <div class="day-right">
+          <div class="day-chevron">▾</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="timeline">
+          <div class="tl-item type-citypass">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~9:00 AM</div>
+            <div class="tl-name">Shedd Aquarium</div>
+            <div class="tl-address">1200 S DuSable Lake Shore Dr</div>
+            <div class="tl-note">Book time slot in CityPASS app · Plan 2–3 hrs · 4D experience — confirm it's open post-renovation</div>
+            <div class="tl-badges">
+              <span class="badge b-citypass">CityPASS</span>
+              <span class="badge b-mustdo">⭐ Must Do</span>
+              <span class="badge b-reserve">📅 Reserve Slot</span>
+            </div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~12:30 PM</div>
+            <div class="tl-name">Harold's Chicken</div>
+            <div class="tl-address">612 S Wabash Ave</div>
+            <div class="tl-note">$$ · Chicago fried chicken legend</div>
+            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
+          </div>
+          <div class="tl-item type-activity">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:00 PM</div>
+            <div class="tl-name">Divvy Bikes — Lakefront Trail</div>
+            <div class="tl-note">Ride north toward Navy Pier · $3.30/30 min or $15 day pass</div>
+            <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
+          </div>
+          <div class="tl-item type-free">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~3:30 PM</div>
+            <div class="tl-name">Navy Pier</div>
+            <div class="tl-address">600 E Grand Ave</div>
+            <div class="tl-note">Free to walk around · Ferris Wheel ~$20 if interested</div>
+            <div class="tl-badges"><span class="badge b-free">Free Entry</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~5:00 PM</div>
+            <div class="tl-name">Uber to Lincoln Park / Old Town</div>
+            <div class="tl-note">~$12</div>
+          </div>
+          <div class="tl-item type-free">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~5:30 PM</div>
+            <div class="tl-name">Lincoln Park Zoo</div>
+            <div class="tl-address">2001 N Clark St</div>
+            <div class="tl-note">Free · Confirm May hours</div>
+            <div class="tl-badges"><span class="badge b-free">FREE</span></div>
+          </div>
+          <div class="tl-item type-bar">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~7:00 PM</div>
+            <div class="tl-name">Utopian Tailgate</div>
+            <div class="tl-address">1608 N Wells St</div>
+            <div class="tl-note">Rooftop + games · Drinks only · Wed–Sun</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~8:30 PM</div>
+            <div class="tl-name">Weiners Circle</div>
+            <div class="tl-address">2622 N Clark St</div>
+            <div class="tl-note">$ · Classic Chicago dog · Open until 2–4am · Staff banter is part of the experience</div>
+            <div class="tl-badges"><span class="badge b-food">Late Night</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day-card" id="day4">
+      <div class="day-header" onclick="toggleDay('day4')">
+        <div class="day-number">04</div>
+        <div class="day-info">
+          <div class="day-label">Friday, May 15</div>
+          <div class="day-title">Architecture Tour + Mag Mile + Nightlife</div>
+          <div class="day-area">Streeterville → Gold Coast / Oak Street → River North</div>
+        </div>
+        <div class="day-right">
+          <div class="day-chevron">▾</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="timeline">
+          <div class="tl-item type-citypass">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~9:30 AM</div>
+            <div class="tl-name">Architecture River Tour</div>
+            <div class="tl-address">465 N McClurg Ct</div>
+            <div class="tl-note">75 min cruise · Book ahead in CityPASS app</div>
+            <div class="tl-badges">
+              <span class="badge b-citypass">CityPASS</span>
+              <span class="badge b-mustdo">⭐ Must Do</span>
+              <span class="badge b-reserve">📅 Book Ahead</span>
+            </div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~11:30 AM</div>
+            <div class="tl-name">Garrett's Popcorn</div>
+            <div class="tl-address">625 N Michigan Ave</div>
+            <div class="tl-note">Get the Garrett Mix</div>
+            <div class="tl-badges"><span class="badge b-food">Snack</span></div>
+          </div>
+          <div class="tl-item type-activity">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~12:00 PM</div>
+            <div class="tl-name">Watch + Jewelry Browse</div>
+            <div class="tl-address">Mag Mile boutiques · Oak Street · River North</div>
+            <div class="tl-badges"><span class="badge b-activity">Browse</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~1:30 PM</div>
+            <div class="tl-name">Kith Chicago</div>
+            <div class="tl-address">54 E Walton St</div>
+            <div class="tl-note">Get the Kith Treats milkshake upstairs</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:00 PM</div>
+            <div class="tl-name">Bape Chicago</div>
+            <div class="tl-address">113 E Oak St</div>
+            <div class="tl-note">Same block as Kith</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~2:30 PM</div>
+            <div class="tl-name">Oak Street Designer Browse</div>
+            <div class="tl-address">E Oak St</div>
+            <div class="tl-note">Hermès, Gucci, etc.</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-shopping">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~3:00 PM</div>
+            <div class="tl-name">State Street / Block 37</div>
+            <div class="tl-address">108 N State St</div>
+            <div class="tl-note">General shopping · Big Starbucks</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~5:00 PM</div>
+            <div class="tl-name">Hotel — Rest &amp; Get Ready</div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~7:30 PM</div>
+            <div class="tl-name">Tao Chicago</div>
+            <div class="tl-address">632 N Dearborn St</div>
+            <div class="tl-note">$$$ · Pan-Asian</div>
+            <div class="tl-badges">
+              <span class="badge b-food">Dinner</span>
+              <span class="badge b-reserve">📅 Reserve Ahead</span>
+            </div>
+          </div>
+          <div class="tl-item type-bar">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~10:00 PM</div>
+            <div class="tl-name">Federales / Recess / Punch Bowl Social</div>
+            <div class="tl-address">Fulton Market cluster</div>
+            <div class="tl-note">High energy Friday night — all within blocks of each other</div>
+            <div class="tl-badges"><span class="badge b-bar">Nightlife</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="day-card" id="day5">
+      <div class="day-header" onclick="toggleDay('day5')">
+        <div class="day-number">05</div>
+        <div class="day-info">
+          <div class="day-label">Saturday, May 16</div>
+          <div class="day-title">Easy Morning + Depart</div>
+          <div class="day-area">Lincoln Park → Loop → O'Hare</div>
+        </div>
+        <div class="day-right">
+          <div class="day-chevron">▾</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="timeline">
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~9:00 AM</div>
+            <div class="tl-name">Batter &amp; Berries</div>
+            <div class="tl-address">2748 N Lincoln Ave</div>
+            <div class="tl-note">$$ · BYOB · Get there early — expect a wait on weekends</div>
+            <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~11:00 AM</div>
+            <div class="tl-name">Check Out</div>
+            <div class="tl-note">Confirm checkout time with hotel</div>
+          </div>
+          <div class="tl-item type-free">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~11:30 AM</div>
+            <div class="tl-name">Last Riverwalk Walk</div>
+            <div class="tl-note">Grab anything you missed</div>
+          </div>
+          <div class="tl-item type-food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~1:00 PM</div>
+            <div class="tl-name">Devil Dawgs</div>
+            <div class="tl-address">767 S State St</div>
+            <div class="tl-note">$ · Classic Chicago dog · Near hotel</div>
+            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~4:00 PM</div>
+            <div class="tl-name">Uber to O'Hare</div>
+            <div class="tl-note">Budget 45–60 min + $40–55</div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">7:06 PM</div>
+            <div class="tl-name">✈️ AA 1038 — ORD → PHX</div>
+            <div class="tl-address">Terminal 3 → Terminal 4</div>
+            <div class="tl-note">Arrives PHX 9:05pm · 3h 59m</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Griffin optional callout -->
+    <div class="tip-card" style="margin-top: 20px;">
+      <div class="tip-title">🔬 Optional: Griffin Museum of Science &amp; Industry</div>
+      <div class="tip-text">5700 S Lake Shore Dr, Hyde Park · ~7 mi south (~$20 Uber) · Opens 9am. Best fit: morning of Day 3 or 4. Could swap with Shedd — do Shedd on Day 4 morning instead. Most out-of-the-way of the CityPASS attractions.</div>
+    </div>
+
+  </section>
+
+  <!-- ─── FOOD & DRINK ───────────────────────── -->
+  <section id="tab-food" class="tab-content">
+
+    <div class="section-hd">
+      <div class="section-hd-eyebrow">Master List</div>
+      <div class="section-hd-title">Food &amp; Drink</div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Brunch</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&h=160&q=70" alt="Wildberry Pancakes">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Wildberry Pancakes &amp; Cafe</div>
+            <div class="place-address">130 E Randolph St</div>
+            <div class="place-meta">
+              <span class="place-price">$$</span>
+              <span class="place-hours">7am – 2pm</span>
+              <span class="badge b-food">Near Hotel</span>
+            </div>
+            <div class="place-note">Expect a wait — go early. On Day 2 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.wildberrycafe.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Wildberry+Pancakes+Cafe+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=400&h=160&q=70" alt="Batter & Berries">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.8</div>
+            <div class="place-name">Batter &amp; Berries</div>
+            <div class="place-address">2748 N Lincoln Ave</div>
+            <div class="place-meta">
+              <span class="place-price">$$</span>
+              <span class="place-hours">8am – 3pm</span>
+              <span class="badge b-food">BYOB</span>
+            </div>
+            <div class="place-note">Get there early on weekends. On Day 5 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.batterandberries.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Batter+and+Berries+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&h=160&q=70" alt="Parlay River North">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.2</div>
+            <div class="place-name">Parlay River North</div>
+            <div class="place-address">112 W Hubbard St</div>
+            <div class="place-meta">
+              <span class="place-price">$$</span>
+              <span class="place-hours">Sat / Sun</span>
+              <span class="badge b-bar">DJ Brunch</span>
+            </div>
+            <div class="place-note">Best on Sat/Sun for the DJ brunch experience.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Parlay+River+North+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Quick Eats &amp; Snacks</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=400&h=160&q=70" alt="Garrett's Popcorn">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Garrett's Popcorn</div>
+            <div class="place-address">625 N Michigan Ave</div>
+            <div class="place-meta"><span class="place-price">$</span></div>
+            <div class="place-note">Get the Garrett Mix. On Day 4 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.garrettpopcorn.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Garretts+Popcorn+Michigan+Ave+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&h=160&q=70" alt="Devil Dawgs">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.2</div>
+            <div class="place-name">Devil Dawgs</div>
+            <div class="place-address">767 S State St</div>
+            <div class="place-meta"><span class="place-price">$</span></div>
+            <div class="place-note">Classic Chicago dog. Near hotel. On Day 5 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Devil+Dawgs+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&h=160&q=70" alt="Weiners Circle">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.1</div>
+            <div class="place-name">Weiners Circle</div>
+            <div class="place-address">2622 N Clark St</div>
+            <div class="place-meta">
+              <span class="place-price">$</span>
+              <span class="place-hours">Open until 2–4am</span>
+            </div>
+            <div class="place-note">Late night institution. Staff banter is part of the experience. On Day 3 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Weiners+Circle+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&h=160&q=70" alt="Harold's Chicken">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.4</div>
+            <div class="place-name">Harold's Chicken</div>
+            <div class="place-address">612 S Wabash Ave</div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">Chicago fried chicken legend. On Day 3 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Harolds+Chicken+Wabash+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Dinner — Casual</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&h=160&q=70" alt="Gino's East">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.4</div>
+            <div class="place-name">Gino's East</div>
+            <div class="place-address">162 E Superior St</div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">Deep dish pizza. 45 min cook time — order early. On Day 1 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.ginoseast.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Ginos+East+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&h=160&q=70" alt="Federales">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Federales</div>
+            <div class="place-address">180 N Morgan St</div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">Tacos + tequila + DJ. Fulton Market. Also great as a bar on Day 4 night.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.federaleschicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Federales+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=400&h=160&q=70" alt="Green Street Smoked Meats">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Green Street Smoked Meats</div>
+            <div class="place-address">112 N Green St</div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">BBQ. Same area as Federales.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.greenstreetsmokedmeats.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Green+Street+Smoked+Meats+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&h=160&q=70" alt="Little Bad Wolf">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">Little Bad Wolf</div>
+            <div class="place-address">1541 W Bryn Mawr Ave</div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">Best burger in Chicago. No reservations — can have a wait.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Little+Bad+Wolf+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--red)"></span>Dinner — Nice Nights Out</div>
+      <div class="place-grid">
+        <div class="place-card" style="border-left: 3px solid var(--red);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&h=160&q=70" alt="Tao Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Tao Chicago</div>
+            <div class="place-address">632 N Dearborn St</div>
+            <div class="place-meta">
+              <span class="place-price">$$$</span>
+              <span class="badge b-reserve">📅 Reserve</span>
+            </div>
+            <div class="place-note">Pan-Asian. On Day 4 itinerary. Strongly recommended to reserve.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.taochicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Tao+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--red);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=400&h=160&q=70" alt="Deliz Italian Steakhouse">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">Deliz Italian Steakhouse</div>
+            <div class="place-address">1840 W North Ave</div>
+            <div class="place-meta">
+              <span class="place-price">$$$</span>
+              <span class="badge b-reserve">📅 Reserve</span>
+            </div>
+            <div class="place-note">Italian steakhouse. On Day 2 itinerary.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.delizchicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Deliz+Italian+Steakhouse+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--purple)"></span>Bars &amp; Nightlife</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=400&h=160&q=70" alt="London House Rooftop">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">London House Rooftop</div>
+            <div class="place-address">85 E Wacker Dr</div>
+            <div class="place-meta"><span class="badge b-bar">Rooftop</span></div>
+            <div class="place-note">Upscale rooftop. Near hotel. $15–18/drink. Day 1 night.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.londonhousechicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=London+House+Rooftop+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1543007631-283050bb3e8c?auto=format&fit=crop&w=400&h=160&q=70" alt="Utopian Tailgate">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.4</div>
+            <div class="place-name">Utopian Tailgate</div>
+            <div class="place-address">1608 N Wells St</div>
+            <div class="place-meta"><span class="place-hours">Wed–Sun</span></div>
+            <div class="place-note">Rooftop + games. Drinks only — food reviews are mixed. Day 3 night.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.utopiantailgate.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Utopian+Tailgate+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&h=160&q=70" alt="The Violet Hour">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">The Violet Hour</div>
+            <div class="place-address">1520 N Damen Ave · Wicker Park</div>
+            <div class="place-meta"><span class="badge b-bar">Speakeasy</span></div>
+            <div class="place-note">Craft cocktails. No sign on door. Slow and chill vibe. Day 2 night.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.theviolethour.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=The+Violet+Hour+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&h=160&q=70" alt="Federales">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Federales</div>
+            <div class="place-address">180 N Morgan St · Fulton Market</div>
+            <div class="place-meta"><span class="badge b-bar">High Energy</span></div>
+            <div class="place-note">DJ. Tacos. Great for Friday night. Day 4 option.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.federaleschicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Federales+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&h=160&q=70" alt="Recess">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.3</div>
+            <div class="place-name">Recess</div>
+            <div class="place-address">838 W Kinzie St · Fulton Market</div>
+            <div class="place-meta"><span class="badge b-bar">Outdoor</span></div>
+            <div class="place-note">Outdoor bar + games + DJ. Day 4 option.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Recess+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=400&h=160&q=70" alt="Punch Bowl Social">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.3</div>
+            <div class="place-name">Punch Bowl Social</div>
+            <div class="place-address">310 N Green St · Fulton Market</div>
+            <div class="place-meta"><span class="badge b-activity">Bowling</span></div>
+            <div class="place-note">Bowling + arcade + bar. Day 4 option.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.punchbowlsocial.com/location/chicago" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Punch+Bowl+Social+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── SHOPPING ───────────────────────────── -->
+  <section id="tab-shopping" class="tab-content">
+
+    <div class="section-hd">
+      <div class="section-hd-eyebrow">By Neighborhood</div>
+      <div class="section-hd-title">Shopping</div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Wicker Park — All within ~2 blocks · Day 2 · ~$15 Uber</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&h=160&q=70" alt="Layers Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.7</div>
+            <div class="place-name">Layers Chicago</div>
+            <div class="place-address">1437 N Milwaukee Ave</div>
+            <div class="place-note">Vintage streetwear · Opens 12pm</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Layers+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=400&h=160&q=70" alt="Round Two">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.7</div>
+            <div class="place-name">Round Two</div>
+            <div class="place-address">1501 N Milwaukee Ave</div>
+            <div class="place-note">Vintage / hypebeast · 2 floors · Opens 12pm</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.roundtwostore.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Round+Two+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=160&q=70" alt="Supreme Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.3</div>
+            <div class="place-name">Supreme Chicago</div>
+            <div class="place-address">1438 N Milwaukee Ave</div>
+            <div class="place-note">Opens 11am</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.supremenewyork.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Supreme+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=160&q=70" alt="Boneyard">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name">Boneyard</div>
+            <div class="place-address">1102 N Ashland Ave</div>
+            <div class="place-note">Sneakers + streetwear</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Boneyard+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>Oak Street / Gold Coast — Kith + Bape on same block · Day 4</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&h=160&q=70" alt="Kith Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">Kith Chicago</div>
+            <div class="place-address">54 E Walton St</div>
+            <div class="place-note">Get the Kith Treats milkshake upstairs</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.kith.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Kith+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=400&h=160&q=70" alt="Bape Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.4</div>
+            <div class="place-name">Bape Chicago</div>
+            <div class="place-address">113 E Oak St</div>
+            <div class="place-note">Same block as Kith</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.bape.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Bape+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=400&h=160&q=70" alt="Oak Street Designer Row">
+          <div class="place-card-body">
+            <div class="place-name">Oak Street Designer Row</div>
+            <div class="place-address">E Oak St</div>
+            <div class="place-note">Hermès, Gucci, and more · Browse only or treat yourself</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Oak+Street+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Downtown / Mag Mile — State Street + Michigan Ave · Easy from hotel</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=400&h=160&q=70" alt="State Street / Block 37">
+          <div class="place-card-body">
+            <div class="place-name">State Street / Block 37</div>
+            <div class="place-address">108 N State St</div>
+            <div class="place-note">General shopping · Big Starbucks</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Block+37+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&h=160&q=70" alt="Mag Mile Boutiques">
+          <div class="place-card-body">
+            <div class="place-name">Mag Mile Boutiques</div>
+            <div class="place-address">N Michigan Ave</div>
+            <div class="place-note">Watch + jewelry browsing · Day 4</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Magnificent+Mile+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── ATTRACTIONS ────────────────────────── -->
+  <section id="tab-attractions" class="tab-content">
+
+    <div class="section-hd">
+      <div class="section-hd-eyebrow">Activities &amp; Sights</div>
+      <div class="section-hd-title">Attractions</div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>CityPASS — $142/person · $426 total · 5 attractions</div>
+      <div class="place-grid">
+        <div class="place-card" style="border-left: 3px solid var(--blue);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=400&h=160&q=70" alt="Shedd Aquarium">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name">Shedd Aquarium</div>
+            <div class="place-address">1200 S DuSable Lake Shore Dr · Opens 9am</div>
+            <div class="place-meta">
+              <span class="badge b-mustdo">⭐ Must Do</span>
+              <span class="badge b-reserve">📅 Book Time Slot</span>
+            </div>
+            <div class="place-note">Book time slot through CityPASS app. Plan 2–3 hrs. Confirm 4D experience is back post-renovation.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.sheddaquarium.org" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Shedd+Aquarium+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--blue);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=400&h=160&q=70" alt="Skydeck Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.8</div>
+            <div class="place-name">Skydeck Chicago</div>
+            <div class="place-address">233 S Wacker Dr · 103rd floor · Opens 9am</div>
+            <div class="place-meta">
+              <span class="badge b-mustdo">⭐ Must Do</span>
+            </div>
+            <div class="place-note">0.4 mi from hotel. Go at golden hour (~5pm) for the best light. The Ledge glass boxes are a highlight.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.theskydeck.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Skydeck+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--blue);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=400&h=160&q=70" alt="Architecture River Tour">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.8</div>
+            <div class="place-name">Architecture River Tour</div>
+            <div class="place-address">465 N McClurg Ct · 75 min cruise</div>
+            <div class="place-meta">
+              <span class="badge b-mustdo">⭐ Must Do</span>
+              <span class="badge b-reserve">📅 Reserve in App</span>
+            </div>
+            <div class="place-note">Book ahead through CityPASS app. One of the best ways to see Chicago's skyline from the water.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.shorechicago.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Architecture+River+Tour+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--blue);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=400&h=160&q=70" alt="Art Institute of Chicago">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.8</div>
+            <div class="place-name">Art Institute of Chicago</div>
+            <div class="place-address">111 S Michigan Ave · Opens 10am</div>
+            <div class="place-meta">
+              <span class="badge b-mustdo">⭐ Planned</span>
+            </div>
+            <div class="place-note">10 min walk from hotel — easiest CityPASS attraction to fit in. Plan 2–3 hrs on Day 2 morning.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.artic.edu" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Art+Institute+of+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--blue);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=400&h=160&q=70" alt="Griffin Museum">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.7</div>
+            <div class="place-name">Griffin Museum of Science &amp; Industry</div>
+            <div class="place-address">5700 S Lake Shore Dr, Hyde Park · Opens 9am</div>
+            <div class="place-meta">
+              <span class="badge b-optional">Optional</span>
+            </div>
+            <div class="place-note">~7 mi south of hotel (~$20 Uber). Most out-of-the-way attraction. Best fit: Day 3 or 4 morning.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.msichicago.org" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Museum+of+Science+and+Industry+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Free / Low Cost</div>
+      <div class="place-grid">
+        <div class="place-card" style="border-left: 3px solid var(--green);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&h=160&q=70" alt="Millennium Park">
+          <div class="place-card-body">
+            <div class="place-name">Millennium Park + The Bean</div>
+            <div class="place-address">Michigan Ave &amp; Monroe</div>
+            <div class="place-meta"><span class="badge b-free">Free</span></div>
+            <div class="place-note">10 min walk from hotel. Easy Day 1 stop.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.millenniumpark.org" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Millennium+Park+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--green);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555658636-6e4a36218be7?auto=format&fit=crop&w=400&h=160&q=70" alt="Chicago Riverwalk">
+          <div class="place-card-body">
+            <div class="place-name">Chicago Riverwalk</div>
+            <div class="place-address">Along Wacker Dr</div>
+            <div class="place-meta"><span class="badge b-free">Free</span></div>
+            <div class="place-note">Bars and cafes along the water. Start and end of trip highlight.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Chicago+Riverwalk" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--green);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400&h=160&q=70" alt="Lincoln Park Zoo">
+          <div class="place-card-body">
+            <div class="place-name">Lincoln Park Zoo</div>
+            <div class="place-address">2001 N Clark St · Opens 10am</div>
+            <div class="place-meta"><span class="badge b-free">FREE</span></div>
+            <div class="place-note">Confirm May hours. On Day 3 itinerary after Lakefront ride.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.lpzoo.org" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Lincoln+Park+Zoo+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" style="border-left: 3px solid var(--green);">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&h=160&q=70" alt="Lakefront Trail">
+          <div class="place-card-body">
+            <div class="place-name">Lakefront Trail — Divvy Bikes</div>
+            <div class="place-address">Along Lake Michigan</div>
+            <div class="place-meta"><span class="badge b-activity">Activity</span></div>
+            <div class="place-note">$3.30/30 min or $15 day pass. Ride north from Museum Campus toward Navy Pier on Day 3.</div>
+            <div class="place-links">
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Lakefront+Trail+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Experiences</div>
+      <div class="place-grid">
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=400&h=160&q=70" alt="Topgolf Chicago">
+          <div class="place-card-body">
+            <div class="place-name">Topgolf Chicago</div>
+            <div class="place-address">Near West Loop / Chicago River</div>
+            <div class="place-note">~$30–50/hr per bay. Group activity on Day 2 before dinner. Plan ~2 hrs.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.topgolf.com/us/chicago" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Topgolf+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=400&h=160&q=70" alt="Navy Pier">
+          <div class="place-card-body">
+            <div class="place-name">Navy Pier</div>
+            <div class="place-address">600 E Grand Ave</div>
+            <div class="place-note">Free to walk around. Ferris Wheel ~$20 if interested. Day 3 afternoon after Lakefront Trail.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.navypier.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Navy+Pier+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── MAP ─────────────────────────────── -->
+  <section id="tab-map" class="tab-content">
+
+    <div class="section-hd">
+      <div class="section-hd-eyebrow">Interactive</div>
+      <div class="section-hd-title">Map</div>
+    </div>
+
+    <div class="map-legend">
+      <span class="map-legend-item"><span class="map-dot" style="background:var(--gold)"></span>Food &amp; Drink</span>
+      <span class="map-legend-item"><span class="map-dot" style="background:var(--green)"></span>Shopping</span>
+      <span class="map-legend-item"><span class="map-dot" style="background:var(--blue)"></span>Attractions</span>
+      <span class="map-legend-item"><span class="map-dot" style="background:var(--purple)"></span>Bars</span>
+      <span class="map-legend-item"><span class="map-dot" style="background:var(--red)"></span>Hotel</span>
+    </div>
+
+    <div style="max-width:960px;margin:0 auto;position:relative;">
+      <div id="main-map" style="width:100%;height:700px;border-radius:var(--radius);border:1px solid var(--border);"></div>
+      <button id="map-tile-toggle" onclick="toggleMapTiles()" style="position:absolute;top:12px;right:12px;z-index:1000;background:rgba(9,9,15,0.85);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 14px;color:var(--text-2);font-family:var(--font-condensed);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,color 0.2s;">🗺️ Street View</button>
+    </div>
+
+  </section>
+
+  <!-- ─── LOGISTICS ──────────────────────────── -->
+  <section id="tab-logistics" class="tab-content">
+
+    <div class="section-hd">
+      <div class="section-hd-eyebrow">Getting There &amp; Around</div>
+      <div class="section-hd-title">Logistics</div>
+    </div>
+
+    <!-- Hotel alert -->
+    <div class="hotel-alert">
+      <div class="hotel-alert-icon">🏨</div>
+      <div>
+        <div class="hotel-alert-title">Central Loop Hotel — Confirmed &amp; Paid</div>
+        <div class="hotel-alert-text">111 W Adams St · Superior Room, 1 Queen, Kitchenette · Sleeps 3 · Free WiFi · Non-refundable Member's Exclusive Price · Check-in May 12, Check-out May 16</div>
+      </div>
+    </div>
+
+    <!-- Flights -->
+    <div class="flights-section">
+      <div class="flights-grid">
+        <div class="flight-segment">
+          <div class="flight-segment-dir">Outbound · Mon May 12</div>
+          <div class="flight-segment-route">PHX → ORD</div>
+          <div class="flight-segment-time">6:00 AM → 11:37 AM</div>
+          <div class="flight-segment-meta">
+            <span>AA 1114</span> · 3h 37m · Economy (B)<br>
+            Terminal 4 → Terminal 3
+          </div>
+        </div>
+        <div class="flight-segment">
+          <div class="flight-segment-dir">Return · Fri May 16</div>
+          <div class="flight-segment-route">ORD → PHX</div>
+          <div class="flight-segment-time">7:06 PM → 9:05 PM</div>
+          <div class="flight-segment-meta">
+            <span>AA 1038</span> · 3h 59m · Economy (B)<br>
+            Terminal 3 → Terminal 4
+          </div>
+        </div>
+      </div>
+      <div class="flight-details-grid">
+        <div class="flight-detail-card">
+          <div class="flight-detail-label">Confirmation</div>
+          <div class="flight-detail-val highlight">OLTGZD</div>
+        </div>
+        <div class="flight-detail-card">
+          <div class="flight-detail-label">Expedia Itin</div>
+          <div class="flight-detail-val">73395781298611</div>
+        </div>
+        <div class="flight-detail-card">
+          <div class="flight-detail-label">Total Cost</div>
+          <div class="flight-detail-val">$707.40</div>
+        </div>
+        <div class="flight-detail-card">
+          <div class="flight-detail-label">Baggage</div>
+          <div class="flight-detail-val" style="font-size:12px;">Carry-on free · 1st $50 · 2nd $60</div>
+        </div>
+      </div>
+      <div class="flight-map-wrapper">
+        <div id="flight-map" style="width:100%;height:300px;border-radius:var(--radius);"></div>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="section-hd" style="margin-top:8px;">
+      <div class="section-hd-eyebrow">Per Person (excluding flight + hotel)</div>
+      <div class="section-hd-title">Budget</div>
+    </div>
+    <div class="budget-grid">
+      <div class="budget-item" style="border-top: 2px solid var(--blue);">
+        <div class="budget-label">CityPASS (5 attractions)</div>
+        <div class="budget-val" style="color:var(--blue);">$142</div>
+      </div>
+      <div class="budget-item" style="border-top: 2px solid var(--orange);">
+        <div class="budget-label">Ubers across 4 days</div>
+        <div class="budget-val" style="color:var(--orange);">~$70</div>
+      </div>
+      <div class="budget-item" style="border-top: 2px solid var(--gold);">
+        <div class="budget-label">Food &amp; Drinks (4 days)</div>
+        <div class="budget-val" style="color:var(--gold);">~$300</div>
+      </div>
+      <div class="budget-item" style="border-top: 2px solid var(--green);">
+        <div class="budget-label">Topgolf (split bay)</div>
+        <div class="budget-val" style="color:var(--green);">~$25</div>
+      </div>
+      <div class="budget-item" style="border-top: 2px solid var(--purple);">
+        <div class="budget-label">Shopping / treats</div>
+        <div class="budget-val" style="color:var(--purple);">varies</div>
+      </div>
+      <div class="budget-item budget-target">
+        <div class="budget-label">Target budget total</div>
+        <div class="budget-val">~$1,000</div>
+      </div>
+    </div>
+
+    <!-- Getting around -->
+    <div class="section-hd" style="margin-top:32px;">
+      <div class="section-hd-eyebrow">Transportation</div>
+      <div class="section-hd-title">Getting Around</div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card" style="border-left: 3px solid var(--orange);">
+        <div class="tip-title">Walk + Divvy</div>
+        <div class="tip-text">Most Loop/downtown stuff is walkable from Central Loop Hotel. Divvy bikes are great for the Lakefront Trail. $3.30/30 min or $15 day pass.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--orange);">
+        <div class="tip-title">Uber</div>
+        <div class="tip-text">Use Uber for anything north (Wicker Park, Lincoln Park) or south (Hyde Park/Griffin). Avoid CTA per local recommendation given hotel location.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--orange);">
+        <div class="tip-title">Airport</div>
+        <div class="tip-text">O'Hare ↔ Downtown: budget 45–60 min and $35–55 each way. Leave for the airport by 4pm on Day 5.</div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="section-hd" style="margin-top:32px;">
+      <div class="section-hd-eyebrow">Good to Know</div>
+      <div class="section-hd-title">Tips</div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card" style="border-left: 3px solid var(--gold);">
+        <div class="tip-title">Gino's East</div>
+        <div class="tip-text">Deep dish takes 45 min to cook. Order early and settle in.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--gold);">
+        <div class="tip-title">Wildberry + Batter &amp; Berries</div>
+        <div class="tip-text">Expect a wait on weekends. Go early or plan for it.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--purple);">
+        <div class="tip-title">Utopian Tailgate</div>
+        <div class="tip-text">Drinks only — food reviews are mixed. Don't count on eating here.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--purple);">
+        <div class="tip-title">The Violet Hour</div>
+        <div class="tip-text">No sign on the door. Craft cocktail bar — slow and chill vibe. Not for the high-energy crowd.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--gold);">
+        <div class="tip-title">Weiners Circle</div>
+        <div class="tip-text">Staff banter is famously part of the experience. Late night only. Open until 2–4am.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--gold);">
+        <div class="tip-title">Little Bad Wolf</div>
+        <div class="tip-text">No reservations — can have a wait. Best burger in Chicago according to locals.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--gold);">
+        <div class="tip-title">Parlay River North</div>
+        <div class="tip-text">Best on Sat/Sun for the DJ brunch experience.</div>
+      </div>
+      <div class="tip-card" style="border-left: 3px solid var(--blue);">
+        <div class="tip-title">Shedd 4D Experience</div>
+        <div class="tip-text">Was closed for renovation through ~May 8. Confirm it's back before the trip.</div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  Chicago · May 12–16, 2026 &nbsp;·&nbsp; Garrett · Andrew · Nathan
+</footer>
+
+<script>
+  // Tab switching
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (target === 'map') setTimeout(initMainMap, 100);
+      if (target === 'logistics') {
+        setTimeout(initFlightMap, 100);
+        animateLogistics();
+      }
+    });
+  });
+
+  // Day card toggle
+  function toggleDay(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  // Checklist with localStorage
+  const checkIds = ['hotel','citypass','tao','deliz','archtour','shedd'];
+
+  function saveChecks() {
+    const state = {};
+    checkIds.forEach(id => {
+      state[id] = document.getElementById('chk-' + id).checked;
+    });
+    localStorage.setItem('chicago-checklist', JSON.stringify(state));
+  }
+
+  function loadChecks() {
+    const saved = localStorage.getItem('chicago-checklist');
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    checkIds.forEach(id => {
+      const chk = document.getElementById('chk-' + id);
+      const item = document.getElementById('ci-' + id);
+      if (state[id]) {
+        chk.checked = true;
+        item.classList.add('done');
+      }
+    });
+  }
+
+  checkIds.forEach(id => {
+    const chk = document.getElementById('chk-' + id);
+    const item = document.getElementById('ci-' + id);
+    chk.addEventListener('change', () => {
+      item.classList.toggle('done', chk.checked);
+      saveChecks();
+    });
+  });
+
+  loadChecks();
+
+  // Staggered entrance animation for Logistics tab
+  function animateLogistics() {
+    const section = document.getElementById('tab-logistics');
+    section.classList.remove('logistics-animate');
+    void section.offsetWidth;
+    section.classList.add('logistics-animate');
+    const items = section.querySelectorAll('.hotel-alert, .flight-segment, .flight-detail-card, .flight-map-wrapper, .budget-item, .tip-card, .section-hd');
+    items.forEach((el, i) => {
+      el.style.animationDelay = (i * 0.06) + 's';
+    });
+  }
+
+  // Fit CHICAGO title to full viewport width
+  function fitChicago() {
+    const el = document.querySelector('.hero-title');
+    if (!el) return;
+    el.style.position = 'absolute';
+    el.style.width = 'auto';
+    el.style.whiteSpace = 'nowrap';
+    el.style.fontSize = '100px';
+    const textW = el.getBoundingClientRect().width;
+    const viewW = document.documentElement.clientWidth;
+    el.style.position = '';
+    el.style.width = '';
+    el.style.whiteSpace = '';
+    el.style.fontSize = Math.floor(100 * (viewW / textW)) + 'px';
+    el.style.visibility = 'visible';
+  }
+  fitChicago();
+  document.fonts.ready.then(fitChicago);
+  window.addEventListener('resize', fitChicago);
+
+  // Flight map (Leaflet — lazy init on Logistics tab)
+  let flightMap = null;
+  function initFlightMap() {
+    if (flightMap) { flightMap.invalidateSize(); return; }
+    flightMap = L.map('flight-map', {
+      zoomControl: false,
+      attributionControl: false,
+      dragging: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      touchZoom: false
+    }).setView([38.5, -97], 4);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19
+    }).addTo(flightMap);
+
+    const phx = [33.4484, -112.0740];
+    const ord = [41.9742, -87.9073];
+
+    L.circleMarker(phx, { radius: 7, color: '#3D8EF0', fillColor: '#3D8EF0', fillOpacity: 1, weight: 0 })
+      .addTo(flightMap).bindTooltip('PHX', { permanent: true, direction: 'bottom', className: 'flight-label' });
+    L.circleMarker(ord, { radius: 7, color: '#3D8EF0', fillColor: '#3D8EF0', fillOpacity: 1, weight: 0 })
+      .addTo(flightMap).bindTooltip('ORD', { permanent: true, direction: 'top', className: 'flight-label' });
+
+    const arcPoints = [];
+    const steps = 40;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const lat = phx[0] + t * (ord[0] - phx[0]);
+      const lng = phx[1] + t * (ord[1] - phx[1]);
+      const arc = Math.sin(t * Math.PI) * 4;
+      arcPoints.push([lat + arc, lng]);
+    }
+    L.polyline(arcPoints, { color: '#3D8EF0', weight: 2.5, dashArray: '8,6', opacity: 0.7 }).addTo(flightMap);
+  }
+
+  // Main map (lazy init — triggered on Map tab)
+  let mainMap = null;
+  const HOTEL = [41.8795, -87.6281];
+  const MAPS_BASE = 'https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=';
+
+  function makePopup(name, addr, rating, website, mapsDest, imgUrl) {
+    var popupImg = imgUrl ? imgUrl.replace(/w=\d+&h=\d+/, 'w=400&h=200') : '';
+    let h = '<div style="font-family:Outfit,sans-serif;min-width:220px;">';
+    if (popupImg) h += '<img src="' + popupImg + '" style="width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:8px;" alt="' + name + '">';
+    h += '<strong style="font-size:14px;">' + name + '</strong>';
+    if (rating) h += ' <span style="color:#F5A82A;font-size:12px;">⭐ ' + rating + '</span>';
+    h += '<br><span style="font-size:12px;color:#999;">' + addr + '</span><br>';
+    if (website) h += '<a href="' + website + '" target="_blank" style="font-size:11px;color:#3D8EF0;">Website</a> · ';
+    h += '<a href="' + MAPS_BASE + encodeURIComponent(mapsDest) + '" target="_blank" style="font-size:11px;color:#00C57A;">Directions</a>';
+    h += '</div>';
+    return h;
+  }
+
+  function makePinIcon(color, imgUrl) {
+    let imgHtml = '';
+    if (imgUrl) {
+      imgHtml = '<div class="map-pin-img-wrap" style="color:' + color + '"><img src="' + imgUrl + '" loading="lazy"></div>';
+    }
+    return L.divIcon({
+      className: '',
+      iconSize: [28, 36],
+      iconAnchor: [14, 36],
+      popupAnchor: [0, -38],
+      html: '<div class="map-pin" style="color:' + color + '">' + imgHtml + '<div class="map-pin-head"></div><div class="map-pin-tail"></div></div>'
+    });
+  }
+
+  function addPin(map, lat, lng, color, name, addr, rating, website, mapsDest, imgUrl) {
+    L.marker([lat, lng], { icon: makePinIcon(color, imgUrl) })
+      .addTo(map)
+      .bindPopup(makePopup(name, addr, rating, website, mapsDest || name + ' Chicago', imgUrl));
+  }
+
+  var satelliteTiles = null;
+  var streetTiles = null;
+  var usingSatellite = true;
+
+  function toggleMapTiles() {
+    if (!mainMap) return;
+    var btn = document.getElementById('map-tile-toggle');
+    if (usingSatellite) {
+      mainMap.removeLayer(satelliteTiles);
+      streetTiles.addTo(mainMap);
+      btn.textContent = '🛰️ Satellite';
+      usingSatellite = false;
+    } else {
+      mainMap.removeLayer(streetTiles);
+      satelliteTiles.addTo(mainMap);
+      btn.textContent = '🗺️ Street View';
+      usingSatellite = true;
+    }
+  }
+
+  function initMainMap() {
+    if (mainMap) { mainMap.invalidateSize(); return; }
+    mainMap = L.map('main-map').setView([41.895, -87.635], 13);
+    satelliteTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: '© Esri'
+    });
+    streetTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap © CARTO'
+    });
+    satelliteTiles.addTo(mainMap);
+
+    // Hotel
+    L.marker(HOTEL, { icon: makePinIcon('#E8402A', null) })
+      .addTo(mainMap)
+      .bindPopup('<div style="font-family:Outfit,sans-serif;"><strong>Central Loop Hotel</strong><br>111 W Adams St<br>Home base!</div>')
+      .bindTooltip('Hotel', { permanent: true, direction: 'top', className: 'hotel-label' });
+
+    var U = 'https://images.unsplash.com/photo-';
+    var S = '?auto=format&fit=crop&w=200&h=200&q=75';
+
+    // Food — gold
+    addPin(mainMap, 41.8846, -87.6244, '#F5A82A', 'Wildberry Pancakes & Cafe', '130 E Randolph St', '4.5', 'https://www.wildberrycafe.com', 'Wildberry Pancakes Cafe Chicago', U+'1567620905732-2d1ec7ab7445'+S);
+    addPin(mainMap, 41.9292, -87.6648, '#F5A82A', 'Batter & Berries', '2748 N Lincoln Ave', '4.8', 'https://www.batterandberries.com', 'Batter and Berries Chicago', U+'1528207776546-365bb710ee93'+S);
+    addPin(mainMap, 41.8899, -87.6318, '#F5A82A', 'Parlay River North', '112 W Hubbard St', '4.2', null, 'Parlay River North Chicago', U+'1414235077428-338989a2e8c0'+S);
+    addPin(mainMap, 41.8930, -87.6244, '#F5A82A', "Garrett's Popcorn", '625 N Michigan Ave', '4.5', 'https://www.garrettpopcorn.com', 'Garretts Popcorn Michigan Ave Chicago', U+'1599490659213-e2b9527bd087'+S);
+    addPin(mainMap, 41.8724, -87.6277, '#F5A82A', 'Devil Dawgs', '767 S State St', '4.2', null, 'Devil Dawgs Chicago', U+'1555939594-58d7cb561ad1'+S);
+    addPin(mainMap, 41.9290, -87.6432, '#F5A82A', 'Weiners Circle', '2622 N Clark St', '4.1', null, 'Weiners Circle Chicago', U+'1555939594-58d7cb561ad1'+S);
+    addPin(mainMap, 41.8731, -87.6260, '#F5A82A', "Harold's Chicken", '612 S Wabash Ave', '4.4', null, 'Harolds Chicken Wabash Chicago', U+'1626082927389-6cd097cdc6ec'+S);
+    addPin(mainMap, 41.8960, -87.6221, '#F5A82A', "Gino's East", '162 E Superior St', '4.4', 'https://www.ginoseast.com', 'Ginos East Chicago', U+'1565299624946-b28f40a0ae38'+S);
+    addPin(mainMap, 41.8858, -87.6520, '#F5A82A', 'Federales', '180 N Morgan St', '4.5', 'https://www.federaleschicago.com', 'Federales Chicago', U+'1565299585323-38d6b0865b47'+S);
+    addPin(mainMap, 41.8843, -87.6488, '#F5A82A', 'Green Street Smoked Meats', '112 N Green St', '4.5', 'https://www.greenstreetsmokedmeats.com', 'Green Street Smoked Meats Chicago', U+'1529193591184-b1d58069ecdd'+S);
+    addPin(mainMap, 41.9834, -87.6695, '#F5A82A', 'Little Bad Wolf', '1541 W Bryn Mawr Ave', '4.6', null, 'Little Bad Wolf Chicago', U+'1568901346375-23c9450c58cd'+S);
+    addPin(mainMap, 41.8931, -87.6298, '#F5A82A', 'Tao Chicago', '632 N Dearborn St', '4.5', 'https://www.taochicago.com', 'Tao Chicago', U+'1579871494447-9811cf80d66c'+S);
+    addPin(mainMap, 41.9108, -87.6738, '#F5A82A', 'Deliz Italian Steakhouse', '1840 W North Ave', '4.6', 'https://www.delizchicago.com', 'Deliz Chicago', U+'1559847844-5315695dadae'+S);
+
+    // Bars — purple
+    addPin(mainMap, 41.8868, -87.6258, '#9B5DE5', 'London House Rooftop', '85 E Wacker Dr', '4.6', 'https://www.londonhousechicago.com', 'London House Rooftop Chicago', U+'1572116469696-31de0f17cc34'+S);
+    addPin(mainMap, 41.9117, -87.6343, '#9B5DE5', 'Utopian Tailgate', '1608 N Wells St', '4.4', 'https://www.utopiantailgate.com', 'Utopian Tailgate Chicago', U+'1543007631-283050bb3e8c'+S);
+    addPin(mainMap, 41.9097, -87.6773, '#9B5DE5', 'The Violet Hour', '1520 N Damen Ave', '4.6', 'https://www.theviolethour.com', 'The Violet Hour Chicago', U+'1514362545857-3bc16c4c7d1b'+S);
+    addPin(mainMap, 41.8895, -87.6500, '#9B5DE5', 'Recess', '838 W Kinzie St', '4.3', null, 'Recess Chicago', U+'1514933651103-005eec06c04b'+S);
+    addPin(mainMap, 41.8872, -87.6488, '#9B5DE5', 'Punch Bowl Social', '310 N Green St', '4.3', 'https://www.punchbowlsocial.com/location/chicago', 'Punch Bowl Social Chicago', U+'1543007630-9710e4a00a20'+S);
+
+    // Shopping — green
+    addPin(mainMap, 41.9079, -87.6729, '#00C57A', 'Layers Chicago', '1437 N Milwaukee Ave', '4.7', null, 'Layers Chicago', U+'1558618666-fcd25c85cd64'+S);
+    addPin(mainMap, 41.9090, -87.6737, '#00C57A', 'Round Two', '1501 N Milwaukee Ave', '4.7', 'https://www.roundtwostore.com', 'Round Two Chicago', U+'1523398002811-999ca8dec234'+S);
+    addPin(mainMap, 41.9080, -87.6730, '#00C57A', 'Supreme Chicago', '1438 N Milwaukee Ave', '4.3', 'https://www.supremenewyork.com', 'Supreme Chicago', U+'1542291026-7eec264c27ff'+S);
+    addPin(mainMap, 41.9027, -87.6680, '#00C57A', 'Boneyard', '1102 N Ashland Ave', '4.5', null, 'Boneyard Chicago', U+'1542291026-7eec264c27ff'+S);
+    addPin(mainMap, 41.9001, -87.6265, '#00C57A', 'Kith Chicago', '54 E Walton St', '4.6', 'https://www.kith.com', 'Kith Chicago', U+'1441986300917-64674bd600d8'+S);
+    addPin(mainMap, 41.9009, -87.6250, '#00C57A', 'Bape Chicago', '113 E Oak St', '4.4', 'https://www.bape.com', 'Bape Chicago', U+'1523398002811-999ca8dec234'+S);
+
+    // Attractions — blue
+    addPin(mainMap, 41.8676, -87.6140, '#3D8EF0', 'Shedd Aquarium', '1200 S DuSable Lake Shore Dr', '4.6', 'https://www.sheddaquarium.org', 'Shedd Aquarium Chicago', U+'1559827260-dc66d52bef19'+S);
+    addPin(mainMap, 41.8789, -87.6359, '#3D8EF0', 'Skydeck Chicago', '233 S Wacker Dr', '4.8', 'https://www.theskydeck.com', 'Skydeck Chicago', U+'1486325212027-8081e485255e'+S);
+    addPin(mainMap, 41.8905, -87.6170, '#3D8EF0', 'Architecture River Tour', '465 N McClurg Ct', '4.8', 'https://www.shorechicago.com', 'Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
+    addPin(mainMap, 41.8796, -87.6237, '#3D8EF0', 'Art Institute of Chicago', '111 S Michigan Ave', '4.8', 'https://www.artic.edu', 'Art Institute of Chicago', U+'1580060839134-75a5edca2e99'+S);
+    addPin(mainMap, 41.7906, -87.5831, '#3D8EF0', 'Griffin Museum', '5700 S Lake Shore Dr', '4.7', 'https://www.msichicago.org', 'Museum of Science and Industry Chicago', U+'1569587112025-0d460e81a126'+S);
+    addPin(mainMap, 41.8827, -87.6233, '#3D8EF0', 'Millennium Park + The Bean', 'Michigan Ave & Monroe', null, 'https://www.millenniumpark.org', 'Millennium Park Chicago', U+'1504674900247-0877df9cc836'+S);
+    addPin(mainMap, 41.9211, -87.6340, '#3D8EF0', 'Lincoln Park Zoo', '2001 N Clark St', null, 'https://www.lpzoo.org', 'Lincoln Park Zoo Chicago', U+'1546182990-dffeafbe841d'+S);
+    addPin(mainMap, 41.8917, -87.6086, '#3D8EF0', 'Navy Pier', '600 E Grand Ave', null, 'https://www.navypier.com', 'Navy Pier Chicago', U+'1570168007204-dfb528c6958f'+S);
+    addPin(mainMap, 41.8840, -87.6560, '#3D8EF0', 'Topgolf Chicago', 'Near West Loop', null, 'https://www.topgolf.com/us/chicago', 'Topgolf Chicago', U+'1535131749006-b7f58c99034b'+S);
+  }
+</script>
+</body>
+</html>
