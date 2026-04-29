@@ -208,7 +208,7 @@
     }
 
     .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease; min-height: 100vh; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -1400,9 +1400,9 @@
           <div class="tl-item type-activity">
             <div class="tl-dot"></div>
             <div class="tl-time">~5:00 PM</div>
-            <div class="tl-name">Topgolf Chicago</div>
-            <div class="tl-address">West Loop / on the river</div>
-            <div class="tl-note">~2 hrs · $30–50/hr per bay</div>
+            <div class="tl-name">Topgolf Schaumburg</div>
+            <div class="tl-address">2050 Progress Pkwy, Schaumburg · ~30 min from downtown</div>
+            <div class="tl-note">~2 hrs · $30–50/hr per bay · Uber ~$35–45</div>
             <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
           </div>
           <div class="tl-item type-food">
@@ -1531,7 +1531,7 @@
             <div class="tl-dot"></div>
             <div class="tl-time">~9:30 AM</div>
             <div class="tl-name">Architecture River Tour</div>
-            <div class="tl-address">465 N McClurg Ct</div>
+            <div class="tl-address">Departs Navy Pier or 401 N Michigan Ave</div>
             <div class="tl-note">75 min cruise · Book ahead in CityPASS app</div>
             <div class="tl-badges">
               <span class="badge b-citypass">CityPASS</span>
@@ -2189,7 +2189,7 @@
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.8</div>
             <div class="place-name">Architecture River Tour</div>
-            <div class="place-address">465 N McClurg Ct · 75 min cruise</div>
+            <div class="place-address">Departs Navy Pier or 401 N Michigan Ave · 75 min cruise</div>
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Must Do</span>
               <span class="badge b-reserve">📅 Reserve in App</span>
@@ -2296,14 +2296,14 @@
       <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Experiences</div>
       <div class="place-grid">
         <div class="place-card">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=400&h=160&q=70" alt="Topgolf Chicago">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=400&h=160&q=70" alt="Topgolf Schaumburg">
           <div class="place-card-body">
-            <div class="place-name">Topgolf Chicago</div>
-            <div class="place-address">Near West Loop / Chicago River</div>
-            <div class="place-note">~$30–50/hr per bay. Group activity on Day 2 before dinner. Plan ~2 hrs.</div>
+            <div class="place-name">Topgolf Schaumburg</div>
+            <div class="place-address">2050 Progress Pkwy, Schaumburg · ~30 min from downtown</div>
+            <div class="place-note">~$30–50/hr per bay. Group activity on Day 2 before dinner. Plan ~2 hrs + travel.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.topgolf.com/us/chicago" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Topgolf+Chicago" target="_blank">Maps</a>
+              <a class="place-link" href="https://www.topgolf.com/us/schaumburg" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Topgolf+Schaumburg+2050+Progress+Pkwy" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2428,7 +2428,7 @@
         <div class="budget-val" style="color:var(--gold);">~$300</div>
       </div>
       <div class="budget-item" style="border-top: 2px solid var(--green);">
-        <div class="budget-label">Topgolf (split bay)</div>
+        <div class="budget-label">Topgolf Schaumburg (split bay)</div>
         <div class="budget-val" style="color:var(--green);">~$25</div>
       </div>
       <div class="budget-item" style="border-top: 2px solid var(--purple);">
@@ -2753,13 +2753,13 @@
     // Attractions — blue
     addPin(mainMap, 41.8676, -87.6140, '#3D8EF0', 'Shedd Aquarium', '1200 S DuSable Lake Shore Dr', '4.6', 'https://www.sheddaquarium.org', 'Shedd Aquarium Chicago', U+'1559827260-dc66d52bef19'+S);
     addPin(mainMap, 41.8789, -87.6359, '#3D8EF0', 'Skydeck Chicago', '233 S Wacker Dr', '4.8', 'https://www.theskydeck.com', 'Skydeck Chicago', U+'1486325212027-8081e485255e'+S);
-    addPin(mainMap, 41.8905, -87.6170, '#3D8EF0', 'Architecture River Tour', '465 N McClurg Ct', '4.8', 'https://www.shorechicago.com', 'Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
+    addPin(mainMap, 41.8897, -87.6240, '#3D8EF0', 'Architecture River Tour', 'Departs Navy Pier or 401 N Michigan Ave', '4.8', 'https://www.shorechicago.com', 'Shoreline Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
     addPin(mainMap, 41.8796, -87.6237, '#3D8EF0', 'Art Institute of Chicago', '111 S Michigan Ave', '4.8', 'https://www.artic.edu', 'Art Institute of Chicago', U+'1580060839134-75a5edca2e99'+S);
     addPin(mainMap, 41.7906, -87.5831, '#3D8EF0', 'Griffin Museum', '5700 S Lake Shore Dr', '4.7', 'https://www.msichicago.org', 'Museum of Science and Industry Chicago', U+'1569587112025-0d460e81a126'+S);
     addPin(mainMap, 41.8827, -87.6233, '#3D8EF0', 'Millennium Park + The Bean', 'Michigan Ave & Monroe', null, 'https://www.millenniumpark.org', 'Millennium Park Chicago', U+'1504674900247-0877df9cc836'+S);
     addPin(mainMap, 41.9211, -87.6340, '#3D8EF0', 'Lincoln Park Zoo', '2001 N Clark St', null, 'https://www.lpzoo.org', 'Lincoln Park Zoo Chicago', U+'1546182990-dffeafbe841d'+S);
     addPin(mainMap, 41.8917, -87.6086, '#3D8EF0', 'Navy Pier', '600 E Grand Ave', null, 'https://www.navypier.com', 'Navy Pier Chicago', U+'1570168007204-dfb528c6958f'+S);
-    addPin(mainMap, 41.8840, -87.6560, '#3D8EF0', 'Topgolf Chicago', 'Near West Loop', null, 'https://www.topgolf.com/us/chicago', 'Topgolf Chicago', U+'1535131749006-b7f58c99034b'+S);
+    addPin(mainMap, 42.0638, -88.0512, '#3D8EF0', 'Topgolf Schaumburg', '2050 Progress Pkwy, Schaumburg', null, 'https://www.topgolf.com/us/schaumburg', 'Topgolf Schaumburg 2050 Progress Pkwy', U+'1535131749006-b7f58c99034b'+S);
   }
 </script>
 </body>
