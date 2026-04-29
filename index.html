@@ -1219,6 +1219,10 @@
     <div class="checklist-card">
       <div class="checklist-title">⚡ Pre-Trip Checklist</div>
       <div class="checklist-items">
+        <label class="check-item done" id="ci-flights">
+          <input type="checkbox" id="chk-flights" checked>
+          <span>Flights — Purchased ($707.40 total)</span>
+        </label>
         <label class="check-item done" id="ci-hotel">
           <input type="checkbox" id="chk-hotel" checked>
           <span>Central Loop Hotel — Confirmed &amp; Paid</span>
@@ -1261,6 +1265,13 @@
       </div>
       <div class="day-body">
         <div class="timeline">
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-time">6:00 AM</div>
+            <div class="tl-name">✈️ AA 1114 — PHX → ORD</div>
+            <div class="tl-address">Terminal 4 → Terminal 3</div>
+            <div class="tl-note">Arrives 11:37am · 3h 37m · Economy</div>
+          </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
             <div class="tl-time">~1:00 PM</div>
@@ -1919,7 +1930,7 @@
           </div>
         </div>
         <div class="place-card">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1543007631-283050bb3e8c?auto=format&fit=crop&w=400&h=160&q=70" alt="Utopian Tailgate">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1763380631462-12a2f528ff25?auto=format&fit=crop&w=400&h=160&q=70" alt="Utopian Tailgate">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
             <div class="place-name">Utopian Tailgate</div>
@@ -2510,7 +2521,7 @@
       tabContents.forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + target).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelector('.tab-nav').scrollIntoView({ behavior: 'smooth' });
       if (target === 'map') setTimeout(initMainMap, 100);
       if (target === 'logistics') {
         setTimeout(initFlightMap, 100);
@@ -2525,7 +2536,7 @@
   }
 
   // Checklist with localStorage
-  const checkIds = ['hotel','citypass','tao','deliz','archtour','shedd'];
+  const checkIds = ['flights','hotel','citypass','tao','deliz','archtour','shedd'];
 
   function saveChecks() {
     const state = {};
@@ -2726,7 +2737,7 @@
 
     // Bars — purple
     addPin(mainMap, 41.8868, -87.6258, '#9B5DE5', 'London House Rooftop', '85 E Wacker Dr', '4.6', 'https://www.londonhousechicago.com', 'London House Rooftop Chicago', U+'1572116469696-31de0f17cc34'+S);
-    addPin(mainMap, 41.9117, -87.6343, '#9B5DE5', 'Utopian Tailgate', '1608 N Wells St', '4.4', 'https://www.utopiantailgate.com', 'Utopian Tailgate Chicago', U+'1543007631-283050bb3e8c'+S);
+    addPin(mainMap, 41.9117, -87.6343, '#9B5DE5', 'Utopian Tailgate', '1608 N Wells St', '4.4', 'https://www.utopiantailgate.com', 'Utopian Tailgate Chicago', U+'1763380631462-12a2f528ff25'+S);
     addPin(mainMap, 41.9097, -87.6773, '#9B5DE5', 'The Violet Hour', '1520 N Damen Ave', '4.6', 'https://www.theviolethour.com', 'The Violet Hour Chicago', U+'1514362545857-3bc16c4c7d1b'+S);
     addPin(mainMap, 41.8895, -87.6500, '#9B5DE5', 'Recess', '838 W Kinzie St', '4.3', null, 'Recess Chicago', U+'1514933651103-005eec06c04b'+S);
     addPin(mainMap, 41.8872, -87.6488, '#9B5DE5', 'Punch Bowl Social', '310 N Green St', '4.3', 'https://www.punchbowlsocial.com/location/chicago', 'Punch Bowl Social Chicago', U+'1543007630-9710e4a00a20'+S);
