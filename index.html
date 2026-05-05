@@ -360,6 +360,8 @@
     .timeline {
       position: relative;
       padding-top: 8px;
+      --mouse-x: 50%;
+      --mouse-y: 50%;
     }
 
     .timeline::before {
@@ -375,6 +377,9 @@
     .tl-item {
       position: relative;
       padding: 14px 0 0 28px;
+      opacity: 0.45;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     .tl-dot {
@@ -430,6 +435,134 @@
       flex-wrap: wrap;
       gap: 4px;
       margin-top: 6px;
+    }
+
+    /* ── ITINERARY HOVER + GLOW EFFECTS ──────── */
+    .tl-item.tl-visible {
+      opacity: 0.55;
+      transform: translateY(0);
+    }
+    .tl-item:hover {
+      opacity: 1;
+      transform: translateY(0) scale(1.01);
+    }
+    .tl-item:hover .tl-name {
+      text-shadow: 0 0 20px rgba(61,142,240,0.3);
+    }
+    .tl-item:hover .tl-dot {
+      box-shadow: 0 0 10px currentColor;
+      transform: scale(1.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(50px circle at var(--mouse-x) var(--mouse-y), rgba(61,142,240,0.06), transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 0;
+    }
+    .timeline:hover::after {
+      opacity: 1;
+    }
+
+    @media (hover: none) {
+      .tl-item.tl-visible { opacity: 1; }
+    }
+
+    /* ── INLINE PREVIEW CARD ─────────────────── */
+    .tl-item[data-preview] {
+      cursor: pointer;
+    }
+    .tl-item[data-preview] .tl-name:hover {
+      color: var(--blue);
+      transition: color 0.2s;
+    }
+    .tl-preview {
+      margin: 10px 0 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s;
+    }
+    .tl-preview.open {
+      max-height: 560px;
+      opacity: 1;
+    }
+    .tl-preview-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .tl-preview-body {
+      padding: 12px 14px;
+    }
+    .tl-preview-rating {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .tl-preview-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .tl-preview-note {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .tl-preview-links {
+      display: flex;
+      gap: 6px;
+    }
+    .tl-preview-link {
+      font-size: 11px;
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border: none;
+      transition: box-shadow 0.2s;
+    }
+    .tl-preview-link.view-tab {
+      color: var(--blue);
+      background: var(--blue-dim);
+    }
+    .tl-preview-link.view-tab:hover {
+      box-shadow: 0 0 12px rgba(61,142,240,0.4);
+    }
+    .tl-preview-link.view-map {
+      color: var(--green);
+      background: var(--green-dim);
+    }
+    .tl-preview-link.view-map:hover {
+      box-shadow: 0 0 12px rgba(0,197,122,0.4);
+    }
+
+    /* ── MAP PIN PULSE ───────────────────────── */
+    @keyframes pin-pulse {
+      0% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.4); filter: brightness(1.5); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+    .map-pin.pulse {
+      animation: pin-pulse 0.6s ease-in-out 3;
     }
 
     /* ── BADGES ───────────────────────────────── */
@@ -512,6 +645,7 @@
     }
 
     .place-card {
+      position: relative;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -522,6 +656,24 @@
       transition: background 0.15s, border-color 0.15s;
     }
     .place-card:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
+    .place-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .place-card:hover::after { opacity: 1; }
+    .place-card[data-cat="food"]::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .place-card[data-cat="bar"]::after { background: linear-gradient(90deg, var(--purple), transparent); }
+    .place-card[data-cat="shopping"]::after { background: linear-gradient(90deg, var(--green), transparent); }
+    .place-card[data-cat="citypass"]::after { background: linear-gradient(90deg, var(--blue), transparent); }
+    .place-card[data-cat="free"]::after { background: linear-gradient(90deg, var(--green), transparent); }
+    .place-card[data-cat="experience"]::after { background: linear-gradient(90deg, var(--orange), transparent); }
 
     .place-card-img {
       width: 100%;
@@ -563,6 +715,31 @@
       color: var(--gold);
       margin-bottom: 4px;
     }
+
+    .place-name-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 3px;
+    }
+
+    .card-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .card-icon[data-cat="food"] { background: var(--gold-dim); }
+    .card-icon[data-cat="bar"] { background: var(--purple-dim); }
+    .card-icon[data-cat="shopping"] { background: var(--green-dim); }
+    .card-icon[data-cat="citypass"] { background: var(--blue-dim); }
+    .card-icon[data-cat="free"] { background: var(--green-dim); }
+    .card-icon[data-cat="experience"] { background: var(--orange-dim); }
 
     .place-meta {
       display: flex;
@@ -631,162 +808,6 @@
       box-shadow: 0 0 6px rgba(0,197,122,0.3);
     }
 
-    /* ── NEIGHBORHOOD CARDS ───────────────────── */
-    .hood-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 14px;
-      overflow: hidden;
-    }
-
-    .hood-header {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-card-2);
-    }
-
-    .hood-name {
-      font-family: var(--font-condensed);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-1);
-      letter-spacing: 0.04em;
-    }
-
-    .hood-note {
-      font-size: 12px;
-      color: var(--text-3);
-      margin-top: 2px;
-    }
-
-    .shop-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 13px 20px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
-    .shop-item:last-child { border-bottom: none; }
-    .shop-item:hover { background: var(--bg-card-2); }
-
-    .shop-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      flex-shrink: 0;
-      margin-top: 5px;
-    }
-
-    .shop-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-1);
-    }
-
-    .shop-address { font-size: 12px; color: var(--text-3); margin-top: 1px; }
-    .shop-note { font-size: 12px; color: var(--text-2); margin-top: 2px; }
-
-    /* ── ATTRACTION CARDS ─────────────────────── */
-    .attr-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .attr-card:hover { background: var(--bg-card-2); border-color: var(--border-strong); }
-    .attr-card.citypass { border-left: 3px solid var(--blue); }
-    .attr-card.free-item { border-left: 3px solid var(--green); }
-
-    .attr-icon {
-      width: 38px; height: 38px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .attr-card.citypass .attr-icon { background: var(--blue-dim); }
-    .attr-card.free-item .attr-icon { background: var(--green-dim); }
-    .attr-card.activity .attr-icon { background: var(--orange-dim); }
-
-    .attr-info { flex: 1; }
-
-    .attr-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-      margin-bottom: 2px;
-    }
-
-    .attr-address { font-size: 12px; color: var(--text-3); margin-bottom: 7px; }
-    .attr-note { font-size: 13px; color: var(--text-2); line-height: 1.4; }
-
-    /* ── FLIGHTS ──────────────────────────────── */
-    .flight-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .flight-conf {
-      padding: 12px 20px;
-      background: var(--bg-card-2);
-      border-bottom: 1px solid var(--border);
-      font-family: var(--font-condensed);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-3);
-    }
-
-    .flight-conf span {
-      font-weight: 700;
-      color: var(--blue);
-      letter-spacing: 0.1em;
-    }
-
-    .flight-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .flight-row:last-child { border-bottom: none; }
-
-    .flight-dir {
-      font-family: var(--font-condensed);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      min-width: 64px;
-    }
-
-    .flight-route {
-      font-family: var(--font-condensed);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-1);
-      letter-spacing: 0.04em;
-      flex: 1;
-    }
-
-    .flight-details {
-      font-size: 12px;
-      color: var(--text-2);
-      text-align: right;
-      line-height: 1.5;
-    }
 
     /* ── LOGISTICS MODERN ─────────────────────────── */
     .flights-section { position: relative; }
@@ -949,13 +970,6 @@
     .budget-target .budget-val { color: var(--blue); }
 
     /* ── TIPS ─────────────────────────────────── */
-    .tips-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-
     .tip-card {
       background: linear-gradient(135deg, rgba(17,17,24,0.65), rgba(22,22,31,0.6));
       backdrop-filter: blur(12px) saturate(1.3);
@@ -1147,6 +1161,294 @@
       margin: 28px 0;
     }
 
+    /* ── TRANSIT MODE CARDS ───────────────────── */
+    .transit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .transit-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .transit-card-header {
+      padding: 20px 18px 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .transit-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .transit-icon.walk { background: linear-gradient(135deg, var(--green), #00a066); }
+    .transit-icon.ride { background: linear-gradient(135deg, var(--orange), #e55a20); }
+    .transit-icon.fly { background: linear-gradient(135deg, var(--blue), #2d6fc0); }
+    .transit-card-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--text-1);
+      letter-spacing: 0.02em;
+    }
+    .transit-card-subtitle {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .transit-card-body { padding: 0 18px 18px; }
+    .transit-card-text { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .transit-stat {
+      display: inline-block;
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .transit-stat.green { color: var(--green); background: var(--green-dim); }
+    .transit-stat.orange { color: var(--orange); background: var(--orange-dim); }
+    .transit-stat.blue { color: var(--blue); background: var(--blue-dim); }
+
+    /* ── DISTANCE RINGS ──────────────────────── */
+    .transport-hero {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .rings-visual {
+      flex-shrink: 0;
+      width: 220px;
+      height: 220px;
+      position: relative;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px dashed;
+    }
+    .ring-uber { width: 190px; height: 190px; top: 15px; left: 15px; border-color: var(--orange); opacity: 0.25; }
+    .ring-divvy { width: 130px; height: 130px; top: 45px; left: 45px; border-color: var(--green); opacity: 0.35; }
+    .ring-walk { width: 70px; height: 70px; top: 75px; left: 75px; border-color: var(--blue); opacity: 0.5; }
+    .ring-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px; height: 10px;
+      background: var(--text-1);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
+      z-index: 2;
+    }
+    .ring-hotel-label {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, 14px);
+      font-family: var(--font-condensed);
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      z-index: 2;
+    }
+    .ring-label {
+      position: absolute;
+      font-family: var(--font-condensed);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .ring-label.walk-l { bottom: 70px; right: 22px; color: var(--blue); }
+    .ring-label.divvy-l { bottom: 38px; right: 14px; color: var(--green); }
+    .ring-label.uber-l { bottom: 8px; right: 8px; color: var(--orange); }
+    .ring-pin {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      z-index: 3;
+    }
+    .ring-pin::after {
+      content: attr(data-label);
+      position: absolute;
+      font-family: var(--font-condensed);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--text-3);
+      white-space: nowrap;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      letter-spacing: 0.05em;
+    }
+    .rings-summary { flex: 1; }
+    .rings-summary-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .rings-summary-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .rings-summary-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .rings-badge {
+      font-family: var(--font-condensed);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rings-badge.walk { color: var(--blue); background: var(--blue-dim); }
+    .rings-badge.divvy { color: var(--green); background: var(--green-dim); }
+    .rings-badge.uber { color: var(--orange); background: var(--orange-dim); }
+
+    /* ── INSIDER KNOWLEDGE CARDS ─────────────── */
+    .insider-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .insider-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .insider-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .insider-card.cat-food::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .insider-card.cat-bar::after { background: linear-gradient(90deg, var(--purple), transparent); }
+    .insider-card.cat-attraction::after { background: linear-gradient(90deg, var(--blue), transparent); }
+    .insider-badge {
+      font-family: var(--font-condensed);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      padding: 3px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .insider-badge.food { color: var(--gold); background: var(--gold-dim); }
+    .insider-badge.bar { color: var(--purple); background: var(--purple-dim); }
+    .insider-badge.attraction { color: var(--blue); background: var(--blue-dim); }
+    .insider-quote {
+      font-size: 22px;
+      color: var(--text-3);
+      font-family: Georgia, serif;
+      line-height: 0;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .insider-title {
+      font-family: var(--font-condensed);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    .insider-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ── FLIGHT COUNTDOWN ────────────────────── */
+    .flight-countdown-banner {
+      background: linear-gradient(135deg, rgba(17,17,24,0.7), rgba(22,22,31,0.65));
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid rgba(61,142,240,0.15);
+      border-radius: 20px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .flight-countdown-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      border-radius: 0 0 4px 4px;
+    }
+    .fcb-left { display: flex; align-items: center; gap: 14px; }
+    .fcb-plane {
+      font-size: 22px;
+      animation: fcb-float 3s ease-in-out infinite;
+    }
+    @keyframes fcb-float {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-4px) rotate(2deg); }
+    }
+    .fcb-label {
+      font-family: var(--font-condensed);
+      font-size: 15px; font-weight: 700;
+      color: var(--text-1);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .fcb-sublabel {
+      font-family: var(--font-condensed);
+      font-size: 12px; color: var(--text-3);
+    }
+    .fcb-timer { display: flex; gap: 6px; align-items: flex-start; }
+    .fcb-unit { text-align: center; }
+    .fcb-num {
+      font-family: var(--font-display);
+      font-size: 28px; color: var(--blue); line-height: 1;
+      background: var(--blue-dim);
+      padding: 5px 8px; border-radius: 8px; min-width: 42px;
+    }
+    .fcb-unit-label {
+      font-family: var(--font-condensed);
+      font-size: 9px; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3px;
+    }
+    .fcb-sep {
+      font-family: var(--font-display);
+      font-size: 24px; color: var(--text-3); padding-top: 2px;
+    }
+
     /* ── RESPONSIVE ───────────────────────────── */
     @media (max-width: 640px) {
       .hero-content { padding: 0 20px; }
@@ -1158,12 +1460,22 @@
       .tab-btn { padding: 13px 14px; font-size: 13px; }
       .place-grid { grid-template-columns: 1fr; }
       .budget-grid { grid-template-columns: repeat(2, 1fr); }
-      .tips-grid { grid-template-columns: 1fr; }
       .checklist-items { grid-template-columns: 1fr; }
-      .flight-details { display: none; }
       .flights-grid { grid-template-columns: 1fr; }
       .flight-details-grid { grid-template-columns: repeat(2, 1fr); }
       #main-map { height: 500px !important; max-width: 100% !important; }
+      .transit-grid { grid-template-columns: 1fr; }
+      .transport-hero { flex-direction: column; }
+      .rings-visual { width: 180px; height: 180px; }
+      .ring-uber { width: 155px; height: 155px; top: 12px; left: 12px; }
+      .ring-divvy { width: 105px; height: 105px; top: 37px; left: 37px; }
+      .ring-walk { width: 55px; height: 55px; top: 62px; left: 62px; }
+      .insider-grid { grid-template-columns: 1fr; }
+      .flight-countdown-banner { flex-direction: column; gap: 14px; text-align: center; }
+      .fcb-left { justify-content: center; }
+      .fcb-timer { justify-content: center; }
+      .tl-preview-img { height: 80px; }
+      .ring-pin { display: none; }
     }
   </style>
 </head>
@@ -1272,14 +1584,14 @@
             <div class="tl-address">Terminal 4 → Terminal 3</div>
             <div class="tl-note">Arrives 11:37am · 3h 37m · Economy</div>
           </div>
-          <div class="tl-item type-transit">
+          <div class="tl-item type-transit" data-map-pin="hotel">
             <div class="tl-dot"></div>
             <div class="tl-time">~1:00 PM</div>
             <div class="tl-name">Check in — Central Loop Hotel</div>
             <div class="tl-address">111 W Adams St</div>
             <div class="tl-note">Room may not be ready — they can hold bags</div>
           </div>
-          <div class="tl-item type-free">
+          <div class="tl-item type-free" data-map-pin="riverwalk">
             <div class="tl-dot"></div>
             <div class="tl-time">~2:00 PM</div>
             <div class="tl-name">Chicago Riverwalk</div>
@@ -1287,14 +1599,14 @@
             <div class="tl-note">Walk, grab drinks at the water bars</div>
             <div class="tl-badges"><span class="badge b-free">Free</span></div>
           </div>
-          <div class="tl-item type-free">
+          <div class="tl-item type-free" data-map-pin="millennium-park">
             <div class="tl-dot"></div>
             <div class="tl-time">~3:30 PM</div>
             <div class="tl-name">Millennium Park + The Bean</div>
             <div class="tl-address">Michigan Ave & Monroe</div>
             <div class="tl-badges"><span class="badge b-free">Free</span></div>
           </div>
-          <div class="tl-item type-citypass">
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-skydeck","img":"https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Skydeck Chicago","note":"0.4 mi from hotel. Go at golden hour for the best light."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~5:00 PM</div>
             <div class="tl-name">Skydeck Chicago</div>
@@ -1305,7 +1617,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-ginos","img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Gino&#39;s East","note":"Deep dish takes 45 min to cook. Order early and settle in."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~7:30 PM</div>
             <div class="tl-name">Gino's East — Deep Dish</div>
@@ -1313,7 +1625,7 @@
             <div class="tl-note">$$  ·  45 min cook time — order early</div>
             <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
           </div>
-          <div class="tl-item type-bar">
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-london-house","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"London House Rooftop","note":"Upscale rooftop bar near hotel. $15-18 cocktails."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~9:30 PM</div>
             <div class="tl-name">London House Rooftop</div>
@@ -1340,7 +1652,7 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-citypass">
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-art-institute","img":"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Art Institute of Chicago","note":"Plan 2-3 hrs. 10 min walk from hotel."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~9:00 AM</div>
             <div class="tl-name">Art Institute of Chicago</div>
@@ -1351,7 +1663,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-wildberry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Wildberry Pancakes &amp; Cafe","note":"Near hotel. Expect a wait on weekends."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~12:00 PM</div>
             <div class="tl-name">Wildberry Pancakes &amp; Cafe</div>
@@ -1365,7 +1677,7 @@
             <div class="tl-name">Uber to Wicker Park</div>
             <div class="tl-note">~$15</div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-layers","img":"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Layers Chicago","note":"Vintage streetwear. Opens 12pm."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~2:00 PM</div>
             <div class="tl-name">Layers Chicago</div>
@@ -1373,7 +1685,7 @@
             <div class="tl-note">Vintage streetwear · Opens 12pm</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-round-two","img":"https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Round Two","note":"Vintage/hypebeast. 2 floors. Opens 12pm."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~2:30 PM</div>
             <div class="tl-name">Round Two</div>
@@ -1381,7 +1693,7 @@
             <div class="tl-note">Vintage/hypebeast · 2 floors · Opens 12pm</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-supreme","img":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.3","name":"Supreme Chicago","note":"Opens 11am. Same block as other Wicker Park shops."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~3:00 PM</div>
             <div class="tl-name">Supreme Chicago</div>
@@ -1389,7 +1701,7 @@
             <div class="tl-note">Opens 11am</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-boneyard","img":"https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Boneyard","note":"Sneakers + streetwear."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~3:45 PM</div>
             <div class="tl-name">Boneyard</div>
@@ -1417,7 +1729,7 @@
             <div class="tl-name">Uber to Bucktown</div>
             <div class="tl-note">~30 min · $35–45</div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-deliz","img":"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Deliz Italian Steakhouse","note":"$$$ Italian steakhouse. Reserve ahead."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~7:15 PM</div>
             <div class="tl-name">Deliz Italian Steakhouse</div>
@@ -1447,7 +1759,7 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-citypass">
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-shedd","img":"https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Shedd Aquarium","note":"Book time slot in CityPASS app. Plan 2-3 hrs."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~9:00 AM</div>
             <div class="tl-name">Shedd Aquarium</div>
@@ -1488,7 +1800,7 @@
             <div class="tl-name">Uber to Lincoln Park / Old Town</div>
             <div class="tl-note">~$12</div>
           </div>
-          <div class="tl-item type-free">
+          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-lincoln-park-zoo","img":"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Lincoln Park Zoo","note":"Free admission. Confirm May hours."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~5:30 PM</div>
             <div class="tl-name">Lincoln Park Zoo</div>
@@ -1496,7 +1808,7 @@
             <div class="tl-note">Free · Confirm May hours</div>
             <div class="tl-badges"><span class="badge b-free">FREE</span></div>
           </div>
-          <div class="tl-item type-bar">
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-utopian","img":"https://images.unsplash.com/photo-1763380631462-12a2f528ff25?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Utopian Tailgate","note":"Rooftop + games. Drinks only. Wed-Sun."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~7:00 PM</div>
             <div class="tl-name">Utopian Tailgate</div>
@@ -1531,7 +1843,7 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-citypass">
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-arch-tour","img":"https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Architecture River Tour","note":"75 min cruise. Book ahead in CityPASS app."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~9:30 AM</div>
             <div class="tl-name">Architecture River Tour</div>
@@ -1543,7 +1855,7 @@
               <span class="badge b-reserve">📅 Book Ahead</span>
             </div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-garretts","img":"https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Garrett&#39;s Popcorn","note":"Get the Garrett Mix. On the Mag Mile."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~11:30 AM</div>
             <div class="tl-name">Garrett's Popcorn</div>
@@ -1558,7 +1870,7 @@
             <div class="tl-address">Mag Mile boutiques · Oak Street · River North</div>
             <div class="tl-badges"><span class="badge b-activity">Browse</span></div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-kith","img":"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Kith Chicago","note":"Get the Kith Treats milkshake upstairs."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~1:30 PM</div>
             <div class="tl-name">Kith Chicago</div>
@@ -1566,7 +1878,7 @@
             <div class="tl-note">Get the Kith Treats milkshake upstairs</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping">
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-bape","img":"https://images.unsplash.com/photo-1538329972958-465d6d2144ed?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Bape Chicago","note":"Same block as Kith on Oak Street."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~2:00 PM</div>
             <div class="tl-name">Bape Chicago</div>
@@ -1595,7 +1907,7 @@
             <div class="tl-time">~5:00 PM</div>
             <div class="tl-name">Hotel — Rest &amp; Get Ready</div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-tao","img":"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Tao Chicago","note":"$$$ Pan-Asian. Reserve ahead."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~7:30 PM</div>
             <div class="tl-name">Tao Chicago</div>
@@ -1606,7 +1918,7 @@
               <span class="badge b-reserve">📅 Reserve Ahead</span>
             </div>
           </div>
-          <div class="tl-item type-bar">
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-federales-bar","img":"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Federales / Recess / Punch Bowl","note":"High energy Friday night — all within blocks in Fulton Market."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~10:00 PM</div>
             <div class="tl-name">Federales / Recess / Punch Bowl Social</div>
@@ -1633,7 +1945,7 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-food">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-batter-berries","img":"https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Batter &amp; Berries","note":"BYOB. Get there early — expect a wait on weekends."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~9:00 AM</div>
             <div class="tl-name">Batter &amp; Berries</div>
@@ -1647,7 +1959,7 @@
             <div class="tl-name">Check Out</div>
             <div class="tl-note">Confirm checkout time with hotel</div>
           </div>
-          <div class="tl-item type-free">
+          <div class="tl-item type-free" data-map-pin="riverwalk">
             <div class="tl-dot"></div>
             <div class="tl-time">~11:30 AM</div>
             <div class="tl-name">Last Riverwalk Walk</div>
@@ -1697,11 +2009,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Brunch</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="food" id="card-wildberry">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&h=160&q=70" alt="Wildberry Pancakes">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Wildberry Pancakes &amp; Cafe</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Wildberry Pancakes &amp; Cafe</div>
+            </div>
             <div class="place-address">130 E Randolph St</div>
             <div class="place-meta">
               <span class="place-price">$$</span>
@@ -1715,11 +2030,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food" id="card-batter-berries">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=400&h=160&q=70" alt="Batter & Berries">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.8</div>
-            <div class="place-name">Batter &amp; Berries</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Batter &amp; Berries</div>
+            </div>
             <div class="place-address">2748 N Lincoln Ave</div>
             <div class="place-meta">
               <span class="place-price">$$</span>
@@ -1733,11 +2051,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&h=160&q=70" alt="Parlay River North">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.2</div>
-            <div class="place-name">Parlay River North</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Parlay River North</div>
+            </div>
             <div class="place-address">112 W Hubbard St</div>
             <div class="place-meta">
               <span class="place-price">$$</span>
@@ -1756,11 +2077,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Quick Eats &amp; Snacks</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="food" id="card-garretts">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=400&h=160&q=70" alt="Garrett's Popcorn">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Garrett's Popcorn</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Garrett's Popcorn</div>
+            </div>
             <div class="place-address">625 N Michigan Ave</div>
             <div class="place-meta"><span class="place-price">$</span></div>
             <div class="place-note">Get the Garrett Mix. On Day 4 itinerary.</div>
@@ -1770,11 +2094,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&h=160&q=70" alt="Devil Dawgs">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.2</div>
-            <div class="place-name">Devil Dawgs</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Devil Dawgs</div>
+            </div>
             <div class="place-address">767 S State St</div>
             <div class="place-meta"><span class="place-price">$</span></div>
             <div class="place-note">Classic Chicago dog. Near hotel. On Day 5 itinerary.</div>
@@ -1783,11 +2110,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1745118845351-7033b364d196?auto=format&fit=crop&w=400&h=160&q=70" alt="Weiners Circle">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.1</div>
-            <div class="place-name">Weiners Circle</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Weiners Circle</div>
+            </div>
             <div class="place-address">2622 N Clark St</div>
             <div class="place-meta">
               <span class="place-price">$</span>
@@ -1799,11 +2129,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&h=160&q=70" alt="Harold's Chicken">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
-            <div class="place-name">Harold's Chicken</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Harold's Chicken</div>
+            </div>
             <div class="place-address">612 S Wabash Ave</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
             <div class="place-note">Chicago fried chicken legend. On Day 3 itinerary.</div>
@@ -1818,11 +2151,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Dinner — Casual</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="food" id="card-ginos">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&h=160&q=70" alt="Gino's East">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
-            <div class="place-name">Gino's East</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Gino's East</div>
+            </div>
             <div class="place-address">162 E Superior St</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
             <div class="place-note">Deep dish pizza. 45 min cook time — order early. On Day 1 itinerary.</div>
@@ -1832,11 +2168,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&h=160&q=70" alt="Federales">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Federales</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Federales</div>
+            </div>
             <div class="place-address">180 N Morgan St</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
             <div class="place-note">Tacos + tequila + DJ. Fulton Market. Also great as a bar on Day 4 night.</div>
@@ -1846,11 +2185,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=400&h=160&q=70" alt="Green Street Smoked Meats">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Green Street Smoked Meats</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Green Street Smoked Meats</div>
+            </div>
             <div class="place-address">112 N Green St</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
             <div class="place-note">BBQ. Same area as Federales.</div>
@@ -1860,11 +2202,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="food" id="card-little-bad-wolf">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&h=160&q=70" alt="Little Bad Wolf">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.6</div>
-            <div class="place-name">Little Bad Wolf</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Little Bad Wolf</div>
+            </div>
             <div class="place-address">1541 W Bryn Mawr Ave</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
             <div class="place-note">Best burger in Chicago. No reservations — can have a wait.</div>
@@ -1879,11 +2224,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--red)"></span>Dinner — Nice Nights Out</div>
       <div class="place-grid">
-        <div class="place-card" style="border-left: 3px solid var(--red);">
+        <div class="place-card" data-cat="food" id="card-tao">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&h=160&q=70" alt="Tao Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Tao Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Tao Chicago</div>
+            </div>
             <div class="place-address">632 N Dearborn St</div>
             <div class="place-meta">
               <span class="place-price">$$$</span>
@@ -1896,11 +2244,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--red);">
+        <div class="place-card" data-cat="food" id="card-deliz">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=400&h=160&q=70" alt="Deliz Italian Steakhouse">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.6</div>
-            <div class="place-name">Deliz Italian Steakhouse</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Deliz Italian Steakhouse</div>
+            </div>
             <div class="place-address">1840 W North Ave</div>
             <div class="place-meta">
               <span class="place-price">$$$</span>
@@ -1919,11 +2270,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--purple)"></span>Bars &amp; Nightlife</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="bar" id="card-london-house">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=400&h=160&q=70" alt="London House Rooftop">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.6</div>
-            <div class="place-name">London House Rooftop</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="bar">🍸</span>
+              <div class="place-name">London House Rooftop</div>
+            </div>
             <div class="place-address">85 E Wacker Dr</div>
             <div class="place-meta"><span class="badge b-bar">Rooftop</span></div>
             <div class="place-note">Upscale rooftop. Near hotel. $15–18/drink. Day 1 night.</div>
@@ -1933,11 +2287,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="bar" id="card-utopian">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1763380631462-12a2f528ff25?auto=format&fit=crop&w=400&h=160&q=70" alt="Utopian Tailgate">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
-            <div class="place-name">Utopian Tailgate</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="bar">🍸</span>
+              <div class="place-name">Utopian Tailgate</div>
+            </div>
             <div class="place-address">1608 N Wells St</div>
             <div class="place-meta"><span class="place-hours">Wed–Sun</span></div>
             <div class="place-note">Rooftop + games. Drinks only — food reviews are mixed. Day 3 night.</div>
@@ -1947,11 +2304,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="bar" id="card-federales-bar">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&h=160&q=70" alt="Federales">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Federales</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="bar">🍸</span>
+              <div class="place-name">Federales</div>
+            </div>
             <div class="place-address">180 N Morgan St · Fulton Market</div>
             <div class="place-meta"><span class="badge b-bar">High Energy</span></div>
             <div class="place-note">DJ. Tacos. Great for Friday night. Day 4 option.</div>
@@ -1961,11 +2321,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="bar" id="card-recess">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&h=160&q=70" alt="Recess">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.3</div>
-            <div class="place-name">Recess</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="bar">🍸</span>
+              <div class="place-name">Recess</div>
+            </div>
             <div class="place-address">838 W Kinzie St · Fulton Market</div>
             <div class="place-meta"><span class="badge b-bar">Outdoor</span></div>
             <div class="place-note">Outdoor bar + games + DJ. Day 4 option.</div>
@@ -1974,11 +2337,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="bar" id="card-punch-bowl">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=400&h=160&q=70" alt="Punch Bowl Social">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.3</div>
-            <div class="place-name">Punch Bowl Social</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="bar">🍸</span>
+              <div class="place-name">Punch Bowl Social</div>
+            </div>
             <div class="place-address">310 N Green St · Fulton Market</div>
             <div class="place-meta"><span class="badge b-activity">Bowling</span></div>
             <div class="place-note">Bowling + arcade + bar. Day 4 option.</div>
@@ -2004,11 +2370,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Wicker Park — All within ~2 blocks · Day 2 · ~$15 Uber</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-layers">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&h=160&q=70" alt="Layers Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.7</div>
-            <div class="place-name">Layers Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Layers Chicago</div>
+            </div>
             <div class="place-address">1437 N Milwaukee Ave</div>
             <div class="place-note">Vintage streetwear · Opens 12pm</div>
             <div class="place-links">
@@ -2016,11 +2385,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-round-two">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=400&h=160&q=70" alt="Round Two">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.7</div>
-            <div class="place-name">Round Two</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Round Two</div>
+            </div>
             <div class="place-address">1501 N Milwaukee Ave</div>
             <div class="place-note">Vintage / hypebeast · 2 floors · Opens 12pm</div>
             <div class="place-links">
@@ -2029,11 +2401,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-supreme">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=160&q=70" alt="Supreme Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.3</div>
-            <div class="place-name">Supreme Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Supreme Chicago</div>
+            </div>
             <div class="place-address">1438 N Milwaukee Ave</div>
             <div class="place-note">Opens 11am</div>
             <div class="place-links">
@@ -2042,11 +2417,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-boneyard">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?auto=format&fit=crop&w=400&h=160&q=70" alt="Boneyard">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name">Boneyard</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Boneyard</div>
+            </div>
             <div class="place-address">1102 N Ashland Ave</div>
             <div class="place-note">Sneakers + streetwear</div>
             <div class="place-links">
@@ -2060,11 +2438,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>Oak Street / Gold Coast — Kith + Bape on same block · Day 4</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-kith">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&h=160&q=70" alt="Kith Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.6</div>
-            <div class="place-name">Kith Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Kith Chicago</div>
+            </div>
             <div class="place-address">54 E Walton St</div>
             <div class="place-note">Get the Kith Treats milkshake upstairs</div>
             <div class="place-links">
@@ -2073,11 +2454,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping" id="card-bape">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1538329972958-465d6d2144ed?auto=format&fit=crop&w=400&h=160&q=70" alt="Bape Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
-            <div class="place-name">Bape Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Bape Chicago</div>
+            </div>
             <div class="place-address">113 E Oak St</div>
             <div class="place-note">Same block as Kith</div>
             <div class="place-links">
@@ -2086,10 +2470,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=400&h=160&q=70" alt="Oak Street Designer Row">
           <div class="place-card-body">
-            <div class="place-name">Oak Street Designer Row</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Oak Street Designer Row</div>
+            </div>
             <div class="place-address">E Oak St</div>
             <div class="place-note">Hermès, Gucci, and more · Browse only or treat yourself</div>
             <div class="place-links">
@@ -2103,10 +2490,13 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Downtown / Mag Mile — State Street + Michigan Ave · Easy from hotel</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=400&h=160&q=70" alt="State Street / Block 37">
           <div class="place-card-body">
-            <div class="place-name">State Street / Block 37</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">State Street / Block 37</div>
+            </div>
             <div class="place-address">108 N State St</div>
             <div class="place-note">General shopping · Big Starbucks</div>
             <div class="place-links">
@@ -2114,10 +2504,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="shopping">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&h=160&q=70" alt="Mag Mile Boutiques">
           <div class="place-card-body">
-            <div class="place-name">Mag Mile Boutiques</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="shopping">🛍️</span>
+              <div class="place-name">Mag Mile Boutiques</div>
+            </div>
             <div class="place-address">N Michigan Ave</div>
             <div class="place-note">Watch + jewelry browsing · Day 4</div>
             <div class="place-links">
@@ -2141,11 +2534,14 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>CityPASS — $142/person · $426 total · 5 attractions</div>
       <div class="place-grid">
-        <div class="place-card" style="border-left: 3px solid var(--blue);">
+        <div class="place-card" data-cat="citypass" id="card-shedd">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=400&h=160&q=70" alt="Shedd Aquarium">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.6</div>
-            <div class="place-name">Shedd Aquarium</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Shedd Aquarium</div>
+            </div>
             <div class="place-address">1200 S DuSable Lake Shore Dr · Opens 9am</div>
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Must Do</span>
@@ -2158,11 +2554,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--blue);">
+        <div class="place-card" data-cat="citypass" id="card-skydeck">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=400&h=160&q=70" alt="Skydeck Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.8</div>
-            <div class="place-name">Skydeck Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Skydeck Chicago</div>
+            </div>
             <div class="place-address">233 S Wacker Dr · 103rd floor · Opens 9am</div>
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Must Do</span>
@@ -2174,11 +2573,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--blue);">
+        <div class="place-card" data-cat="citypass" id="card-arch-tour">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=400&h=160&q=70" alt="Architecture River Tour">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.8</div>
-            <div class="place-name">Architecture River Tour</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Architecture River Tour</div>
+            </div>
             <div class="place-address">Departs Navy Pier or 401 N Michigan Ave · 75 min cruise</div>
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Must Do</span>
@@ -2191,11 +2593,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--blue);">
+        <div class="place-card" data-cat="citypass" id="card-art-institute">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=400&h=160&q=70" alt="Art Institute of Chicago">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.8</div>
-            <div class="place-name">Art Institute of Chicago</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Art Institute of Chicago</div>
+            </div>
             <div class="place-address">111 S Michigan Ave · Opens 10am</div>
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Planned</span>
@@ -2207,11 +2612,14 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--blue);">
+        <div class="place-card" data-cat="citypass">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=400&h=160&q=70" alt="Griffin Museum">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.7</div>
-            <div class="place-name">Griffin Museum of Science &amp; Industry</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Griffin Museum of Science &amp; Industry</div>
+            </div>
             <div class="place-address">5700 S Lake Shore Dr, Hyde Park · Opens 9am</div>
             <div class="place-meta">
               <span class="badge b-optional">Optional</span>
@@ -2229,10 +2637,13 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Free / Low Cost</div>
       <div class="place-grid">
-        <div class="place-card" style="border-left: 3px solid var(--green);">
+        <div class="place-card" data-cat="free">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&h=160&q=70" alt="Millennium Park">
           <div class="place-card-body">
-            <div class="place-name">Millennium Park + The Bean</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="free">🌿</span>
+              <div class="place-name">Millennium Park + The Bean</div>
+            </div>
             <div class="place-address">Michigan Ave &amp; Monroe</div>
             <div class="place-meta"><span class="badge b-free">Free</span></div>
             <div class="place-note">10 min walk from hotel. Easy Day 1 stop.</div>
@@ -2242,10 +2653,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--green);">
+        <div class="place-card" data-cat="free">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1555658636-6e4a36218be7?auto=format&fit=crop&w=400&h=160&q=70" alt="Chicago Riverwalk">
           <div class="place-card-body">
-            <div class="place-name">Chicago Riverwalk</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="free">🌿</span>
+              <div class="place-name">Chicago Riverwalk</div>
+            </div>
             <div class="place-address">Along Wacker Dr</div>
             <div class="place-meta"><span class="badge b-free">Free</span></div>
             <div class="place-note">Bars and cafes along the water. Start and end of trip highlight.</div>
@@ -2254,10 +2668,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--green);">
+        <div class="place-card" data-cat="free" id="card-lincoln-park-zoo">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400&h=160&q=70" alt="Lincoln Park Zoo">
           <div class="place-card-body">
-            <div class="place-name">Lincoln Park Zoo</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="free">🌿</span>
+              <div class="place-name">Lincoln Park Zoo</div>
+            </div>
             <div class="place-address">2001 N Clark St · Opens 10am</div>
             <div class="place-meta"><span class="badge b-free">FREE</span></div>
             <div class="place-note">Confirm May hours. On Day 3 itinerary after Lakefront ride.</div>
@@ -2267,10 +2684,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card" style="border-left: 3px solid var(--green);">
+        <div class="place-card" data-cat="free">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&h=160&q=70" alt="Lakefront Trail">
           <div class="place-card-body">
-            <div class="place-name">Lakefront Trail — Divvy Bikes</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="free">🌿</span>
+              <div class="place-name">Lakefront Trail — Divvy Bikes</div>
+            </div>
             <div class="place-address">Along Lake Michigan</div>
             <div class="place-meta"><span class="badge b-activity">Activity</span></div>
             <div class="place-note">$3.30/30 min or $15 day pass. Ride north from Museum Campus toward Navy Pier on Day 3.</div>
@@ -2285,10 +2705,13 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Experiences</div>
       <div class="place-grid">
-        <div class="place-card">
+        <div class="place-card" data-cat="experience">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=400&h=160&q=70" alt="Topgolf Schaumburg">
           <div class="place-card-body">
-            <div class="place-name">Topgolf Schaumburg</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="experience">⚡</span>
+              <div class="place-name">Topgolf Schaumburg</div>
+            </div>
             <div class="place-address">2050 Progress Pkwy, Schaumburg · ~30 min from downtown</div>
             <div class="place-note">~$30–50/hr per bay. Group activity on Day 2 before dinner. Plan ~2 hrs + travel.</div>
             <div class="place-links">
@@ -2297,10 +2720,13 @@
             </div>
           </div>
         </div>
-        <div class="place-card">
+        <div class="place-card" data-cat="experience">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=400&h=160&q=70" alt="Navy Pier">
           <div class="place-card-body">
-            <div class="place-name">Navy Pier</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="experience">⚡</span>
+              <div class="place-name">Navy Pier</div>
+            </div>
             <div class="place-address">600 E Grand Ave</div>
             <div class="place-note">Free to walk around. Ferris Wheel ~$20 if interested. Day 3 afternoon after Lakefront Trail.</div>
             <div class="place-links">
@@ -2356,6 +2782,25 @@
 
     <!-- Flights -->
     <div class="flights-section">
+      <!-- Countdown -->
+      <div class="flight-countdown-banner">
+        <div class="fcb-left">
+          <div class="fcb-plane">✈️</div>
+          <div>
+            <div class="fcb-label">Departing in</div>
+            <div class="fcb-sublabel">Phoenix → Chicago · May 12</div>
+          </div>
+        </div>
+        <div class="fcb-timer">
+          <div class="fcb-unit"><div class="fcb-num" id="cd-days">--</div><div class="fcb-unit-label">Days</div></div>
+          <div class="fcb-sep">:</div>
+          <div class="fcb-unit"><div class="fcb-num" id="cd-hrs">--</div><div class="fcb-unit-label">Hours</div></div>
+          <div class="fcb-sep">:</div>
+          <div class="fcb-unit"><div class="fcb-num" id="cd-min">--</div><div class="fcb-unit-label">Min</div></div>
+          <div class="fcb-sep">:</div>
+          <div class="fcb-unit"><div class="fcb-num" id="cd-sec">--</div><div class="fcb-unit-label">Sec</div></div>
+        </div>
+      </div>
       <div class="flights-grid">
         <div class="flight-segment">
           <div class="flight-segment-dir">Outbound · Mon May 12</div>
@@ -2436,18 +2881,74 @@
       <div class="section-hd-eyebrow">Transportation</div>
       <div class="section-hd-title">Getting Around</div>
     </div>
-    <div class="tips-grid">
-      <div class="tip-card" style="border-left: 3px solid var(--orange);">
-        <div class="tip-title">Walk + Divvy</div>
-        <div class="tip-text">Most Loop/downtown stuff is walkable from Central Loop Hotel. Divvy bikes are great for the Lakefront Trail. $3.30/30 min or $15 day pass.</div>
+
+    <div class="transport-hero">
+      <div class="rings-visual">
+        <div class="ring ring-uber"></div>
+        <div class="ring ring-divvy"></div>
+        <div class="ring ring-walk"></div>
+        <div class="ring-center"></div>
+        <div class="ring-hotel-label">Hotel</div>
+        <div class="ring-label walk-l">Walk</div>
+        <div class="ring-label divvy-l">Divvy</div>
+        <div class="ring-label uber-l">Uber</div>
+        <div class="ring-pin" style="background:var(--blue);top:85px;left:145px;" data-label="Mag Mile"></div>
+        <div class="ring-pin" style="background:var(--blue);top:120px;left:142px;" data-label="M. Park"></div>
+        <div class="ring-pin" style="background:var(--green);top:62px;left:50px;" data-label="Lakefront"></div>
+        <div class="ring-pin" style="background:var(--orange);top:30px;left:80px;" data-label="Wicker Pk"></div>
+        <div class="ring-pin" style="background:var(--orange);top:42px;left:140px;" data-label="Lincoln Pk"></div>
+        <div class="ring-pin" style="background:var(--orange);top:185px;left:120px;" data-label="Hyde Park"></div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--orange);">
-        <div class="tip-title">Uber</div>
-        <div class="tip-text">Use Uber for anything north (Wicker Park, Lincoln Park) or south (Hyde Park/Griffin). Avoid CTA per local recommendation given hotel location.</div>
+      <div class="rings-summary">
+        <div class="rings-summary-title">Your Hotel Is the Hub</div>
+        <div class="rings-summary-text">Central Loop Hotel sits in the middle of everything. Most top spots are walkable, the lakefront is a quick Divvy ride, and Uber covers the neighborhoods. No CTA needed.</div>
+        <div class="rings-summary-badges">
+          <div class="rings-badge walk">🚶 Walk — Downtown</div>
+          <div class="rings-badge divvy">🚲 Divvy — Lakefront</div>
+          <div class="rings-badge uber">🚗 Uber — Neighborhoods</div>
+        </div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--orange);">
-        <div class="tip-title">Airport</div>
-        <div class="tip-text">O'Hare ↔ Downtown: budget 45–60 min and $35–55 each way. Leave for the airport by 4pm on Day 5.</div>
+    </div>
+
+    <div class="transit-grid">
+      <div class="transit-card">
+        <div class="transit-card-header">
+          <div class="transit-icon walk">🚶</div>
+          <div>
+            <div class="transit-card-title">Walk + Divvy</div>
+            <div class="transit-card-subtitle">Downtown &amp; Lakefront</div>
+          </div>
+        </div>
+        <div class="transit-card-body">
+          <div class="transit-card-text">Most Loop/downtown stuff is walkable from Central Loop Hotel. Divvy bikes are great for the Lakefront Trail.</div>
+          <div class="transit-stat green">$3.30/30 min · $15 day pass</div>
+        </div>
+      </div>
+      <div class="transit-card">
+        <div class="transit-card-header">
+          <div class="transit-icon ride">🚗</div>
+          <div>
+            <div class="transit-card-title">Uber</div>
+            <div class="transit-card-subtitle">Neighborhoods &amp; Beyond</div>
+          </div>
+        </div>
+        <div class="transit-card-body">
+          <div class="transit-card-text">Use Uber for anything north (Wicker Park, Lincoln Park) or south (Hyde Park/Griffin). Avoid CTA per local recommendation.</div>
+          <div class="transit-stat orange">~$15–25 per ride</div>
+        </div>
+      </div>
+      <div class="transit-card">
+        <div class="transit-card-header">
+          <div class="transit-icon fly">✈️</div>
+          <div>
+            <div class="transit-card-title">Airport</div>
+            <div class="transit-card-subtitle">O'Hare ↔ Downtown</div>
+          </div>
+        </div>
+        <div class="transit-card-body">
+          <div class="transit-card-text">Budget 45–60 min and $35–55 each way. Leave for the airport by 4pm on Day 5.</div>
+          <div class="transit-stat blue">$35–55 each way</div>
+        </div>
       </div>
     </div>
 
@@ -2456,34 +2957,48 @@
       <div class="section-hd-eyebrow">Good to Know</div>
       <div class="section-hd-title">Tips</div>
     </div>
-    <div class="tips-grid">
-      <div class="tip-card" style="border-left: 3px solid var(--gold);">
-        <div class="tip-title">Gino's East</div>
-        <div class="tip-text">Deep dish takes 45 min to cook. Order early and settle in.</div>
+    <div class="insider-grid">
+      <div class="insider-card cat-food">
+        <div class="insider-badge food">Local Tip</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Gino's East</div>
+        <div class="insider-text">Deep dish takes 45 min to cook. Order early and settle in.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--gold);">
-        <div class="tip-title">Wildberry + Batter &amp; Berries</div>
-        <div class="tip-text">Expect a wait on weekends. Go early or plan for it.</div>
+      <div class="insider-card cat-food">
+        <div class="insider-badge food">Local Tip</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Wildberry + Batter &amp; Berries</div>
+        <div class="insider-text">Expect a wait on weekends. Go early or plan for it.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--purple);">
-        <div class="tip-title">Utopian Tailgate</div>
-        <div class="tip-text">Drinks only — food reviews are mixed. Don't count on eating here.</div>
+      <div class="insider-card cat-bar">
+        <div class="insider-badge bar">Bar Intel</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Utopian Tailgate</div>
+        <div class="insider-text">Drinks only — food reviews are mixed. Don't count on eating here.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--gold);">
-        <div class="tip-title">Weiners Circle</div>
-        <div class="tip-text">Staff banter is famously part of the experience. Late night only. Open until 2–4am.</div>
+      <div class="insider-card cat-food">
+        <div class="insider-badge food">Local Tip</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Weiners Circle</div>
+        <div class="insider-text">Staff banter is famously part of the experience. Late night only. Open until 2–4am.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--gold);">
-        <div class="tip-title">Little Bad Wolf</div>
-        <div class="tip-text">No reservations — can have a wait. Best burger in Chicago according to locals.</div>
+      <div class="insider-card cat-food">
+        <div class="insider-badge food">Local Tip</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Little Bad Wolf</div>
+        <div class="insider-text">No reservations — can have a wait. Best burger in Chicago according to locals.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--gold);">
-        <div class="tip-title">Parlay River North</div>
-        <div class="tip-text">Best on Sat/Sun for the DJ brunch experience.</div>
+      <div class="insider-card cat-food">
+        <div class="insider-badge food">Local Tip</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Parlay River North</div>
+        <div class="insider-text">Best on Sat/Sun for the DJ brunch experience.</div>
       </div>
-      <div class="tip-card" style="border-left: 3px solid var(--blue);">
-        <div class="tip-title">Shedd 4D Experience</div>
-        <div class="tip-text">Was closed for renovation through ~May 8. Confirm it's back before the trip.</div>
+      <div class="insider-card cat-attraction">
+        <div class="insider-badge attraction">Heads Up</div>
+        <span class="insider-quote">&ldquo;</span>
+        <div class="insider-title">Shedd 4D Experience</div>
+        <div class="insider-text">Was closed for renovation through ~May 8. Confirm it's back before the trip.</div>
       </div>
     </div>
 
@@ -2563,7 +3078,7 @@
     section.classList.remove('logistics-animate');
     void section.offsetWidth;
     section.classList.add('logistics-animate');
-    const items = section.querySelectorAll('.hotel-alert, .flight-segment, .flight-detail-card, .flight-map-wrapper, .budget-item, .tip-card, .section-hd');
+    const items = section.querySelectorAll('.hotel-alert, .flight-segment, .flight-detail-card, .flight-map-wrapper, .budget-item, .transit-card, .insider-card, .transport-hero, .section-hd');
     items.forEach((el, i) => {
       el.style.animationDelay = (i * 0.06) + 's';
     });
@@ -2630,6 +3145,7 @@
   let mainMap = null;
   const HOTEL = [41.8795, -87.6281];
   const MAPS_BASE = 'https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=';
+  var mapMarkers = {};
 
   function makePopup(name, addr, rating, website, mapsDest, imgUrl) {
     var popupImg = imgUrl ? imgUrl.replace(/w=\d+&h=\d+/, 'w=400&h=200') : '';
@@ -2660,6 +3176,12 @@
 
   function addPin(map, lat, lng, color, name, addr, rating, website, mapsDest, imgUrl) {
     L.marker([lat, lng], { icon: makePinIcon(color, imgUrl) })
+      .addTo(map)
+      .bindPopup(makePopup(name, addr, rating, website, mapsDest || name + ' Chicago', imgUrl));
+  }
+
+  function addPinWithRef(map, lat, lng, color, name, addr, rating, website, mapsDest, imgUrl) {
+    return L.marker([lat, lng], { icon: makePinIcon(color, imgUrl) })
       .addTo(map)
       .bindPopup(makePopup(name, addr, rating, website, mapsDest || name + ' Chicago', imgUrl));
   }
@@ -2698,7 +3220,7 @@
     satelliteTiles.addTo(mainMap);
 
     // Hotel
-    L.marker(HOTEL, { icon: makePinIcon('#E8402A', null) })
+    mapMarkers['hotel'] = L.marker(HOTEL, { icon: makePinIcon('#E8402A', null) })
       .addTo(mainMap)
       .bindPopup('<div style="font-family:Outfit,sans-serif;"><strong>Central Loop Hotel</strong><br>111 W Adams St<br>Home base!</div>')
       .bindTooltip('Hotel', { permanent: true, direction: 'top', className: 'hotel-label' });
@@ -2742,11 +3264,151 @@
     addPin(mainMap, 41.8897, -87.6240, '#3D8EF0', 'Architecture River Tour', 'Departs Navy Pier or 401 N Michigan Ave', '4.8', 'https://www.shorechicago.com', 'Shoreline Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
     addPin(mainMap, 41.8796, -87.6237, '#3D8EF0', 'Art Institute of Chicago', '111 S Michigan Ave', '4.8', 'https://www.artic.edu', 'Art Institute of Chicago', U+'1580060839134-75a5edca2e99'+S);
     addPin(mainMap, 41.7906, -87.5831, '#3D8EF0', 'Griffin Museum', '5700 S Lake Shore Dr', '4.7', 'https://www.msichicago.org', 'Museum of Science and Industry Chicago', U+'1569587112025-0d460e81a126'+S);
-    addPin(mainMap, 41.8827, -87.6233, '#3D8EF0', 'Millennium Park + The Bean', 'Michigan Ave & Monroe', null, 'https://www.millenniumpark.org', 'Millennium Park Chicago', U+'1504674900247-0877df9cc836'+S);
+    mapMarkers['millennium-park'] = addPinWithRef(mainMap, 41.8827, -87.6233, '#3D8EF0', 'Millennium Park + The Bean', 'Michigan Ave & Monroe', null, 'https://www.millenniumpark.org', 'Millennium Park Chicago', U+'1504674900247-0877df9cc836'+S);
+    mapMarkers['riverwalk'] = addPinWithRef(mainMap, 41.8876, -87.6270, '#3D8EF0', 'Chicago Riverwalk', 'Along Wacker Dr', null, null, 'Chicago Riverwalk', U+'1555658636-6e4a36218be7'+S);
     addPin(mainMap, 41.9211, -87.6340, '#3D8EF0', 'Lincoln Park Zoo', '2001 N Clark St', null, 'https://www.lpzoo.org', 'Lincoln Park Zoo Chicago', U+'1546182990-dffeafbe841d'+S);
     addPin(mainMap, 41.8917, -87.6086, '#3D8EF0', 'Navy Pier', '600 E Grand Ave', null, 'https://www.navypier.com', 'Navy Pier Chicago', U+'1570168007204-dfb528c6958f'+S);
     addPin(mainMap, 42.0638, -88.0512, '#3D8EF0', 'Topgolf Schaumburg', '2050 Progress Pkwy, Schaumburg', null, 'https://www.topgolf.com/us/schaumburg', 'Topgolf Schaumburg 2050 Progress Pkwy', U+'1535131749006-b7f58c99034b'+S);
   }
+
+  // Flight countdown timer
+  const DEPARTURE = new Date('2026-05-12T06:00:00-07:00');
+  function updateCountdown() {
+    const diff = Math.max(0, DEPARTURE - new Date());
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-hrs').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-min').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-sec').textContent = String(s).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Itinerary scroll: progressive reveal + spotlight
+  function initItineraryScroll() {
+    const items = document.querySelectorAll('.tl-item');
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('tl-visible');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    items.forEach(item => observer.observe(item));
+
+    setTimeout(() => {
+      items.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          item.classList.add('tl-visible');
+        }
+      });
+    }, 100);
+
+    // Mouse glow follows cursor across all timelines
+    document.querySelectorAll('.timeline').forEach(tl => {
+      tl.addEventListener('mousemove', (e) => {
+        const rect = tl.getBoundingClientRect();
+        tl.style.setProperty('--mouse-x', (e.clientX - rect.left + 4) + 'px');
+        tl.style.setProperty('--mouse-y', (e.clientY - rect.top + 12) + 'px');
+      });
+    });
+  }
+
+  initItineraryScroll();
+
+  // Inline preview cards
+  document.querySelectorAll('.tl-item[data-preview]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+
+      const existing = item.querySelector('.tl-preview');
+      if (existing) {
+        existing.classList.remove('open');
+        setTimeout(() => existing.remove(), 400);
+        return;
+      }
+
+      document.querySelectorAll('.tl-preview.open').forEach(p => {
+        p.classList.remove('open');
+        setTimeout(() => p.remove(), 400);
+      });
+
+      const data = JSON.parse(item.dataset.preview);
+      const preview = document.createElement('div');
+      preview.className = 'tl-preview';
+
+      let html = '';
+      if (data.img) html += '<img class="tl-preview-img" src="' + data.img + '" alt="' + data.name + '">';
+      html += '<div class="tl-preview-body">';
+      if (data.rating) html += '<div class="tl-preview-rating">⭐ ' + data.rating + '</div>';
+      html += '<div class="tl-preview-name">' + data.name + '</div>';
+      if (data.note) html += '<div class="tl-preview-note">' + data.note + '</div>';
+      html += '<div class="tl-preview-links">';
+      html += '<button class="tl-preview-link view-tab" onclick="navigateToCard(\'' + data.tab + '\',\'' + data.card + '\')">View on Tab</button>';
+      html += '</div></div>';
+
+      preview.innerHTML = html;
+      item.appendChild(preview);
+      requestAnimationFrame(() => preview.classList.add('open'));
+    });
+  });
+
+  function navigateToCard(tabName, cardId) {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+    const btn = document.querySelector('[data-tab="' + tabName + '"]');
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabName).classList.add('active');
+
+    const card = document.getElementById(cardId);
+    if (card) {
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.boxShadow = '0 0 20px rgba(61,142,240,0.5)';
+        card.style.transition = 'box-shadow 0.3s';
+        setTimeout(() => { card.style.boxShadow = ''; }, 2000);
+      }, 150);
+    }
+  }
+
+  // Navigate to map and pulse a pin
+  document.querySelectorAll('.tl-item[data-map-pin]').forEach(item => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      const pinId = item.dataset.mapPin;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      document.querySelector('[data-tab="map"]').classList.add('active');
+      document.getElementById('tab-map').classList.add('active');
+      document.querySelector('.tab-nav').scrollIntoView({ behavior: 'smooth' });
+
+      setTimeout(() => {
+        initMainMap();
+        const marker = mapMarkers[pinId];
+        if (marker) {
+          mainMap.setView(marker.getLatLng(), 15, { animate: true });
+          marker.openPopup();
+          const el = marker.getElement();
+          if (el) {
+            const pin = el.querySelector('.map-pin');
+            if (pin) {
+              pin.classList.add('pulse');
+              setTimeout(() => pin.classList.remove('pulse'), 2000);
+            }
+          }
+        }
+      }, 200);
+    });
+  });
 </script>
 </body>
 </html>
