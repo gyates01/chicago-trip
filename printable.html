@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Chicago Trip · May 2026 — Printable</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f2ee;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.45;
+      color: #1a1a1a;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e3c72, #2b4c7c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero .dates {
+      color: #4b5563;
+      font-weight: 500;
+      background: #e6e9f0;
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .hotel-badge {
+      background: white;
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-top: 0.8rem;
+    }
+
+    .day-card {
+      background: white;
+      border-radius: 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+      border: 1px solid #e9eef3;
+    }
+
+    .day-header {
+      background: #faf9f7;
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .day-name {
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.3px;
+      background: #1e293b;
+      display: inline-block;
+      padding: 0.1rem 0.7rem;
+      border-radius: 40px;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .day-date {
+      color: #2c3e66;
+      font-weight: 500;
+      margin-left: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .vibe-tag {
+      font-size: 0.75rem;
+      background: #eef2ff;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      color: #1e3a8a;
+    }
+
+    .itinerary-list {
+      padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+    }
+
+    .item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .time {
+      min-width: 85px;
+      font-weight: 600;
+      color: #0f3b5c;
+      font-size: 0.85rem;
+      letter-spacing: -0.2px;
+    }
+
+    .detail {
+      flex: 1;
+    }
+
+    .detail strong {
+      font-weight: 700;
+      color: #0a2540;
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+
+    .detail .note {
+      font-size: 0.8rem;
+      color: #5b6e8c;
+      margin-top: 0.2rem;
+      line-height: 1.35;
+    }
+
+    .reserve-badge {
+      background: #fef9e3;
+      color: #b45309;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .birthday-badge {
+      background: #fce7f3;
+      color: #be185d;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+
+    .flight-tag {
+      background: #e6f0fa;
+      border-radius: 20px;
+      padding: 0.2rem 0.6rem;
+      font-family: monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .footnote {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      padding: 1rem 1.3rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 550px) {
+      body {
+        padding: 1rem 0.8rem;
+      }
+      .item {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .time {
+        min-width: auto;
+      }
+      .day-header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🌆 CHICAGO</h1>
+    <div class="dates">MAY 12 – 17, 2026 · 6 DAYS</div>
+    <div class="hotel-badge">
+      🏨 Central Loop Hotel · 111 W Adams St
+    </div>
+  </div>
+
+  <!-- TUESDAY (arrival 11:40, Lincoln Park Zoo, deep dish, rooftop optional) -->
+  <div class="day-card">
+    <div class="day-header">
+      <div><span class="day-name">TUESDAY</span> <span class="day-date">May 12</span></div>
+      <div class="vibe-tag">✈️ arrival · loop & zoo</div>
+    </div>
+    <div class="itinerary-list">
+      <div class="item"><div class="time">11:40 AM</div><div class="detail"><strong>✈️ Fly in</strong> — arrival ORD <span class="flight-tag">AA 1114</span><div class="note">Phoenix → Chicago O'Hare</div></div></div>
+      <div class="item"><div class="time">~12:45 PM</div><div class="detail"><strong>🚗 Uber to Central Loop Hotel</strong> — check in / hold bags if room not ready</div></div>
+      <div class="item"><div class="time">~1:45 PM</div><div class="detail"><strong>🚲 Walk or rent Divvy bikes</strong> — ride around park (weather permitting)</div></div>
+      <div class="item"><div class="time">~2:30 PM</div><div class="detail"><strong>🍽️ Light lunch</strong> — quick bite near the Loop / River North</div></div>
+      <div class="item"><div class="time">~4:00 PM</div><div class="detail"><strong>🦒 Lincoln Park Zoo</strong><div class="note">Free admission · 2001 N Clark St · (Art Institute closed today — moved to Friday)</div></div></div>
+      <div class="item"><div class="time">~7:30 PM</div><div class="detail"><strong>🍕 Deep dish pizza dinner</strong> — classic Chicago (Gino's East / Lou Malnati's)</div></div>
+      <div class="item"><div class="time">~9:30 PM</div><div class="detail"><strong>🍸 Rooftop bar?</strong> — London House or similar (optional)</div></div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY: Wildberry 9AM res, Shedd 11AM, Adler after aquarium, Tao dinner 8PM -->
+  <div class="day-card">
+    <div class="day-header">
+      <div><span class="day-name">WEDNESDAY</span> <span class="day-date">May 13</span></div>
+      <div class="vibe-tag">🐟 aquarium · planetarium · tao dinner</div>
+    </div>
+    <div class="itinerary-list">
+      <div class="item"><div class="time">9:00 AM</div><div class="detail"><strong>🥞 Wildberry Pancakes and Cafe</strong> <span class="reserve-badge">reservation confirmed 9AM</span><div class="note">130 E Randolph St</div></div></div>
+      <div class="item"><div class="time">11:00 AM</div><div class="detail"><strong>🐠 Shedd Aquarium</strong> <span class="reserve-badge">reservation required · booked 11:00AM</span><div class="note">1200 S DuSable Lake Shore Dr · CityPASS slot</div></div></div>
+      <div class="item"><div class="time">~1:30 PM</div><div class="detail"><strong>🔭 Adler Planetarium</strong> — after aquarium (instead of zoo)<div class="note">1300 S DuSable Lake Shore Dr · sky shows & exhibits</div></div></div>
+      <div class="item"><div class="time">~3:30 PM</div><div class="detail"><strong>📸 The Bean & Navy Pier area</strong> — Millennium Park + stroll the pier</div></div>
+      <div class="item"><div class="time">~5:30 PM</div><div class="detail"><strong>Free time / rest before dinner</strong> — or cocktails near River North</div></div>
+      <div class="item"><div class="time">8:00 PM</div><div class="detail"><strong>🍽️ Tao Chicago</strong> <span class="reserve-badge">reservation made · 8PM</span><div class="note">632 N Dearborn St · Pan-Asian, $$$</div></div></div>
+      <div class="item"><div class="time">~10:00 PM</div><div class="detail"><strong>🍹 Drinks after dinner</strong> — rooftop or Fulton Market bars</div></div>
+    </div>
+  </div>
+
+  <!-- THURSDAY: shopping district + Skydeck 8PM sunset + steakhouse -->
+  <div class="day-card">
+    <div class="day-header">
+      <div><span class="day-name">THURSDAY</span> <span class="day-date">May 14</span></div>
+      <div class="vibe-tag">🛍️ hype shopping · skydeck sunset</div>
+    </div>
+    <div class="itinerary-list">
+      <div class="item"><div class="time">~9:00 AM</div><div class="detail"><strong>☕ Breakfast</strong> — cafe or grab-and-go</div></div>
+      <div class="item"><div class="time">~10:30 AM</div><div class="detail"><strong>🚗 Uber to shopping district</strong> — Layers, Round Two, Supreme, Boneyard<div class="note">Wicker Park / Milwaukee Ave corridor</div></div></div>
+      <div class="item"><div class="time">11:00 AM – 4:00 PM</div><div class="detail"><strong>🛍️ Streetwear & vintage shopping</strong> — Layers, Round Two, Supreme, Boneyard + explore</div></div>
+      <div class="item"><div class="time">~5:00 PM</div><div class="detail"><strong>Back to hotel / freshen up</strong> — pre-Skydeck</div></div>
+      <div class="item"><div class="time">8:00 PM</div><div class="detail"><strong>🌆 Skydeck Chicago</strong> <span class="reserve-badge">reserved for sunset (8:00PM)</span><div class="note">103rd floor · The Ledge · 233 S Wacker Dr</div></div></div>
+      <div class="item"><div class="time">~9:30 PM</div><div class="detail"><strong>🥩 Steakhouse dinner + drinks</strong> — if not steakhouse on Wednesday (Dēliz or other)<div class="note">(Wednesday was Tao, so steak tonight is open)</div></div></div>
+    </div>
+  </div>
+
+  <!-- FRIDAY: architecture tour 10:45AM, Art Institute (moved from Tue), Deliz birthday dinner 8:45PM -->
+  <div class="day-card">
+    <div class="day-header">
+      <div><span class="day-name">FRIDAY</span> <span class="day-date">May 15</span></div>
+      <div class="vibe-tag">🎂 BIRTHDAY · art institute · river tour · deliz steakhouse</div>
+    </div>
+    <div class="itinerary-list">
+      <div class="item"><div class="time">10:45 AM</div><div class="detail"><strong>⛵ Shoreline Sightseeing Architecture River Tour (75 min)</strong> <span class="reserve-badge">reserved</span><div class="note">401 N Michigan Ave · arrive 15 min early</div></div></div>
+      <div class="item"><div class="time">12:30 PM</div><div class="detail"><strong>🍽️ Lunch</strong> — quick bite near River North / Mag Mile</div></div>
+      <div class="item"><div class="time">~2:00 PM</div><div class="detail"><strong>🖼️ Art Institute of Chicago</strong> <span class="reserve-badge">no reservation needed</span><div class="note">111 S Michigan Ave · 2–3 hrs · (moved from Tuesday)</div></div></div>
+      <div class="item"><div class="time">~4:30 PM</div><div class="detail"><strong>🛍️ More shopping / exploring</strong> — Mag Mile, Oak Street, Kith, Bape</div></div>
+      <div class="item"><div class="time">~7:00 PM</div><div class="detail"><strong>🎉 Pre-birthday drinks / freshen up</strong></div></div>
+      <div class="item"><div class="time">8:45 PM</div><div class="detail"><strong>🥩 Dēliz Italian Steakhouse · BIRTHDAY DINNER</strong> <span class="birthday-badge">🎂 reservation 8:45PM</span><div class="note">1840 W North Ave · Italian steakhouse, $$$</div></div></div>
+      <div class="item"><div class="time">~10:30 PM</div><div class="detail"><strong>🍾 Birthday drinks / celebration</strong> — rooftop or nightcap</div></div>
+    </div>
+  </div>
+
+  <!-- SATURDAY: check out, walk/bike park/pier, airport 4-5pm, flight 7:06pm -->
+  <div class="day-card">
+    <div class="day-header">
+      <div><span class="day-name">SATURDAY</span> <span class="day-date">May 16</span></div>
+      <div class="vibe-tag">🌳 farewell · lakeside · depart</div>
+    </div>
+    <div class="itinerary-list">
+      <div class="item"><div class="time">~9:00 AM</div><div class="detail"><strong>🍳 Breakfast</strong> — casual spot or bakery</div></div>
+      <div class="item"><div class="time">11:00 AM</div><div class="detail"><strong>🏨 Check out of hotel</strong> — hold bags with front desk</div></div>
+      <div class="item"><div class="time">11:30 AM – 2:30 PM</div><div class="detail"><strong>🚶‍♂️🚲 Walk / bike through park & pier again</strong> — Millennium Park, Lakefront Trail, or Navy Pier<div class="note">Divvy bikes or leisurely walk</div></div></div>
+      <div class="item"><div class="time">~3:00 PM</div><div class="detail"><strong>☕ Mess around / last minute treats</strong> — Garrett's Popcorn, coffee, souvenirs</div></div>
+      <div class="item"><div class="time">4:00 – 4:30 PM</div><div class="detail"><strong>🚗 Uber to O'Hare airport</strong> — ~1 hour drive, budget traffic</div></div>
+      <div class="item"><div class="time">7:06 PM</div><div class="detail"><strong>✈️ Departure flight</strong> — AA 1038 ORD → PHX<div class="note">arrive Phoenix 9:05pm</div></div></div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="footnote">
+    <strong>📌 KEY NOTES</strong><br>
+    • <strong>Tuesday:</strong> Lincoln Park Zoo (free admission) — closes 5PM.<br>
+    • <strong>Wednesday:</strong> Wildberry 9AM → Shedd 11AM → Adler Planetarium → Tao Chicago <strong>8PM dinner</strong>.<br>
+    • <strong>Thursday:</strong> Skydeck <strong>reserved 8PM</strong>. Weiners Circle late-night after Utopian.<br>
+    • <strong>Friday (BIRTHDAY):</strong> Architecture tour 9:30AM → Art Institute 11:30AM → Mag Mile shopping → <strong>Dēliz Steakhouse 8:45PM</strong> 🎂.<br>
+    • <strong>Saturday:</strong> Checkout, Millennium Park / lakefront, Uber to O'Hare by 4:30PM for 7:06PM flight.
+  </div>
+</div>
+</body>
+</html>
