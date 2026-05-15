@@ -1527,49 +1527,14 @@
   <!-- ─── ITINERARY ─────────────────────────── -->
   <section id="tab-itinerary" class="tab-content active">
 
-    <!-- Pre-trip checklist -->
-    <div class="checklist-card">
-      <div class="checklist-title">⚡ Pre-Trip Checklist</div>
-      <div class="checklist-items">
-        <label class="check-item done" id="ci-flights">
-          <input type="checkbox" id="chk-flights" checked>
-          <span>Flights — Purchased ($707.40 total)</span>
-        </label>
-        <label class="check-item done" id="ci-hotel">
-          <input type="checkbox" id="chk-hotel" checked>
-          <span>Central Loop Hotel — Confirmed &amp; Paid</span>
-        </label>
-        <label class="check-item" id="ci-citypass">
-          <input type="checkbox" id="chk-citypass">
-          <span>Buy CityPASS — citypass.com ($142/person)</span>
-        </label>
-        <label class="check-item" id="ci-tao">
-          <input type="checkbox" id="chk-tao">
-          <span>Reserve Tao Chicago (Friday dinner, strongly recommended)</span>
-        </label>
-        <label class="check-item" id="ci-deliz">
-          <input type="checkbox" id="chk-deliz">
-          <span>Reserve Deliz Italian Steakhouse (Wednesday dinner)</span>
-        </label>
-        <label class="check-item" id="ci-archtour">
-          <input type="checkbox" id="chk-archtour">
-          <span>Book Architecture River Tour through CityPASS app</span>
-        </label>
-        <label class="check-item" id="ci-shedd">
-          <input type="checkbox" id="chk-shedd">
-          <span>Book Shedd Aquarium time slot through CityPASS app</span>
-        </label>
-      </div>
-    </div>
-
     <!-- DAY 1 -->
     <div class="day-card open" id="day1">
       <div class="day-header" onclick="toggleDay('day1')">
         <div class="day-number">01</div>
         <div class="day-info">
           <div class="day-label">Tuesday, May 12</div>
-          <div class="day-title">Arrival + The Loop + Lincoln Park Zoo</div>
-          <div class="day-area">Downtown Loop · Riverwalk · Millennium Park · Lincoln Park</div>
+          <div class="day-title">Arrival + Devil Dawgs + Lincoln Park Zoo + Giordano's</div>
+          <div class="day-area">Loop → Lincoln Park → River North</div>
         </div>
         <div class="day-right">
           <div class="day-chevron">▾</div>
@@ -1582,62 +1547,69 @@
             <div class="tl-time">6:00 AM</div>
             <div class="tl-name">✈️ AA 1114 — PHX → ORD</div>
             <div class="tl-address">Terminal 4 → Terminal 3</div>
-            <div class="tl-note">Arrives 11:37am · 3h 37m · Economy</div>
+            <div class="tl-note">Arrived 11:37am · 3h 37m · Economy</div>
           </div>
           <div class="tl-item type-transit" data-map-pin="hotel">
             <div class="tl-dot"></div>
-            <div class="tl-time">~1:00 PM</div>
-            <div class="tl-name">Check in — Central Loop Hotel</div>
-            <div class="tl-address">111 W Adams St</div>
-            <div class="tl-note">Room may not be ready — they can hold bags</div>
+            <div class="tl-time">Midday</div>
+            <div class="tl-name">Ubered to the hotel, dropped bags</div>
+            <div class="tl-address">Central Loop Hotel · 111 W Adams St</div>
+            <div class="tl-note">Room wasn't ready yet — held our bags while we got food</div>
           </div>
-          <div class="tl-item type-free" data-map-pin="riverwalk">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-devildawgs","img":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.2","name":"Devil Dawgs","note":"Classic Chicago dog near the hotel. First real food in Chicago."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~2:00 PM</div>
-            <div class="tl-name">Chicago Riverwalk</div>
-            <div class="tl-address">Along Wacker Dr</div>
-            <div class="tl-note">Walk, grab drinks at the water bars</div>
-            <div class="tl-badges"><span class="badge b-free">Free</span></div>
-          </div>
-          <div class="tl-item type-free" data-map-pin="millennium-park">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~3:30 PM</div>
-            <div class="tl-name">Millennium Park + The Bean</div>
-            <div class="tl-address">Michigan Ave & Monroe</div>
-            <div class="tl-badges"><span class="badge b-free">Free</span></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Devil Dawgs</div>
+            <div class="tl-address">767 S State St</div>
+            <div class="tl-note">First Chicago dog of the trip — exactly what we needed after the flight</div>
+            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
           </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~4:30 PM</div>
-            <div class="tl-name">Uber to Lincoln Park</div>
-            <div class="tl-note">~$12 from the Loop · ~15 min</div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Biked up to Lincoln Park Zoo</div>
+            <div class="tl-note">Grabbed Divvy bikes and rode north along the lakefront</div>
           </div>
-          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-lincoln-park-zoo","img":"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Lincoln Park Zoo","note":"Free admission. Confirm May hours."}'>
+          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-lincoln-park-zoo","img":"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Lincoln Park Zoo","note":"Free admission. Got rained on but still explored for about 2 hours."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~5:00 PM</div>
+            <div class="tl-time">~2 hrs</div>
             <div class="tl-name">Lincoln Park Zoo</div>
             <div class="tl-address">2001 N Clark St</div>
-            <div class="tl-note">Free admission · Confirm May hours</div>
-            <div class="tl-badges">
-              <span class="badge b-free">FREE</span>
-              <span class="badge b-mustdo">⭐ Must Do</span>
-            </div>
+            <div class="tl-note">Rained on the whole time but stuck it out — explored for about 2 hours</div>
+            <div class="tl-badges"><span class="badge b-free">FREE</span></div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-ginos","img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Gino&#39;s East","note":"Deep dish takes 45 min to cook. Order early and settle in."}'>
+          <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~7:30 PM</div>
-            <div class="tl-name">Gino's East — Deep Dish</div>
-            <div class="tl-address">162 E Superior St</div>
-            <div class="tl-note">$$  ·  45 min cook time — order early</div>
+            <div class="tl-time">Evening</div>
+            <div class="tl-name">Biked back to the hotel</div>
+            <div class="tl-note">Soaked but happy</div>
+          </div>
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-elephant-castle","img":"https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&h=600&q=90","name":"Elephant &amp; Castle","note":"The pub attached to the hotel lobby. Dried off and had a drink."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Evening</div>
+            <div class="tl-name">Drink at Elephant &amp; Castle</div>
+            <div class="tl-address">Hotel lobby bar</div>
+            <div class="tl-note">Dried off and had a drink at the pub in the hotel lobby</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+          </div>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-giordanos","img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Giordano&#39;s","note":"Classic Chicago stuffed deep dish. Worth every minute of the wait."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Dinner</div>
+            <div class="tl-name">Giordano's — Deep Dish</div>
+            <div class="tl-note">The classic Chicago deep dish — stuffed pizza done right</div>
             <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-london-house","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"London House Rooftop","note":"Upscale rooftop bar near hotel. $15-18 cocktails."}'>
+          <div class="tl-item type-activity" data-preview='{"tab":"attractions","card":"card-ballys","img":"https://images.unsplash.com/photo-1518893063132-36e46dbe2428?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bally\'s Chicago","note":"Casino right in the city. Good time before crashing for the night."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~9:30 PM</div>
-            <div class="tl-name">London House Rooftop</div>
-            <div class="tl-address">85 E Wacker Dr</div>
-            <div class="tl-note">Upscale rooftop · $15–18/drink · Near hotel</div>
-            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+            <div class="tl-time">Late</div>
+            <div class="tl-name">Bally's Chicago Casino</div>
+            <div class="tl-address">777 W Chicago Ave</div>
+            <div class="tl-note">Hit the casino for a bit — solid way to end the first night</div>
+            <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
+          </div>
+          <div class="tl-item type-transit">
+            <div class="tl-dot"></div>
+            <div class="tl-name">Back to the hotel to crash</div>
           </div>
         </div>
       </div>
@@ -1649,8 +1621,8 @@
         <div class="day-number">02</div>
         <div class="day-info">
           <div class="day-label">Wednesday, May 13</div>
-          <div class="day-title">Wicker Park + Topgolf</div>
-          <div class="day-area">Loop → Wicker Park → Schaumburg → Bucktown</div>
+          <div class="day-title">Wildberry + Shedd + Ramen San + Tao</div>
+          <div class="day-area">Loop → Museum Campus → Streeterville → Mag Mile</div>
         </div>
         <div class="day-right">
           <div class="day-chevron">▾</div>
@@ -1658,82 +1630,82 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-wildberry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Wildberry Pancakes &amp; Cafe","note":"Near hotel. Expect a wait on weekends."}'>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-wildberry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Wildberry Pancakes &amp; Cafe","note":"Biked over around 10am. Light crowd, got seated fast."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~9:00 AM</div>
+            <div class="tl-time">~10:00 AM</div>
             <div class="tl-name">Wildberry Pancakes &amp; Cafe</div>
             <div class="tl-address">130 E Randolph St</div>
-            <div class="tl-note">$$ · Near hotel · Expect a wait</div>
+            <div class="tl-note">Biked over from the hotel — light crowd, got seated fast</div>
             <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
           </div>
-          <div class="tl-item type-transit">
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-shedd","img":"https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Shedd Aquarium","note":"Biked to noon entry. Spent a couple hours inside."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~1:30 PM</div>
-            <div class="tl-name">Uber to Wicker Park</div>
-            <div class="tl-note">~$15</div>
+            <div class="tl-time">12:00 PM</div>
+            <div class="tl-name">Shedd Aquarium</div>
+            <div class="tl-address">1200 S DuSable Lake Shore Dr</div>
+            <div class="tl-note">Biked down for noon entry — spent a couple hours in there</div>
+            <div class="tl-badges"><span class="badge b-citypass">CityPASS</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-layers","img":"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Layers Chicago","note":"Vintage streetwear. Opens 12pm."}'>
+          <div class="tl-item type-free">
             <div class="tl-dot"></div>
-            <div class="tl-time">~2:00 PM</div>
-            <div class="tl-name">Layers Chicago</div>
-            <div class="tl-address">1437 N Milwaukee Ave</div>
-            <div class="tl-note">Vintage streetwear · Opens 12pm</div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Biked around Soldier Field</div>
+            <div class="tl-note">Rode around the stadium on the way back — cool to see up close</div>
+            <div class="tl-badges"><span class="badge b-free">Free</span></div>
+          </div>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-ramen-san","img":"https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Ramen San","note":"165 E Huron St. Biked over for a bowl after the aquarium."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Ramen San</div>
+            <div class="tl-address">165 E Huron St</div>
+            <div class="tl-note">Biked over for lunch — solid ramen spot in Streeterville</div>
+            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
+          </div>
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-saks","img":"https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=1600&h=600&q=90","name":"Saks Fifth Avenue","note":"700 N Michigan Ave. Walked the Mag Mile luxury stretch."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Saks Fifth Avenue</div>
+            <div class="tl-address">700 N Michigan Ave</div>
+            <div class="tl-note">Started the Mag Mile shopping stretch at Saks</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-round-two","img":"https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Round Two","note":"Vintage/hypebeast. 2 floors. Opens 12pm."}'>
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-kith","img":"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Kith Chicago","note":"Hit Kith on the Mag Mile stretch."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~2:30 PM</div>
-            <div class="tl-name">Round Two</div>
-            <div class="tl-address">1501 N Milwaukee Ave</div>
-            <div class="tl-note">Vintage/hypebeast · 2 floors · Opens 12pm</div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Kith Chicago</div>
+            <div class="tl-address">54 E Walton St</div>
+            <div class="tl-note">Hit up Kith on the Mag Mile stretch</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-supreme","img":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.3","name":"Supreme Chicago","note":"Opens 11am. Same block as other Wicker Park shops."}'>
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-water-tower","img":"https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1600&h=600&q=90","name":"Water Tower Place","note":"835 N Michigan. Multi-floor mall on the Mag Mile."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~3:00 PM</div>
-            <div class="tl-name">Supreme Chicago</div>
-            <div class="tl-address">1438 N Milwaukee Ave</div>
-            <div class="tl-note">Opens 11am</div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Water Tower Place</div>
+            <div class="tl-address">835 N Michigan Ave</div>
+            <div class="tl-note">Browsed the mall before heading back to the hotel</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
-          </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-boneyard","img":"https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Boneyard","note":"Sneakers + streetwear."}'>
-            <div class="tl-dot"></div>
-            <div class="tl-time">~3:45 PM</div>
-            <div class="tl-name">Boneyard</div>
-            <div class="tl-address">1102 N Ashland Ave</div>
-            <div class="tl-note">Sneakers + streetwear</div>
-            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
-          </div>
-          <div class="tl-item type-transit">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~4:00 PM</div>
-            <div class="tl-name">Uber to Topgolf Schaumburg</div>
-            <div class="tl-note">~30 min · $35–45</div>
-          </div>
-          <div class="tl-item type-activity">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~4:30 PM</div>
-            <div class="tl-name">Topgolf Schaumburg</div>
-            <div class="tl-address">2050 Progress Pkwy, Schaumburg</div>
-            <div class="tl-note">~2 hrs · $30–50/hr per bay</div>
-            <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
           </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~6:30 PM</div>
-            <div class="tl-name">Uber to Bucktown</div>
-            <div class="tl-note">~30 min · $35–45</div>
+            <div class="tl-time">Late Afternoon</div>
+            <div class="tl-name">Rode back to the hotel to rest</div>
+            <div class="tl-note">Freshened up before dinner</div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-deliz","img":"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Deliz Italian Steakhouse","note":"$$$ Italian steakhouse. Reserve ahead."}'>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-tao","img":"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Tao Chicago","note":"$$$ Pan-Asian. One of the best meals of the trip."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~7:15 PM</div>
-            <div class="tl-name">Deliz Italian Steakhouse</div>
-            <div class="tl-address">1840 W North Ave</div>
-            <div class="tl-note">$$$ · Italian steakhouse</div>
-            <div class="tl-badges">
-              <span class="badge b-food">Dinner</span>
-              <span class="badge b-reserve">📅 Reserve Ahead</span>
-            </div>
+            <div class="tl-time">8:00 PM</div>
+            <div class="tl-name">Tao Chicago</div>
+            <div class="tl-address">632 N Dearborn St</div>
+            <div class="tl-note">$$$ · Pan-Asian — one of the best dinners of the trip</div>
+            <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
+          </div>
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-elephant-castle","img":"https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&h=600&q=90","name":"Elephant &amp; Castle","note":"The hotel lobby pub — easy drinks after Tao."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Late</div>
+            <div class="tl-name">Drinks at Elephant &amp; Castle</div>
+            <div class="tl-address">Hotel lobby bar</div>
+            <div class="tl-note">Ended the night back at the hotel pub — easy nightcap</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
           </div>
         </div>
       </div>
@@ -1745,8 +1717,8 @@
         <div class="day-number">03</div>
         <div class="day-info">
           <div class="day-label">Thursday, May 14</div>
-          <div class="day-title">Shedd + Lakefront + Skydeck</div>
-          <div class="day-area">Museum Campus → Lakefront → Navy Pier → Willis Tower</div>
+          <div class="day-title">Gotham Bagels + Adler + Art Institute + Skydeck + Flight Club</div>
+          <div class="day-area">Loop → Museum Campus → Art Institute → Willis → River North</div>
         </div>
         <div class="day-right">
           <div class="day-chevron">▾</div>
@@ -1754,74 +1726,79 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-shedd","img":"https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Shedd Aquarium","note":"Book time slot in CityPASS app. Plan 2-3 hrs."}'>
-            <div class="tl-dot"></div>
-            <div class="tl-time">~9:00 AM</div>
-            <div class="tl-name">Shedd Aquarium</div>
-            <div class="tl-address">1200 S DuSable Lake Shore Dr</div>
-            <div class="tl-note">Book time slot in CityPASS app · Plan 2–3 hrs · 4D experience — confirm it's open post-renovation</div>
-            <div class="tl-badges">
-              <span class="badge b-citypass">CityPASS</span>
-              <span class="badge b-mustdo">⭐ Must Do</span>
-              <span class="badge b-reserve">📅 Reserve Slot</span>
-            </div>
-          </div>
-          <div class="tl-item type-food">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~12:30 PM</div>
-            <div class="tl-name">Harold's Chicken</div>
-            <div class="tl-address">612 S Wabash Ave</div>
-            <div class="tl-note">$$ · Chicago fried chicken legend</div>
-            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
-          </div>
-          <div class="tl-item type-activity">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~2:00 PM</div>
-            <div class="tl-name">Divvy Bikes — Lakefront Trail</div>
-            <div class="tl-note">Ride north toward Navy Pier · $3.30/30 min or $15 day pass</div>
-            <div class="tl-badges"><span class="badge b-activity">Activity</span></div>
-          </div>
           <div class="tl-item type-free">
             <div class="tl-dot"></div>
-            <div class="tl-time">~3:30 PM</div>
-            <div class="tl-name">Navy Pier</div>
-            <div class="tl-address">600 E Grand Ave</div>
-            <div class="tl-note">Free to walk around · Ferris Wheel ~$20 if interested</div>
-            <div class="tl-badges"><span class="badge b-free">Free Entry</span></div>
+            <div class="tl-time">Morning</div>
+            <div class="tl-name">Slept in</div>
+            <div class="tl-note">Well-earned rest after two big days</div>
           </div>
-          <div class="tl-item type-transit">
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-gotham-bagels","img":"https://images.unsplash.com/photo-1612637968894-660373e23b03?auto=format&fit=crop&w=1600&h=600&q=90","name":"Gotham Bagels","note":"Grabbed bagels around noon before heading out."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~5:00 PM</div>
-            <div class="tl-name">Uber back to Loop / Hotel</div>
-            <div class="tl-note">Rest &amp; freshen up before Skydeck</div>
+            <div class="tl-time">~Noon</div>
+            <div class="tl-name">Gotham Bagels</div>
+            <div class="tl-note">Grabbed bagels before heading out for the day</div>
+            <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-skydeck","img":"https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Skydeck Chicago","note":"0.4 mi from hotel. Go at golden hour for the best light."}'>
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-adler","img":"https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=1600&h=600&q=90","name":"Adler Planetarium","note":"Biked down to Museum Campus. Great skyline views from outside."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Adler Planetarium</div>
+            <div class="tl-address">1300 S DuSable Lake Shore Dr</div>
+            <div class="tl-note">Biked down to the museum campus — spectacular skyline views from the grounds</div>
+            <div class="tl-badges"><span class="badge b-citypass">CityPASS</span></div>
+          </div>
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-art-institute","img":"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Art Institute of Chicago","note":"Biked over from Adler and walked through the galleries."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Art Institute of Chicago</div>
+            <div class="tl-address">111 S Michigan Ave</div>
+            <div class="tl-note">Biked over from Adler and explored the galleries</div>
+            <div class="tl-badges"><span class="badge b-citypass">CityPASS</span></div>
+          </div>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-relish","img":"https://images.unsplash.com/photo-1533483595632-c5f0e57a1936?auto=format&fit=crop&w=1600&h=600&q=90","name":"Relish Chicago Hot Dogs","note":"Classic Chicago dog stop on the way to Skydeck."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Late Afternoon</div>
+            <div class="tl-name">Relish Chicago Hot Dogs</div>
+            <div class="tl-note">Classic Chicago dog on the way toward Skydeck</div>
+            <div class="tl-badges"><span class="badge b-food">Snack</span></div>
+          </div>
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-bar-sotto","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bar Sotto","note":"Pre-Skydeck drinks. Good atmosphere before the big views."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Early Evening</div>
+            <div class="tl-name">Bar Sotto</div>
+            <div class="tl-note">Walked over for drinks before Skydeck — good pre-game spot</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
+          </div>
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-skydeck","img":"https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Skydeck Chicago","note":"103rd floor. The Ledge glass boxes are worth it. Incredible city views."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">8:00 PM</div>
             <div class="tl-name">Skydeck Chicago</div>
             <div class="tl-address">233 S Wacker Dr — 103rd floor</div>
-            <div class="tl-note">Sunset views · The Ledge · 0.4 mi from hotel</div>
+            <div class="tl-note">Incredible city views — The Ledge glass boxes 103 floors up</div>
             <div class="tl-badges">
               <span class="badge b-citypass">CityPASS</span>
               <span class="badge b-mustdo">⭐ Must Do</span>
-              <span class="badge b-reserve">📅 Reserved 8PM</span>
             </div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-utopian","img":"https://images.unsplash.com/photo-1763380631462-12a2f528ff25?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Utopian Tailgate","note":"Rooftop + games. Drinks only. Wed-Sun."}'>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-als-beef","img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&h=600&q=90","name":"Al&#39;s Italian Beef","note":"As seen on Man vs. Food. Legendary Chicago sandwich — get it dipped."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~9:30 PM</div>
-            <div class="tl-name">Utopian Tailgate</div>
-            <div class="tl-address">1608 N Wells St</div>
-            <div class="tl-note">Rooftop + games · Drinks only · Wed–Sun</div>
+            <div class="tl-time">Late Night</div>
+            <div class="tl-name">Al's Italian Beef</div>
+            <div class="tl-address">1079 W Taylor St</div>
+            <div class="tl-note">As seen on Man vs. Food — the iconic Italian beef sandwich, get it dipped</div>
+            <div class="tl-badges"><span class="badge b-food">Late Night</span></div>
+          </div>
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-flight-club","img":"https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1600&h=600&q=90","name":"Flight Club Chicago","note":"Darts bar. Social darts + drinks — a great end to a long day."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Late Night</div>
+            <div class="tl-name">Flight Club Chicago</div>
+            <div class="tl-note">Social darts + drinks — perfect way to end a big day</div>
             <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
           </div>
-          <div class="tl-item type-food">
+          <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~11:00 PM</div>
-            <div class="tl-name">Weiners Circle</div>
-            <div class="tl-address">2622 N Clark St</div>
-            <div class="tl-note">$ · Classic Chicago dog · Open 'til 2–4 AM · Staff banter is part of the experience</div>
-            <div class="tl-badges"><span class="badge b-food">Late Night</span></div>
+            <div class="tl-time">Night</div>
+            <div class="tl-name">Biked back to the hotel</div>
           </div>
         </div>
       </div>
@@ -1833,8 +1810,8 @@
         <div class="day-number">04</div>
         <div class="day-info">
           <div class="day-label">Friday, May 15</div>
-          <div class="day-title">Architecture Tour + Art Institute + Mag Mile + Nightlife</div>
-          <div class="day-area">Streeterville → Loop → Gold Coast / Oak Street → River North</div>
+          <div class="day-title">Architecture Tour + Millennium Park + Shopping + Deliz</div>
+          <div class="day-area">Streeterville → Loop → Wicker Park → River North</div>
         </div>
         <div class="day-right">
           <div class="day-chevron">▾</div>
@@ -1842,99 +1819,68 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-arch-tour","img":"https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Architecture River Tour","note":"75 min cruise. Book ahead in CityPASS app."}'>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-honey-berry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","name":"Honey Berry Pancakes &amp; Café","note":"Good breakfast before the architecture tour."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~9:30 AM</div>
-            <div class="tl-name">Architecture River Tour</div>
-            <div class="tl-address">Departs Navy Pier or 401 N Michigan Ave</div>
-            <div class="tl-note">75 min cruise · Book ahead in CityPASS app</div>
-            <div class="tl-badges">
-              <span class="badge b-citypass">CityPASS</span>
-              <span class="badge b-mustdo">⭐ Must Do</span>
-              <span class="badge b-reserve">📅 Book Ahead</span>
-            </div>
+            <div class="tl-time">Morning</div>
+            <div class="tl-name">Honey Berry Pancakes &amp; Café</div>
+            <div class="tl-note">Breakfast before the tour — started the day right</div>
+            <div class="tl-badges"><span class="badge b-food">Breakfast</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-art-institute","img":"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Art Institute of Chicago","note":"Plan 2-3 hrs. 10 min walk from hotel."}'>
+          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-arch-tour","img":"https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Architecture River Tour","note":"75 min cruise departing 401 N Michigan Ave. Best way to see the city."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~11:30 AM</div>
-            <div class="tl-name">Art Institute of Chicago</div>
-            <div class="tl-address">111 S Michigan Ave</div>
-            <div class="tl-note">Plan 2–3 hrs · 10 min walk from hotel</div>
+            <div class="tl-time">Morning</div>
+            <div class="tl-name">Shoreline Sightseeing Architecture River Tour</div>
+            <div class="tl-address">401 N Michigan Ave</div>
+            <div class="tl-note">75 min cruise — best way to see the city's architecture from the water</div>
             <div class="tl-badges">
               <span class="badge b-citypass">CityPASS</span>
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-garretts","img":"https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Garrett&#39;s Popcorn","note":"Get the Garrett Mix. On the Mag Mile."}'>
+          <div class="tl-item type-free" data-map-pin="millennium-park">
             <div class="tl-dot"></div>
-            <div class="tl-time">~2:30 PM</div>
-            <div class="tl-name">Garrett's Popcorn</div>
-            <div class="tl-address">625 N Michigan Ave</div>
-            <div class="tl-note">Get the Garrett Mix</div>
-            <div class="tl-badges"><span class="badge b-food">Snack</span></div>
-          </div>
-          <div class="tl-item type-activity">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~2:45 PM</div>
-            <div class="tl-name">Watch + Jewelry Browse</div>
-            <div class="tl-address">Mag Mile boutiques · Oak Street · River North</div>
-            <div class="tl-badges"><span class="badge b-activity">Browse</span></div>
-          </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-kith","img":"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Kith Chicago","note":"Get the Kith Treats milkshake upstairs."}'>
-            <div class="tl-dot"></div>
-            <div class="tl-time">~3:15 PM</div>
-            <div class="tl-name">Kith Chicago</div>
-            <div class="tl-address">54 E Walton St</div>
-            <div class="tl-note">Get the Kith Treats milkshake upstairs</div>
-            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
-          </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-bape","img":"https://images.unsplash.com/photo-1538329972958-465d6d2144ed?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.4","name":"Bape Chicago","note":"Same block as Kith on Oak Street."}'>
-            <div class="tl-dot"></div>
-            <div class="tl-time">~3:45 PM</div>
-            <div class="tl-name">Bape Chicago</div>
-            <div class="tl-address">113 E Oak St</div>
-            <div class="tl-note">Same block as Kith</div>
-            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
-          </div>
-          <div class="tl-item type-shopping">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~4:15 PM</div>
-            <div class="tl-name">Oak Street Designer Browse</div>
-            <div class="tl-address">E Oak St</div>
-            <div class="tl-note">Hermès, Gucci, etc.</div>
-            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
-          </div>
-          <div class="tl-item type-shopping">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~4:45 PM</div>
-            <div class="tl-name">State Street / Block 37</div>
-            <div class="tl-address">108 N State St</div>
-            <div class="tl-note">General shopping · Big Starbucks</div>
-            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+            <div class="tl-time">Midday</div>
+            <div class="tl-name">Millennium Park + The Bean</div>
+            <div class="tl-address">Michigan Ave &amp; Monroe</div>
+            <div class="tl-note">Explored the park and got the Bean photos after the tour</div>
+            <div class="tl-badges"><span class="badge b-free">Free</span></div>
           </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~5:30 PM</div>
-            <div class="tl-name">Hotel — Rest &amp; Get Ready</div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Back to hotel to prep for dinner</div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-tao","img":"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Tao Chicago","note":"$$$ Pan-Asian. Reserve ahead."}'>
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-supreme","img":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.3","name":"Supreme Chicago","note":"Afternoon shopping run — hit Supreme and Round 2 nearby."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~7:30 PM</div>
-            <div class="tl-name">Tao Chicago</div>
-            <div class="tl-address">632 N Dearborn St</div>
-            <div class="tl-note">$$$ · Pan-Asian</div>
-            <div class="tl-badges">
-              <span class="badge b-food">Dinner</span>
-              <span class="badge b-reserve">📅 Reserve Ahead</span>
-            </div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Supreme Chicago</div>
+            <div class="tl-address">1438 N Milwaukee Ave</div>
+            <div class="tl-note">Afternoon shopping run — hit Supreme and Round 2 nearby</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-federales-bar","img":"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Federales / Recess / Punch Bowl","note":"High energy Friday night — all within blocks in Fulton Market."}'>
+          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-round-two","img":"https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Round Two","note":"Vintage/hypebeast. 2 floors. Good finds on the same block as Supreme."}'>
             <div class="tl-dot"></div>
-            <div class="tl-time">~10:00 PM</div>
-            <div class="tl-name">Federales / Recess / Punch Bowl Social</div>
-            <div class="tl-address">Fulton Market cluster</div>
-            <div class="tl-note">High energy Friday night — all within blocks of each other</div>
-            <div class="tl-badges"><span class="badge b-bar">Nightlife</span></div>
+            <div class="tl-time">Afternoon</div>
+            <div class="tl-name">Round Two</div>
+            <div class="tl-address">1501 N Milwaukee Ave</div>
+            <div class="tl-note">Vintage and hypebeast on 2 floors — solid finds</div>
+            <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
+          </div>
+          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-deliz","img":"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Deliz Italian Steakhouse","note":"$$$ Italian steakhouse. 8:45 PM reservation. Incredible food."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">8:45 PM</div>
+            <div class="tl-name">Deliz Italian Steakhouse</div>
+            <div class="tl-address">1840 W North Ave</div>
+            <div class="tl-note">$$$ · Italian steakhouse — outstanding meal, great reservation</div>
+            <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
+          </div>
+          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-london-house","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"London House Rooftop","note":"Upscale rooftop near hotel. Capped the last full night in Chicago."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Late</div>
+            <div class="tl-name">London House Rooftop</div>
+            <div class="tl-address">85 E Wacker Dr</div>
+            <div class="tl-note">Upscale rooftop bar to cap the last full night in Chicago</div>
+            <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
           </div>
         </div>
       </div>
@@ -1946,8 +1892,8 @@
         <div class="day-number">05</div>
         <div class="day-info">
           <div class="day-label">Saturday, May 16</div>
-          <div class="day-title">Easy Morning + Depart</div>
-          <div class="day-area">Lincoln Park → Loop → O'Hare</div>
+          <div class="day-title">Slow Morning + Wrigley Field + Depart</div>
+          <div class="day-area">Loop → Wrigleyville → O'Hare</div>
         </div>
         <div class="day-right">
           <div class="day-chevron">▾</div>
@@ -1955,56 +1901,42 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-batter-berries","img":"https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Batter &amp; Berries","note":"BYOB. Get there early — expect a wait on weekends."}'>
-            <div class="tl-dot"></div>
-            <div class="tl-time">~9:00 AM</div>
-            <div class="tl-name">Batter &amp; Berries</div>
-            <div class="tl-address">2748 N Lincoln Ave</div>
-            <div class="tl-note">$$ · BYOB · Get there early — expect a wait on weekends</div>
-            <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
-          </div>
-          <div class="tl-item type-transit">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~11:00 AM</div>
-            <div class="tl-name">Check Out</div>
-            <div class="tl-note">Confirm checkout time with hotel</div>
-          </div>
-          <div class="tl-item type-free" data-map-pin="riverwalk">
-            <div class="tl-dot"></div>
-            <div class="tl-time">~11:30 AM</div>
-            <div class="tl-name">Last Riverwalk Walk</div>
-            <div class="tl-note">Grab anything you missed</div>
-          </div>
           <div class="tl-item type-food">
             <div class="tl-dot"></div>
-            <div class="tl-time">~1:00 PM</div>
-            <div class="tl-name">Devil Dawgs</div>
-            <div class="tl-address">767 S State St</div>
-            <div class="tl-note">$ · Classic Chicago dog · Near hotel</div>
-            <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
+            <div class="tl-time">Morning</div>
+            <div class="tl-name">Breakfast nearby</div>
+            <div class="tl-note">Grabbed food before checking out</div>
+            <div class="tl-badges"><span class="badge b-food">Breakfast</span></div>
+          </div>
+          <div class="tl-item type-transit" data-map-pin="hotel">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~11:00 AM</div>
+            <div class="tl-name">Checked out of Central Loop Hotel</div>
           </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
-            <div class="tl-time">~4:00 PM</div>
-            <div class="tl-name">Uber to O'Hare</div>
-            <div class="tl-note">Budget 45–60 min + $40–55</div>
+            <div class="tl-time">Late Morning</div>
+            <div class="tl-name">Ubered to Wrigley Field</div>
+          </div>
+          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-wrigley","img":"https://images.unsplash.com/photo-1540747913346-19212a4ad3b4?auto=format&fit=crop&w=1600&h=600&q=90","name":"Wrigley Field","note":"Classic Chicago ballpark. Walked around, took photos, grabbed drinks nearby."}'>
+            <div class="tl-dot"></div>
+            <div class="tl-time">Midday</div>
+            <div class="tl-name">Wrigley Field</div>
+            <div class="tl-address">1060 W Addison St</div>
+            <div class="tl-note">Walked around the stadium, took photos, grabbed drinks nearby</div>
+            <div class="tl-badges"><span class="badge b-free">Free</span></div>
           </div>
           <div class="tl-item type-transit">
             <div class="tl-dot"></div>
             <div class="tl-time">7:06 PM</div>
             <div class="tl-name">✈️ AA 1038 — ORD → PHX</div>
             <div class="tl-address">Terminal 3 → Terminal 4</div>
-            <div class="tl-note">Arrives PHX 9:05pm · 3h 59m</div>
+            <div class="tl-note">Arrived PHX 9:05pm · 3h 59m · End of an incredible trip</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Griffin optional callout -->
-    <div class="tip-card" style="margin-top: 20px;">
-      <div class="tip-title">🔬 Optional: Griffin Museum of Science &amp; Industry</div>
-      <div class="tip-text">5700 S Lake Shore Dr, Hyde Park · ~7 mi south (~$20 Uber) · Opens 9am. Best fit: morning of Day 3 or 4. Could swap with Shedd — do Shedd on Day 4 morning instead. Most out-of-the-way of the CityPASS attractions.</div>
-    </div>
 
   </section>
 
@@ -2040,24 +1972,20 @@
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="food" id="card-batter-berries">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=400&h=160&q=70" alt="Batter & Berries">
+        <div class="place-card" data-cat="food" id="card-honey-berry">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=400&h=160&q=70" alt="Honey Berry">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.8</div>
+            <div class="place-rating">⭐ 4.6</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="food">🍴</span>
-              <div class="place-name">Batter &amp; Berries</div>
+              <div class="place-name">Honey Berry Pancakes &amp; Café</div>
             </div>
-            <div class="place-address">2748 N Lincoln Ave</div>
             <div class="place-meta">
               <span class="place-price">$$</span>
-              <span class="place-hours">8am – 3pm</span>
-              <span class="badge b-food">BYOB</span>
             </div>
-            <div class="place-note">Get there early on weekends. On Day 5 itinerary.</div>
+            <div class="place-note">Breakfast before the architecture tour. Day 4 morning.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.batterandberries.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Batter+and+Berries+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Honey+Berry+Pancakes+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2087,24 +2015,7 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Quick Eats &amp; Snacks</div>
       <div class="place-grid">
-        <div class="place-card" data-cat="food" id="card-garretts">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=400&h=160&q=70" alt="Garrett's Popcorn">
-          <div class="place-card-body">
-            <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name-row">
-              <span class="card-icon" data-cat="food">🍴</span>
-              <div class="place-name">Garrett's Popcorn</div>
-            </div>
-            <div class="place-address">625 N Michigan Ave</div>
-            <div class="place-meta"><span class="place-price">$</span></div>
-            <div class="place-note">Get the Garrett Mix. On Day 4 itinerary.</div>
-            <div class="place-links">
-              <a class="place-link" href="https://www.garrettpopcorn.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Garretts+Popcorn+Michigan+Ave+Chicago" target="_blank">Maps</a>
-            </div>
-          </div>
-        </div>
-        <div class="place-card" data-cat="food">
+        <div class="place-card" data-cat="food" id="card-devildawgs">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&h=160&q=70" alt="Devil Dawgs">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.2</div>
@@ -2114,44 +2025,39 @@
             </div>
             <div class="place-address">767 S State St</div>
             <div class="place-meta"><span class="place-price">$</span></div>
-            <div class="place-note">Classic Chicago dog. Near hotel. On Day 5 itinerary.</div>
+            <div class="place-note">Classic Chicago dog. Near hotel. First food of the trip on Day 1.</div>
             <div class="place-links">
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Devil+Dawgs+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="food">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1745118845351-7033b364d196?auto=format&fit=crop&w=400&h=160&q=70" alt="Weiners Circle">
+        <div class="place-card" data-cat="food" id="card-gotham-bagels">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1612637968894-660373e23b03?auto=format&fit=crop&w=400&h=160&q=70" alt="Gotham Bagels">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.1</div>
+            <div class="place-rating">⭐ 4.5</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="food">🍴</span>
-              <div class="place-name">Weiners Circle</div>
+              <div class="place-name">Gotham Bagels</div>
             </div>
-            <div class="place-address">2622 N Clark St</div>
-            <div class="place-meta">
-              <span class="place-price">$</span>
-              <span class="place-hours">Open until 2–4am</span>
-            </div>
-            <div class="place-note">Late night institution. Staff banter is part of the experience. On Day 3 itinerary.</div>
+            <div class="place-meta"><span class="place-price">$</span></div>
+            <div class="place-note">Grabbed bagels before Day 3's museum run — great way to fuel up.</div>
             <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Weiners+Circle+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Gotham+Bagels+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="food">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&h=160&q=70" alt="Harold's Chicken">
+        <div class="place-card" data-cat="food" id="card-relish">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1533483595632-c5f0e57a1936?auto=format&fit=crop&w=400&h=160&q=70" alt="Relish Chicago Hot Dogs">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.4</div>
+            <div class="place-rating">⭐ 4.3</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="food">🍴</span>
-              <div class="place-name">Harold's Chicken</div>
+              <div class="place-name">Relish Chicago Hot Dogs</div>
             </div>
-            <div class="place-address">612 S Wabash Ave</div>
-            <div class="place-meta"><span class="place-price">$$</span></div>
-            <div class="place-note">Chicago fried chicken legend. On Day 3 itinerary.</div>
+            <div class="place-meta"><span class="place-price">$</span></div>
+            <div class="place-note">Classic Chicago dog stop on Day 3 between Art Institute and Skydeck.</div>
             <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Harolds+Chicken+Wabash+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Relish+Chicago+Hot+Dogs" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2161,20 +2067,52 @@
     <div class="cat-group">
       <div class="cat-label"><span class="cat-dot" style="background:var(--gold)"></span>Dinner — Casual</div>
       <div class="place-grid">
-        <div class="place-card" data-cat="food" id="card-ginos">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&h=160&q=70" alt="Gino's East">
+        <div class="place-card" data-cat="food" id="card-giordanos">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&h=160&q=70" alt="Giordano's">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.5</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Giordano's</div>
+            </div>
+            <div class="place-meta"><span class="place-price">$$</span></div>
+            <div class="place-note">Classic Chicago stuffed deep dish. Day 1 dinner — the real deal.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.giordanos.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Giordanos+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" data-cat="food" id="card-ramen-san">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=400&h=160&q=70" alt="Ramen San">
           <div class="place-card-body">
             <div class="place-rating">⭐ 4.4</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="food">🍴</span>
-              <div class="place-name">Gino's East</div>
+              <div class="place-name">Ramen San</div>
             </div>
-            <div class="place-address">162 E Superior St</div>
+            <div class="place-address">165 E Huron St</div>
             <div class="place-meta"><span class="place-price">$$</span></div>
-            <div class="place-note">Deep dish pizza. 45 min cook time — order early. On Day 1 itinerary.</div>
+            <div class="place-note">Solid ramen in Streeterville. Day 2 lunch after Shedd.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.ginoseast.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Ginos+East+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Ramen+San+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
+        <div class="place-card" data-cat="food" id="card-als-beef">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&h=160&q=70" alt="Al's Italian Beef">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="food">🍴</span>
+              <div class="place-name">Al's Italian Beef</div>
+            </div>
+            <div class="place-address">1079 W Taylor St</div>
+            <div class="place-meta"><span class="place-price">$</span></div>
+            <div class="place-note">As seen on Man vs. Food. The iconic Chicago Italian beef sandwich — get it dipped. Day 3 late night.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.alsbeef.com" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Als+Italian+Beef+Taylor+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2230,7 +2168,7 @@
               <span class="place-price">$$$</span>
               <span class="badge b-reserve">📅 Reserve</span>
             </div>
-            <div class="place-note">Pan-Asian. On Day 4 itinerary. Strongly recommended to reserve.</div>
+            <div class="place-note">Pan-Asian. Day 2 dinner — one of the best meals of the trip.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.taochicago.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Tao+Chicago" target="_blank">Maps</a>
@@ -2250,7 +2188,7 @@
               <span class="place-price">$$$</span>
               <span class="badge b-reserve">📅 Reserve</span>
             </div>
-            <div class="place-note">Italian steakhouse. On Day 2 itinerary.</div>
+            <div class="place-note">Italian steakhouse. Day 4 dinner — 8:45 PM reservation.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.delizchicago.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Deliz+Italian+Steakhouse+Chicago" target="_blank">Maps</a>
@@ -2273,77 +2211,53 @@
             </div>
             <div class="place-address">85 E Wacker Dr</div>
             <div class="place-meta"><span class="badge b-bar">Rooftop</span></div>
-            <div class="place-note">Upscale rooftop. Near hotel. $15–18/drink. Day 1 night.</div>
+            <div class="place-note">Upscale rooftop near hotel. Day 4 night — capped the last full night in Chicago.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.londonhousechicago.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=London+House+Rooftop+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="bar" id="card-utopian">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1763380631462-12a2f528ff25?auto=format&fit=crop&w=400&h=160&q=70" alt="Utopian Tailgate">
+        <div class="place-card" data-cat="bar" id="card-elephant-castle">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&h=160&q=70" alt="Elephant & Castle">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.4</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="bar">🍸</span>
-              <div class="place-name">Utopian Tailgate</div>
+              <div class="place-name">Elephant &amp; Castle</div>
             </div>
-            <div class="place-address">1608 N Wells St</div>
-            <div class="place-meta"><span class="place-hours">Wed–Sun</span></div>
-            <div class="place-note">Rooftop + games. Drinks only — food reviews are mixed. Day 3 night.</div>
+            <div class="place-address">Hotel lobby pub · 111 W Adams St</div>
+            <div class="place-meta"><span class="badge b-bar">Hotel Bar</span></div>
+            <div class="place-note">The pub attached to the hotel lobby. Home base for end-of-night drinks. Day 1 &amp; Day 2.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.utopiantailgate.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Utopian+Tailgate+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Elephant+and+Castle+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="bar" id="card-federales-bar">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&h=160&q=70" alt="Federales">
+        <div class="place-card" data-cat="bar" id="card-bar-sotto">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=400&h=160&q=70" alt="Bar Sotto">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.5</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="bar">🍸</span>
-              <div class="place-name">Federales</div>
+              <div class="place-name">Bar Sotto</div>
             </div>
-            <div class="place-address">180 N Morgan St · Fulton Market</div>
-            <div class="place-meta"><span class="badge b-bar">High Energy</span></div>
-            <div class="place-note">DJ. Tacos. Great for Friday night. Day 4 option.</div>
+            <div class="place-meta"><span class="badge b-bar">Bar</span></div>
+            <div class="place-note">Pre-Skydeck drinks on Day 3 — good atmosphere and vibe before the big views.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.federaleschicago.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Federales+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Bar+Sotto+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="bar" id="card-recess">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&h=160&q=70" alt="Recess">
+        <div class="place-card" data-cat="bar" id="card-flight-club">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=400&h=160&q=70" alt="Flight Club Chicago">
           <div class="place-card-body">
-            <div class="place-rating">⭐ 4.3</div>
             <div class="place-name-row">
               <span class="card-icon" data-cat="bar">🍸</span>
-              <div class="place-name">Recess</div>
+              <div class="place-name">Flight Club Chicago</div>
             </div>
-            <div class="place-address">838 W Kinzie St · Fulton Market</div>
-            <div class="place-meta"><span class="badge b-bar">Outdoor</span></div>
-            <div class="place-note">Outdoor bar + games + DJ. Day 4 option.</div>
+            <div class="place-meta"><span class="badge b-activity">Darts</span></div>
+            <div class="place-note">Social darts bar. Great late-night spot after Skydeck on Day 3 — biked over, stayed late.</div>
             <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Recess+Chicago" target="_blank">Maps</a>
-            </div>
-          </div>
-        </div>
-        <div class="place-card" data-cat="bar" id="card-punch-bowl">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=400&h=160&q=70" alt="Punch Bowl Social">
-          <div class="place-card-body">
-            <div class="place-rating">⭐ 4.3</div>
-            <div class="place-name-row">
-              <span class="card-icon" data-cat="bar">🍸</span>
-              <div class="place-name">Punch Bowl Social</div>
-            </div>
-            <div class="place-address">310 N Green St · Fulton Market</div>
-            <div class="place-meta"><span class="badge b-activity">Bowling</span></div>
-            <div class="place-note">Bowling + arcade + bar. Day 4 option.</div>
-            <div class="place-links">
-              <a class="place-link" href="https://www.punchbowlsocial.com/location/chicago" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Punch+Bowl+Social+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Flight+Club+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2361,23 +2275,8 @@
     </div>
 
     <div class="cat-group">
-      <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Wicker Park — All within ~2 blocks · Day 2 · ~$15 Uber</div>
+      <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Wicker Park — Supreme &amp; Round Two on same block · Day 4 afternoon</div>
       <div class="place-grid">
-        <div class="place-card" data-cat="shopping" id="card-layers">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&h=160&q=70" alt="Layers Chicago">
-          <div class="place-card-body">
-            <div class="place-rating">⭐ 4.7</div>
-            <div class="place-name-row">
-              <span class="card-icon" data-cat="shopping">🛍️</span>
-              <div class="place-name">Layers Chicago</div>
-            </div>
-            <div class="place-address">1437 N Milwaukee Ave</div>
-            <div class="place-note">Vintage streetwear · Opens 12pm</div>
-            <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Layers+Chicago" target="_blank">Maps</a>
-            </div>
-          </div>
-        </div>
         <div class="place-card" data-cat="shopping" id="card-round-two">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=400&h=160&q=70" alt="Round Two">
           <div class="place-card-body">
@@ -2410,26 +2309,11 @@
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="shopping" id="card-boneyard">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?auto=format&fit=crop&w=400&h=160&q=70" alt="Boneyard">
-          <div class="place-card-body">
-            <div class="place-rating">⭐ 4.5</div>
-            <div class="place-name-row">
-              <span class="card-icon" data-cat="shopping">🛍️</span>
-              <div class="place-name">Boneyard</div>
-            </div>
-            <div class="place-address">1102 N Ashland Ave</div>
-            <div class="place-note">Sneakers + streetwear</div>
-            <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Boneyard+Chicago" target="_blank">Maps</a>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
     <div class="cat-group">
-      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>Oak Street / Gold Coast — Kith + Bape on same block · Day 4</div>
+      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>Oak Street / Gold Coast — Kith · Day 2</div>
       <div class="place-grid">
         <div class="place-card" data-cat="shopping" id="card-kith">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&h=160&q=70" alt="Kith Chicago">
@@ -2444,22 +2328,6 @@
             <div class="place-links">
               <a class="place-link" href="https://www.kith.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Kith+Chicago" target="_blank">Maps</a>
-            </div>
-          </div>
-        </div>
-        <div class="place-card" data-cat="shopping" id="card-bape">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1538329972958-465d6d2144ed?auto=format&fit=crop&w=400&h=160&q=70" alt="Bape Chicago">
-          <div class="place-card-body">
-            <div class="place-rating">⭐ 4.4</div>
-            <div class="place-name-row">
-              <span class="card-icon" data-cat="shopping">🛍️</span>
-              <div class="place-name">Bape Chicago</div>
-            </div>
-            <div class="place-address">113 E Oak St</div>
-            <div class="place-note">Same block as Kith</div>
-            <div class="place-links">
-              <a class="place-link" href="https://www.bape.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Bape+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2481,33 +2349,33 @@
     </div>
 
     <div class="cat-group">
-      <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Downtown / Mag Mile — State Street + Michigan Ave · Easy from hotel</div>
+      <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Mag Mile — Day 2 afternoon walk</div>
       <div class="place-grid">
-        <div class="place-card" data-cat="shopping">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=400&h=160&q=70" alt="State Street / Block 37">
+        <div class="place-card" data-cat="shopping" id="card-saks">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=400&h=160&q=70" alt="Saks Fifth Avenue">
           <div class="place-card-body">
             <div class="place-name-row">
               <span class="card-icon" data-cat="shopping">🛍️</span>
-              <div class="place-name">State Street / Block 37</div>
+              <div class="place-name">Saks Fifth Avenue</div>
             </div>
-            <div class="place-address">108 N State St</div>
-            <div class="place-note">General shopping · Big Starbucks</div>
+            <div class="place-address">700 N Michigan Ave</div>
+            <div class="place-note">Luxury flagship on the Mag Mile. Day 2 — kicked off the afternoon shopping stretch.</div>
             <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Block+37+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Saks+Fifth+Avenue+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="shopping">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&h=160&q=70" alt="Mag Mile Boutiques">
+        <div class="place-card" data-cat="shopping" id="card-water-tower">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=400&h=160&q=70" alt="Water Tower Place">
           <div class="place-card-body">
             <div class="place-name-row">
               <span class="card-icon" data-cat="shopping">🛍️</span>
-              <div class="place-name">Mag Mile Boutiques</div>
+              <div class="place-name">Water Tower Place</div>
             </div>
-            <div class="place-address">N Michigan Ave</div>
-            <div class="place-note">Watch + jewelry browsing · Day 4</div>
+            <div class="place-address">835 N Michigan Ave</div>
+            <div class="place-note">Multi-floor mall on the Mag Mile. Day 2 — last stop before heading back to the hotel.</div>
             <div class="place-links">
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Magnificent+Mile+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Water+Tower+Place+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2525,8 +2393,27 @@
     </div>
 
     <div class="cat-group">
-      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>CityPASS — $142/person · $426 total · 5 attractions</div>
+      <div class="cat-label"><span class="cat-dot" style="background:var(--blue)"></span>CityPASS Attractions</div>
       <div class="place-grid">
+        <div class="place-card" data-cat="citypass" id="card-adler">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=400&h=160&q=70" alt="Adler Planetarium">
+          <div class="place-card-body">
+            <div class="place-rating">⭐ 4.6</div>
+            <div class="place-name-row">
+              <span class="card-icon" data-cat="citypass">🎟️</span>
+              <div class="place-name">Adler Planetarium</div>
+            </div>
+            <div class="place-address">1300 S DuSable Lake Shore Dr</div>
+            <div class="place-meta">
+              <span class="badge b-citypass">CityPASS</span>
+            </div>
+            <div class="place-note">Day 3 — biked down to Museum Campus. Incredible skyline views from outside.</div>
+            <div class="place-links">
+              <a class="place-link" href="https://www.adlerplanetarium.org" target="_blank">Website</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Adler+Planetarium+Chicago" target="_blank">Maps</a>
+            </div>
+          </div>
+        </div>
         <div class="place-card" data-cat="citypass" id="card-shedd">
           <img class="place-card-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=400&h=160&q=70" alt="Shedd Aquarium">
           <div class="place-card-body">
@@ -2540,7 +2427,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
               <span class="badge b-reserve">📅 Book Time Slot</span>
             </div>
-            <div class="place-note">Book time slot through CityPASS app. Plan 2–3 hrs. Confirm 4D experience is back post-renovation.</div>
+            <div class="place-note">Day 2 — biked down for noon entry. Plan 2–3 hrs. The dolphin show was a highlight.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.sheddaquarium.org" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Shedd+Aquarium+Chicago" target="_blank">Maps</a>
@@ -2559,7 +2446,7 @@
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
-            <div class="place-note">0.4 mi from hotel. Go at golden hour (~5pm) for the best light. The Ledge glass boxes are a highlight.</div>
+            <div class="place-note">Day 3 — 8 PM visit. The Ledge glass boxes 103 floors up are a highlight. 0.4 mi from hotel.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.theskydeck.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Skydeck+Chicago" target="_blank">Maps</a>
@@ -2579,7 +2466,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
               <span class="badge b-reserve">📅 Reserve in App</span>
             </div>
-            <div class="place-note">Book ahead through CityPASS app. One of the best ways to see Chicago's skyline from the water.</div>
+            <div class="place-note">Day 4 morning. 75 min cruise — one of the best ways to see Chicago's skyline from the water.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.shorechicago.com" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Architecture+River+Tour+Chicago" target="_blank">Maps</a>
@@ -2598,7 +2485,7 @@
             <div class="place-meta">
               <span class="badge b-mustdo">⭐ Planned</span>
             </div>
-            <div class="place-note">10 min walk from hotel — easiest CityPASS attraction to fit in. Plan 2–3 hrs on Day 2 morning.</div>
+            <div class="place-note">Day 3 afternoon — biked over from Adler. Plan 2–3 hrs. 10 min walk from hotel.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.artic.edu" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Art+Institute+of+Chicago" target="_blank">Maps</a>
@@ -2639,7 +2526,7 @@
             </div>
             <div class="place-address">Michigan Ave &amp; Monroe</div>
             <div class="place-meta"><span class="badge b-free">Free</span></div>
-            <div class="place-note">10 min walk from hotel. Easy Day 1 stop.</div>
+            <div class="place-note">Day 4 — explored the park and got the Bean photos after the architecture tour.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.millenniumpark.org" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Millennium+Park+Chicago" target="_blank">Maps</a>
@@ -2670,7 +2557,7 @@
             </div>
             <div class="place-address">2001 N Clark St · Opens 10am</div>
             <div class="place-meta"><span class="badge b-free">FREE</span></div>
-            <div class="place-note">Confirm May hours. On Day 3 itinerary after Lakefront ride.</div>
+            <div class="place-note">Day 1 — biked up and explored for ~2 hours in the rain. Free admission.</div>
             <div class="place-links">
               <a class="place-link" href="https://www.lpzoo.org" target="_blank">Website</a>
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Lincoln+Park+Zoo+Chicago" target="_blank">Maps</a>
@@ -2686,7 +2573,7 @@
             </div>
             <div class="place-address">Along Lake Michigan</div>
             <div class="place-meta"><span class="badge b-activity">Activity</span></div>
-            <div class="place-note">$3.30/30 min or $15 day pass. Ride north from Museum Campus toward Navy Pier on Day 3.</div>
+            <div class="place-note">Used on Day 2 biking from Shedd around Soldier Field. Free passes available with Divvy membership.</div>
             <div class="place-links">
               <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Lakefront+Trail+Chicago" target="_blank">Maps</a>
             </div>
@@ -2696,35 +2583,35 @@
     </div>
 
     <div class="cat-group">
-      <div class="cat-label"><span class="cat-dot" style="background:var(--orange)"></span>Experiences</div>
+      <div class="cat-label"><span class="cat-dot" style="background:var(--green)"></span>Also Visited</div>
       <div class="place-grid">
-        <div class="place-card" data-cat="experience">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=400&h=160&q=70" alt="Topgolf Schaumburg">
+        <div class="place-card" data-cat="free" id="card-wrigley">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1540747913346-19212a4ad3b4?auto=format&fit=crop&w=400&h=160&q=70" alt="Wrigley Field">
           <div class="place-card-body">
             <div class="place-name-row">
-              <span class="card-icon" data-cat="experience">⚡</span>
-              <div class="place-name">Topgolf Schaumburg</div>
+              <span class="card-icon" data-cat="free">🌿</span>
+              <div class="place-name">Wrigley Field</div>
             </div>
-            <div class="place-address">2050 Progress Pkwy, Schaumburg · ~30 min from downtown</div>
-            <div class="place-note">~$30–50/hr per bay. Group activity on Day 2 before dinner. Plan ~2 hrs + travel.</div>
+            <div class="place-address">1060 W Addison St</div>
+            <div class="place-meta"><span class="badge b-free">Free</span></div>
+            <div class="place-note">Day 5 — Ubered up for a walk around the classic ballpark before the flight home.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.topgolf.com/us/schaumburg" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Topgolf+Schaumburg+2050+Progress+Pkwy" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Wrigley+Field+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
-        <div class="place-card" data-cat="experience">
-          <img class="place-card-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=400&h=160&q=70" alt="Navy Pier">
+        <div class="place-card" data-cat="experience" id="card-ballys">
+          <img class="place-card-img" src="https://images.unsplash.com/photo-1518893063132-36e46dbe2428?auto=format&fit=crop&w=400&h=160&q=70" alt="Bally's Chicago">
           <div class="place-card-body">
             <div class="place-name-row">
               <span class="card-icon" data-cat="experience">⚡</span>
-              <div class="place-name">Navy Pier</div>
+              <div class="place-name">Bally's Chicago Casino</div>
             </div>
-            <div class="place-address">600 E Grand Ave</div>
-            <div class="place-note">Free to walk around. Ferris Wheel ~$20 if interested. Day 3 afternoon after Lakefront Trail.</div>
+            <div class="place-address">777 W Chicago Ave</div>
+            <div class="place-meta"><span class="badge b-activity">Casino</span></div>
+            <div class="place-note">Day 1 late night — hit the casino after Giordano's. Solid way to end the first night.</div>
             <div class="place-links">
-              <a class="place-link" href="https://www.navypier.com" target="_blank">Website</a>
-              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Navy+Pier+Chicago" target="_blank">Maps</a>
+              <a class="place-link maps" href="https://www.google.com/maps/dir/?api=1&origin=111+W+Adams+St,+Chicago,+IL+60603&destination=Ballys+Chicago" target="_blank">Maps</a>
             </div>
           </div>
         </div>
@@ -2778,10 +2665,10 @@
       <!-- Countdown -->
       <div class="flight-countdown-banner">
         <div class="fcb-left">
-          <div class="fcb-plane">✈️</div>
+          <div class="fcb-plane">🏙️</div>
           <div>
-            <div class="fcb-label">Departing in</div>
-            <div class="fcb-sublabel">Phoenix → Chicago · May 12</div>
+            <div class="fcb-label">Time since Chicago</div>
+            <div class="fcb-sublabel">Chicago → Phoenix · May 16</div>
           </div>
         </div>
         <div class="fcb-timer">
@@ -2856,8 +2743,8 @@
         <div class="budget-val" style="color:var(--gold);">~$300</div>
       </div>
       <div class="budget-item" style="border-top: 2px solid var(--green);">
-        <div class="budget-label">Topgolf Schaumburg (split bay)</div>
-        <div class="budget-val" style="color:var(--green);">~$25</div>
+        <div class="budget-label">Bally's Casino + activities</div>
+        <div class="budget-val" style="color:var(--green);">varies</div>
       </div>
       <div class="budget-item" style="border-top: 2px solid var(--purple);">
         <div class="budget-label">Shopping / treats</div>
@@ -3029,42 +2916,6 @@
     document.getElementById(id).classList.toggle('open');
   }
 
-  // Checklist with localStorage
-  const checkIds = ['flights','hotel','citypass','tao','deliz','archtour','shedd'];
-
-  function saveChecks() {
-    const state = {};
-    checkIds.forEach(id => {
-      state[id] = document.getElementById('chk-' + id).checked;
-    });
-    localStorage.setItem('chicago-checklist', JSON.stringify(state));
-  }
-
-  function loadChecks() {
-    const saved = localStorage.getItem('chicago-checklist');
-    if (!saved) return;
-    const state = JSON.parse(saved);
-    checkIds.forEach(id => {
-      const chk = document.getElementById('chk-' + id);
-      const item = document.getElementById('ci-' + id);
-      if (state[id]) {
-        chk.checked = true;
-        item.classList.add('done');
-      }
-    });
-  }
-
-  checkIds.forEach(id => {
-    const chk = document.getElementById('chk-' + id);
-    const item = document.getElementById('ci-' + id);
-    chk.addEventListener('change', () => {
-      item.classList.toggle('done', chk.checked);
-      saveChecks();
-    });
-  });
-
-  loadChecks();
-
   // Staggered entrance animation for Logistics tab
   function animateLogistics() {
     const section = document.getElementById('tab-logistics');
@@ -3217,51 +3068,45 @@
 
     // Food — gold
     addPin(mainMap, 41.8846, -87.6244, '#F5A82A', 'Wildberry Pancakes & Cafe', '130 E Randolph St', '4.5', 'https://www.wildberrycafe.com', 'Wildberry Pancakes Cafe Chicago', U+'1567620905732-2d1ec7ab7445'+S);
-    addPin(mainMap, 41.9292, -87.6648, '#F5A82A', 'Batter & Berries', '2748 N Lincoln Ave', '4.8', 'https://www.batterandberries.com', 'Batter and Berries Chicago', U+'1528207776546-365bb710ee93'+S);
     addPin(mainMap, 41.8899, -87.6318, '#F5A82A', 'Parlay River North', '112 W Hubbard St', '4.2', null, 'Parlay River North Chicago', U+'1414235077428-338989a2e8c0'+S);
-    addPin(mainMap, 41.8930, -87.6244, '#F5A82A', "Garrett's Popcorn", '625 N Michigan Ave', '4.5', 'https://www.garrettpopcorn.com', 'Garretts Popcorn Michigan Ave Chicago', U+'1599490659213-e2b9527bd087'+S);
     addPin(mainMap, 41.8724, -87.6277, '#F5A82A', 'Devil Dawgs', '767 S State St', '4.2', null, 'Devil Dawgs Chicago', U+'1555939594-58d7cb561ad1'+S);
-    addPin(mainMap, 41.9290, -87.6432, '#F5A82A', 'Weiners Circle', '2622 N Clark St', '4.1', null, 'Weiners Circle Chicago', U+'1745118845351-7033b364d196'+S);
-    addPin(mainMap, 41.8731, -87.6260, '#F5A82A', "Harold's Chicken", '612 S Wabash Ave', '4.4', null, 'Harolds Chicken Wabash Chicago', U+'1626082927389-6cd097cdc6ec'+S);
-    addPin(mainMap, 41.8960, -87.6221, '#F5A82A', "Gino's East", '162 E Superior St', '4.4', 'https://www.ginoseast.com', 'Ginos East Chicago', U+'1565299624946-b28f40a0ae38'+S);
-    addPin(mainMap, 41.8858, -87.6520, '#F5A82A', 'Federales', '180 N Morgan St', '4.5', 'https://www.federaleschicago.com', 'Federales Chicago', U+'1565299585323-38d6b0865b47'+S);
+    addPin(mainMap, 41.8845, -87.6225, '#F5A82A', "Giordano's", 'Chicago Loop', '4.5', 'https://www.giordanos.com', "Giordanos Chicago", U+'1565299624946-b28f40a0ae38'+S);
+    addPin(mainMap, 41.8975, -87.6217, '#F5A82A', 'Ramen San', '165 E Huron St', '4.4', null, 'Ramen San Chicago', U+'1569050467447-ce54b3bbc37d'+S);
     addPin(mainMap, 41.8843, -87.6488, '#F5A82A', 'Green Street Smoked Meats', '112 N Green St', '4.5', 'https://www.greenstreetsmokedmeats.com', 'Green Street Smoked Meats Chicago', U+'1529193591184-b1d58069ecdd'+S);
     addPin(mainMap, 41.9834, -87.6695, '#F5A82A', 'Little Bad Wolf', '1541 W Bryn Mawr Ave', '4.6', null, 'Little Bad Wolf Chicago', U+'1568901346375-23c9450c58cd'+S);
     addPin(mainMap, 41.8931, -87.6298, '#F5A82A', 'Tao Chicago', '632 N Dearborn St', '4.5', 'https://www.taochicago.com', 'Tao Chicago', U+'1579871494447-9811cf80d66c'+S);
     addPin(mainMap, 41.9108, -87.6738, '#F5A82A', 'Deliz Italian Steakhouse', '1840 W North Ave', '4.6', 'https://www.delizchicago.com', 'Deliz Chicago', U+'1559847844-5315695dadae'+S);
+    addPin(mainMap, 41.8694, -87.6568, '#F5A82A', "Al's Italian Beef", '1079 W Taylor St', '4.6', 'https://www.alsbeef.com', "Als Italian Beef Chicago", U+'1568901346375-23c9450c58cd'+S);
 
     // Bars — purple
     addPin(mainMap, 41.8868, -87.6258, '#9B5DE5', 'London House Rooftop', '85 E Wacker Dr', '4.6', 'https://www.londonhousechicago.com', 'London House Rooftop Chicago', U+'1572116469696-31de0f17cc34'+S);
-    addPin(mainMap, 41.9117, -87.6343, '#9B5DE5', 'Utopian Tailgate', '1608 N Wells St', '4.4', 'https://www.utopiantailgate.com', 'Utopian Tailgate Chicago', U+'1763380631462-12a2f528ff25'+S);
-
-    addPin(mainMap, 41.8895, -87.6500, '#9B5DE5', 'Recess', '838 W Kinzie St', '4.3', null, 'Recess Chicago', U+'1514933651103-005eec06c04b'+S);
-    addPin(mainMap, 41.8872, -87.6488, '#9B5DE5', 'Punch Bowl Social', '310 N Green St', '4.3', 'https://www.punchbowlsocial.com/location/chicago', 'Punch Bowl Social Chicago', U+'1543007630-9710e4a00a20'+S);
+    addPin(mainMap, 41.8794, -87.6319, '#9B5DE5', 'Elephant & Castle', 'Hotel Lobby · 111 W Adams St', null, null, 'Elephant and Castle Chicago', U+'1514933651103-005eec06c04b'+S);
+    addPin(mainMap, 41.8869, -87.6315, '#9B5DE5', 'Flight Club Chicago', '111 W Wacker Dr', null, null, 'Flight Club Chicago', U+'1543007630-9710e4a00a20'+S);
 
     // Shopping — green
-    addPin(mainMap, 41.9079, -87.6729, '#00C57A', 'Layers Chicago', '1437 N Milwaukee Ave', '4.7', null, 'Layers Chicago', U+'1558618666-fcd25c85cd64'+S);
     addPin(mainMap, 41.9090, -87.6737, '#00C57A', 'Round Two', '1501 N Milwaukee Ave', '4.7', 'https://www.roundtwostore.com', 'Round Two Chicago', U+'1523398002811-999ca8dec234'+S);
     addPin(mainMap, 41.9080, -87.6730, '#00C57A', 'Supreme Chicago', '1438 N Milwaukee Ave', '4.3', 'https://www.supremenewyork.com', 'Supreme Chicago', U+'1542291026-7eec264c27ff'+S);
-    addPin(mainMap, 41.9027, -87.6680, '#00C57A', 'Boneyard', '1102 N Ashland Ave', '4.5', null, 'Boneyard Chicago', U+'1521335629791-ce4aec67dd15'+S);
     addPin(mainMap, 41.9001, -87.6265, '#00C57A', 'Kith Chicago', '54 E Walton St', '4.6', 'https://www.kith.com', 'Kith Chicago', U+'1441986300917-64674bd600d8'+S);
-    addPin(mainMap, 41.9009, -87.6250, '#00C57A', 'Bape Chicago', '113 E Oak St', '4.4', 'https://www.bape.com', 'Bape Chicago', U+'1538329972958-465d6d2144ed'+S);
+    addPin(mainMap, 41.8940, -87.6240, '#00C57A', 'Saks Fifth Avenue', '700 N Michigan Ave', null, null, 'Saks Fifth Avenue Chicago', U+'1551232864-3f0890e580d9'+S);
+    addPin(mainMap, 41.8972, -87.6241, '#00C57A', 'Water Tower Place', '835 N Michigan Ave', null, null, 'Water Tower Place Chicago', U+'1555529669-e69e7aa0ba9a'+S);
 
     // Attractions — blue
+    addPin(mainMap, 41.8662, -87.6073, '#3D8EF0', 'Adler Planetarium', '1300 S DuSable Lake Shore Dr', '4.6', 'https://www.adlerplanetarium.org', 'Adler Planetarium Chicago', U+'1569587112025-0d460e81a126'+S);
     addPin(mainMap, 41.8676, -87.6140, '#3D8EF0', 'Shedd Aquarium', '1200 S DuSable Lake Shore Dr', '4.6', 'https://www.sheddaquarium.org', 'Shedd Aquarium Chicago', U+'1559827260-dc66d52bef19'+S);
     addPin(mainMap, 41.8789, -87.6359, '#3D8EF0', 'Skydeck Chicago', '233 S Wacker Dr', '4.8', 'https://www.theskydeck.com', 'Skydeck Chicago', U+'1486325212027-8081e485255e'+S);
-    addPin(mainMap, 41.8897, -87.6240, '#3D8EF0', 'Architecture River Tour', 'Departs Navy Pier or 401 N Michigan Ave', '4.8', 'https://www.shorechicago.com', 'Shoreline Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
+    addPin(mainMap, 41.8897, -87.6240, '#3D8EF0', 'Architecture River Tour', '401 N Michigan Ave', '4.8', 'https://www.shorechicago.com', 'Shoreline Architecture River Tour Chicago', U+'1581373449483-37449f962b6c'+S);
     addPin(mainMap, 41.8796, -87.6237, '#3D8EF0', 'Art Institute of Chicago', '111 S Michigan Ave', '4.8', 'https://www.artic.edu', 'Art Institute of Chicago', U+'1580060839134-75a5edca2e99'+S);
-    addPin(mainMap, 41.7906, -87.5831, '#3D8EF0', 'Griffin Museum', '5700 S Lake Shore Dr', '4.7', 'https://www.msichicago.org', 'Museum of Science and Industry Chicago', U+'1569587112025-0d460e81a126'+S);
+    addPin(mainMap, 41.9484, -87.6553, '#3D8EF0', 'Wrigley Field', '1060 W Addison St', null, null, 'Wrigley Field Chicago', U+'1540747913346-19212a4ad3b4'+S);
+    addPin(mainMap, 41.8964, -87.6466, '#3D8EF0', "Bally's Chicago Casino", '777 W Chicago Ave', null, null, 'Ballys Casino Chicago', U+'1518893063132-36e46dbe2428'+S);
     mapMarkers['millennium-park'] = addPin(mainMap, 41.8827, -87.6233, '#3D8EF0', 'Millennium Park + The Bean', 'Michigan Ave & Monroe', null, 'https://www.millenniumpark.org', 'Millennium Park Chicago', U+'1504674900247-0877df9cc836'+S);
     mapMarkers['riverwalk'] = addPin(mainMap, 41.8876, -87.6270, '#3D8EF0', 'Chicago Riverwalk', 'Along Wacker Dr', null, null, 'Chicago Riverwalk', U+'1555658636-6e4a36218be7'+S);
     addPin(mainMap, 41.9211, -87.6340, '#3D8EF0', 'Lincoln Park Zoo', '2001 N Clark St', null, 'https://www.lpzoo.org', 'Lincoln Park Zoo Chicago', U+'1546182990-dffeafbe841d'+S);
-    addPin(mainMap, 41.8917, -87.6086, '#3D8EF0', 'Navy Pier', '600 E Grand Ave', null, 'https://www.navypier.com', 'Navy Pier Chicago', U+'1570168007204-dfb528c6958f'+S);
-    addPin(mainMap, 42.0638, -88.0512, '#3D8EF0', 'Topgolf Schaumburg', '2050 Progress Pkwy, Schaumburg', null, 'https://www.topgolf.com/us/schaumburg', 'Topgolf Schaumburg 2050 Progress Pkwy', U+'1535131749006-b7f58c99034b'+S);
   }
 
-  // Flight countdown timer
-  const DEPARTURE = new Date('2026-05-12T06:00:00-07:00');
+  // Time-since-trip ticker (counts up from return flight landing)
+  const TRIP_END = new Date('2026-05-16T21:05:00-05:00');
   function updateCountdown() {
-    const diff = Math.max(0, DEPARTURE - new Date());
+    const diff = Math.max(0, new Date() - TRIP_END);
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
