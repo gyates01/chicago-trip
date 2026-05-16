@@ -481,6 +481,80 @@
       color: var(--blue);
       transition: color 0.2s;
     }
+
+    /* ── Photo strip ─────────────────────────── */
+    .photo-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-top: 12px;
+      padding-bottom: 6px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-strip img {
+      height: 130px;
+      width: auto;
+      border-radius: 6px;
+      cursor: zoom-in;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      object-fit: cover;
+      transition: opacity 0.15s;
+    }
+    .photo-strip img:hover { opacity: 0.82; }
+
+    /* ── Lightbox ───────────────────────────── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.93);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    #lightbox.open { opacity: 1; pointer-events: all; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 10px;
+      opacity: 0.65;
+      line-height: 1;
+    }
+    #lightbox-close:hover { opacity: 1; }
+    #lightbox-prev, #lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 40px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px 18px;
+      opacity: 0.55;
+      user-select: none;
+    }
+    #lightbox-prev:hover, #lightbox-next:hover { opacity: 1; }
+    #lightbox-prev { left: 6px; }
+    #lightbox-next { right: 6px; }
     .tl-preview {
       margin: 10px 0 6px;
       background: var(--bg-card);
@@ -1556,7 +1630,7 @@
             <div class="tl-address">Central Loop Hotel · 111 W Adams St</div>
             <div class="tl-note">Room wasn't ready yet — held our bags while we got food</div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-devildawgs","img":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.2","name":"Devil Dawgs","note":"Classic Chicago dog near the hotel. First real food in Chicago."}'>
+          <div class="tl-item type-food" data-photo-id="devil-dawgs" data-preview='{"tab":"food","card":"card-devildawgs","img":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.2","name":"Devil Dawgs","note":"Classic Chicago dog near the hotel. First real food in Chicago."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Devil Dawgs</div>
@@ -1570,7 +1644,7 @@
             <div class="tl-name">Biked up to Lincoln Park Zoo</div>
             <div class="tl-note">Grabbed Divvy bikes and rode north along the lakefront</div>
           </div>
-          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-lincoln-park-zoo","img":"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Lincoln Park Zoo","note":"Free admission. Got rained on but still explored for about 2 hours."}'>
+          <div class="tl-item type-free" data-photo-id="lincoln-park-zoo" data-preview='{"tab":"attractions","card":"card-lincoln-park-zoo","img":"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Lincoln Park Zoo","note":"Free admission. Got rained on but still explored for about 2 hours."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~2 hrs</div>
             <div class="tl-name">Lincoln Park Zoo</div>
@@ -1584,7 +1658,7 @@
             <div class="tl-name">Biked back to the hotel</div>
             <div class="tl-note">Soaked but happy</div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-elephant-castle","img":"https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&h=600&q=90","name":"Elephant &amp; Castle","note":"The pub attached to the hotel lobby. Dried off and had a drink."}'>
+          <div class="tl-item type-bar" data-photo-id="elephant-castle" data-preview='{"tab":"food","card":"card-elephant-castle","img":"https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&h=600&q=90","name":"Elephant &amp; Castle","note":"The pub attached to the hotel lobby. Dried off and had a drink."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Evening</div>
             <div class="tl-name">Drink at Elephant &amp; Castle</div>
@@ -1592,14 +1666,14 @@
             <div class="tl-note">Dried off and had a drink at the pub in the hotel lobby</div>
             <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-giordanos","img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Giordano&#39;s","note":"Classic Chicago stuffed deep dish. Worth every minute of the wait."}'>
+          <div class="tl-item type-food" data-photo-id="giordanos" data-preview='{"tab":"food","card":"card-giordanos","img":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Giordano&#39;s","note":"Classic Chicago stuffed deep dish. Worth every minute of the wait."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Dinner</div>
             <div class="tl-name">Giordano's — Deep Dish</div>
             <div class="tl-note">The classic Chicago deep dish — stuffed pizza done right</div>
             <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
           </div>
-          <div class="tl-item type-activity" data-preview='{"tab":"attractions","card":"card-ballys","img":"https://images.unsplash.com/photo-1518893063132-36e46dbe2428?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bally\'s Chicago","note":"Casino right in the city. Good time before crashing for the night."}'>
+          <div class="tl-item type-activity" data-photo-id="ballys-chicago-casino" data-preview='{"tab":"attractions","card":"card-ballys","img":"https://images.unsplash.com/photo-1518893063132-36e46dbe2428?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bally\'s Chicago","note":"Casino right in the city. Good time before crashing for the night."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Late</div>
             <div class="tl-name">Bally's Chicago Casino</div>
@@ -1630,7 +1704,7 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-wildberry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Wildberry Pancakes &amp; Cafe","note":"Biked over around 10am. Light crowd, got seated fast."}'>
+          <div class="tl-item type-food" data-photo-id="wildberry-pancakes-cafe" data-preview='{"tab":"food","card":"card-wildberry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Wildberry Pancakes &amp; Cafe","note":"Biked over around 10am. Light crowd, got seated fast."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~10:00 AM</div>
             <div class="tl-name">Wildberry Pancakes &amp; Cafe</div>
@@ -1638,7 +1712,7 @@
             <div class="tl-note">Biked over from the hotel — light crowd, got seated fast</div>
             <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-shedd","img":"https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Shedd Aquarium","note":"Biked to noon entry. Spent a couple hours inside."}'>
+          <div class="tl-item type-citypass" data-photo-id="shedd-aquarium" data-preview='{"tab":"attractions","card":"card-shedd","img":"https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Shedd Aquarium","note":"Biked to noon entry. Spent a couple hours inside."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">12:00 PM</div>
             <div class="tl-name">Shedd Aquarium</div>
@@ -1653,7 +1727,7 @@
             <div class="tl-note">Rode around the stadium on the way back — cool to see up close</div>
             <div class="tl-badges"><span class="badge b-free">Free</span></div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-ramen-san","img":"https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Ramen San","note":"165 E Huron St. Biked over for a bowl after the aquarium."}'>
+          <div class="tl-item type-food" data-photo-id="ramen-san" data-preview='{"tab":"food","card":"card-ramen-san","img":"https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=1600&h=600&q=90","name":"Ramen San","note":"165 E Huron St. Biked over for a bowl after the aquarium."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Ramen San</div>
@@ -1661,7 +1735,7 @@
             <div class="tl-note">Biked over for lunch — solid ramen spot in Streeterville</div>
             <div class="tl-badges"><span class="badge b-food">Lunch</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-saks","img":"https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=1600&h=600&q=90","name":"Saks Fifth Avenue","note":"700 N Michigan Ave. Walked the Mag Mile luxury stretch."}'>
+          <div class="tl-item type-shopping" data-photo-id="saks-fifth-avenue" data-preview='{"tab":"shopping","card":"card-saks","img":"https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=1600&h=600&q=90","name":"Saks Fifth Avenue","note":"700 N Michigan Ave. Walked the Mag Mile luxury stretch."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Saks Fifth Avenue</div>
@@ -1669,7 +1743,7 @@
             <div class="tl-note">Started the Mag Mile shopping stretch at Saks</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-kith","img":"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Kith Chicago","note":"Hit Kith on the Mag Mile stretch."}'>
+          <div class="tl-item type-shopping" data-photo-id="kith-chicago" data-preview='{"tab":"shopping","card":"card-kith","img":"https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Kith Chicago","note":"Hit Kith on the Mag Mile stretch."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Kith Chicago</div>
@@ -1677,7 +1751,7 @@
             <div class="tl-note">Hit up Kith on the Mag Mile stretch</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-water-tower","img":"https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1600&h=600&q=90","name":"Water Tower Place","note":"835 N Michigan. Multi-floor mall on the Mag Mile."}'>
+          <div class="tl-item type-shopping" data-photo-id="water-tower-place" data-preview='{"tab":"shopping","card":"card-water-tower","img":"https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1600&h=600&q=90","name":"Water Tower Place","note":"835 N Michigan. Multi-floor mall on the Mag Mile."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Water Tower Place</div>
@@ -1691,7 +1765,7 @@
             <div class="tl-name">Rode back to the hotel to rest</div>
             <div class="tl-note">Freshened up before dinner</div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-tao","img":"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Tao Chicago","note":"$$$ Pan-Asian. One of the best meals of the trip."}'>
+          <div class="tl-item type-food" data-photo-id="tao-chicago" data-preview='{"tab":"food","card":"card-tao","img":"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.5","name":"Tao Chicago","note":"$$$ Pan-Asian. One of the best meals of the trip."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">8:00 PM</div>
             <div class="tl-name">Tao Chicago</div>
@@ -1732,14 +1806,14 @@
             <div class="tl-name">Slept in</div>
             <div class="tl-note">Well-earned rest after two big days</div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-gotham-bagels","img":"https://images.unsplash.com/photo-1612637968894-660373e23b03?auto=format&fit=crop&w=1600&h=600&q=90","name":"Gotham Bagels","note":"Grabbed bagels around noon before heading out."}'>
+          <div class="tl-item type-food" data-photo-id="gotham-bagels" data-preview='{"tab":"food","card":"card-gotham-bagels","img":"https://images.unsplash.com/photo-1612637968894-660373e23b03?auto=format&fit=crop&w=1600&h=600&q=90","name":"Gotham Bagels","note":"Grabbed bagels around noon before heading out."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">~Noon</div>
             <div class="tl-name">Gotham Bagels</div>
             <div class="tl-note">Grabbed bagels before heading out for the day</div>
             <div class="tl-badges"><span class="badge b-food">Brunch</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-adler","img":"https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=1600&h=600&q=90","name":"Adler Planetarium","note":"Biked down to Museum Campus. Great skyline views from outside."}'>
+          <div class="tl-item type-citypass" data-photo-id="adler-planetarium" data-preview='{"tab":"attractions","card":"card-adler","img":"https://images.unsplash.com/photo-1569587112025-0d460e81a126?auto=format&fit=crop&w=1600&h=600&q=90","name":"Adler Planetarium","note":"Biked down to Museum Campus. Great skyline views from outside."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Adler Planetarium</div>
@@ -1747,7 +1821,7 @@
             <div class="tl-note">Biked down to the museum campus — spectacular skyline views from the grounds</div>
             <div class="tl-badges"><span class="badge b-citypass">CityPASS</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-art-institute","img":"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Art Institute of Chicago","note":"Biked over from Adler and walked through the galleries."}'>
+          <div class="tl-item type-citypass" data-photo-id="art-institute-of-chicago" data-preview='{"tab":"attractions","card":"card-art-institute","img":"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Art Institute of Chicago","note":"Biked over from Adler and walked through the galleries."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Art Institute of Chicago</div>
@@ -1755,21 +1829,21 @@
             <div class="tl-note">Biked over from Adler and explored the galleries</div>
             <div class="tl-badges"><span class="badge b-citypass">CityPASS</span></div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-relish","img":"https://images.unsplash.com/photo-1533483595632-c5f0e57a1936?auto=format&fit=crop&w=1600&h=600&q=90","name":"Relish Chicago Hot Dogs","note":"Classic Chicago dog stop on the way to Skydeck."}'>
+          <div class="tl-item type-food" data-photo-id="relish-chicago-hot-dogs" data-preview='{"tab":"food","card":"card-relish","img":"https://images.unsplash.com/photo-1533483595632-c5f0e57a1936?auto=format&fit=crop&w=1600&h=600&q=90","name":"Relish Chicago Hot Dogs","note":"Classic Chicago dog stop on the way to Skydeck."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Late Afternoon</div>
             <div class="tl-name">Relish Chicago Hot Dogs</div>
             <div class="tl-note">Classic Chicago dog on the way toward Skydeck</div>
             <div class="tl-badges"><span class="badge b-food">Snack</span></div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-bar-sotto","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bar Sotto","note":"Pre-Skydeck drinks. Good atmosphere before the big views."}'>
+          <div class="tl-item type-bar" data-photo-id="bar-sotto" data-preview='{"tab":"food","card":"card-bar-sotto","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","name":"Bar Sotto","note":"Pre-Skydeck drinks. Good atmosphere before the big views."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Early Evening</div>
             <div class="tl-name">Bar Sotto</div>
             <div class="tl-note">Walked over for drinks before Skydeck — good pre-game spot</div>
             <div class="tl-badges"><span class="badge b-bar">Bar</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-skydeck","img":"https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Skydeck Chicago","note":"103rd floor. The Ledge glass boxes are worth it. Incredible city views."}'>
+          <div class="tl-item type-citypass" data-photo-id="skydeck-chicago" data-preview='{"tab":"attractions","card":"card-skydeck","img":"https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Skydeck Chicago","note":"103rd floor. The Ledge glass boxes are worth it. Incredible city views."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">8:00 PM</div>
             <div class="tl-name">Skydeck Chicago</div>
@@ -1780,7 +1854,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-als-beef","img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&h=600&q=90","name":"Al&#39;s Italian Beef","note":"As seen on Man vs. Food. Legendary Chicago sandwich — get it dipped."}'>
+          <div class="tl-item type-food" data-photo-id="als-italian-beef" data-preview='{"tab":"food","card":"card-als-beef","img":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&h=600&q=90","name":"Al&#39;s Italian Beef","note":"As seen on Man vs. Food. Legendary Chicago sandwich — get it dipped."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Late Night</div>
             <div class="tl-name">Al's Italian Beef</div>
@@ -1788,7 +1862,7 @@
             <div class="tl-note">As seen on Man vs. Food — the iconic Italian beef sandwich, get it dipped</div>
             <div class="tl-badges"><span class="badge b-food">Late Night</span></div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-flight-club","img":"https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1600&h=600&q=90","name":"Flight Club Chicago","note":"Darts bar. Social darts + drinks — a great end to a long day."}'>
+          <div class="tl-item type-bar" data-photo-id="flight-club-chicago" data-preview='{"tab":"food","card":"card-flight-club","img":"https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1600&h=600&q=90","name":"Flight Club Chicago","note":"Darts bar. Social darts + drinks — a great end to a long day."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Late Night</div>
             <div class="tl-name">Flight Club Chicago</div>
@@ -1819,14 +1893,14 @@
       </div>
       <div class="day-body">
         <div class="timeline">
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-honey-berry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","name":"Honey Berry Pancakes &amp; Café","note":"Good breakfast before the architecture tour."}'>
+          <div class="tl-item type-food" data-photo-id="honey-berry-pancakes-cafe" data-preview='{"tab":"food","card":"card-honey-berry","img":"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1600&h=600&q=90","name":"Honey Berry Pancakes &amp; Café","note":"Good breakfast before the architecture tour."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Morning</div>
             <div class="tl-name">Honey Berry Pancakes &amp; Café</div>
             <div class="tl-note">Breakfast before the tour — started the day right</div>
             <div class="tl-badges"><span class="badge b-food">Breakfast</span></div>
           </div>
-          <div class="tl-item type-citypass" data-preview='{"tab":"attractions","card":"card-arch-tour","img":"https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Architecture River Tour","note":"75 min cruise departing 401 N Michigan Ave. Best way to see the city."}'>
+          <div class="tl-item type-citypass" data-photo-id="arch-tour" data-preview='{"tab":"attractions","card":"card-arch-tour","img":"https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.8","name":"Architecture River Tour","note":"75 min cruise departing 401 N Michigan Ave. Best way to see the city."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Morning</div>
             <div class="tl-name">Shoreline Sightseeing Architecture River Tour</div>
@@ -1837,7 +1911,7 @@
               <span class="badge b-mustdo">⭐ Must Do</span>
             </div>
           </div>
-          <div class="tl-item type-free" data-map-pin="millennium-park">
+          <div class="tl-item type-free" data-photo-id="millennium-park-the-bean" data-map-pin="millennium-park">
             <div class="tl-dot"></div>
             <div class="tl-time">Midday</div>
             <div class="tl-name">Millennium Park + The Bean</div>
@@ -1850,7 +1924,7 @@
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Back to hotel to prep for dinner</div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-supreme","img":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.3","name":"Supreme Chicago","note":"Afternoon shopping run — hit Supreme and Round 2 nearby."}'>
+          <div class="tl-item type-shopping" data-photo-id="supreme-chicago" data-preview='{"tab":"shopping","card":"card-supreme","img":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.3","name":"Supreme Chicago","note":"Afternoon shopping run — hit Supreme and Round 2 nearby."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Supreme Chicago</div>
@@ -1858,7 +1932,7 @@
             <div class="tl-note">Afternoon shopping run — hit Supreme and Round 2 nearby</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-shopping" data-preview='{"tab":"shopping","card":"card-round-two","img":"https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Round Two","note":"Vintage/hypebeast. 2 floors. Good finds on the same block as Supreme."}'>
+          <div class="tl-item type-shopping" data-photo-id="round-two" data-preview='{"tab":"shopping","card":"card-round-two","img":"https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.7","name":"Round Two","note":"Vintage/hypebeast. 2 floors. Good finds on the same block as Supreme."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Afternoon</div>
             <div class="tl-name">Round Two</div>
@@ -1866,7 +1940,7 @@
             <div class="tl-note">Vintage and hypebeast on 2 floors — solid finds</div>
             <div class="tl-badges"><span class="badge b-shopping">Shopping</span></div>
           </div>
-          <div class="tl-item type-food" data-preview='{"tab":"food","card":"card-deliz","img":"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Deliz Italian Steakhouse","note":"$$$ Italian steakhouse. 8:45 PM reservation. Incredible food."}'>
+          <div class="tl-item type-food" data-photo-id="deliz-italian-steakhouse" data-preview='{"tab":"food","card":"card-deliz","img":"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"Deliz Italian Steakhouse","note":"$$$ Italian steakhouse. 8:45 PM reservation. Incredible food."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">8:45 PM</div>
             <div class="tl-name">Deliz Italian Steakhouse</div>
@@ -1874,7 +1948,7 @@
             <div class="tl-note">$$$ · Italian steakhouse — outstanding meal, great reservation</div>
             <div class="tl-badges"><span class="badge b-food">Dinner</span></div>
           </div>
-          <div class="tl-item type-bar" data-preview='{"tab":"food","card":"card-london-house","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"London House Rooftop","note":"Upscale rooftop near hotel. Capped the last full night in Chicago."}'>
+          <div class="tl-item type-bar" data-photo-id="london-house-rooftop" data-preview='{"tab":"food","card":"card-london-house","img":"https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=600&q=90","rating":"4.6","name":"London House Rooftop","note":"Upscale rooftop near hotel. Capped the last full night in Chicago."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Late</div>
             <div class="tl-name">London House Rooftop</div>
@@ -1918,7 +1992,7 @@
             <div class="tl-time">Late Morning</div>
             <div class="tl-name">Ubered to Wrigley Field</div>
           </div>
-          <div class="tl-item type-free" data-preview='{"tab":"attractions","card":"card-wrigley","img":"https://images.unsplash.com/photo-1540747913346-19212a4ad3b4?auto=format&fit=crop&w=1600&h=600&q=90","name":"Wrigley Field","note":"Classic Chicago ballpark. Walked around, took photos, grabbed drinks nearby."}'>
+          <div class="tl-item type-free" data-photo-id="wrigley-field" data-preview='{"tab":"attractions","card":"card-wrigley","img":"https://images.unsplash.com/photo-1540747913346-19212a4ad3b4?auto=format&fit=crop&w=1600&h=600&q=90","name":"Wrigley Field","note":"Classic Chicago ballpark. Walked around, took photos, grabbed drinks nearby."}'>
             <div class="tl-dot"></div>
             <div class="tl-time">Midday</div>
             <div class="tl-name">Wrigley Field</div>
@@ -3019,9 +3093,17 @@
   }
 
   function addPin(map, lat, lng, color, name, addr, rating, website, mapsDest, imgUrl) {
-    return L.marker([lat, lng], { icon: makePinIcon(color, imgUrl) })
+    var marker = L.marker([lat, lng], { icon: makePinIcon(color, imgUrl) })
       .addTo(map)
       .bindPopup(makePopup(name, addr, rating, website, mapsDest || name + ' Chicago', imgUrl));
+    var key = name.normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    mapMarkers[key] = marker;
+    return marker;
   }
 
   var satelliteTiles = null;
@@ -3241,6 +3323,107 @@
       }, 200);
     });
   });
+
+  // ── Scrapbook: photos.json → photo strips + lightbox + scroll-map sync ──
+  (function () {
+    // Lightbox
+    var lbPhotos = [];
+    var lbIndex  = 0;
+    var lbEl  = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+
+    function openLightbox(photos, idx) {
+      lbPhotos = photos;
+      lbIndex  = idx;
+      lbImg.src = photos[idx];
+      lbEl.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lbEl.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    function showPhoto(delta) {
+      lbIndex = (lbIndex + delta + lbPhotos.length) % lbPhotos.length;
+      lbImg.src = lbPhotos[lbIndex];
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-prev').addEventListener('click', function () { showPhoto(-1); });
+    document.getElementById('lightbox-next').addEventListener('click', function () { showPhoto(1); });
+    lbEl.addEventListener('click', function (e) { if (e.target === lbEl) closeLightbox(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lbEl.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft')  showPhoto(-1);
+      if (e.key === 'ArrowRight') showPhoto(1);
+    });
+
+    // Inject photo strips from manifest
+    fetch('./photos.json')
+      .then(function (r) { return r.json(); })
+      .then(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.files || !entry.files.length) return;
+          var item = document.querySelector('[data-photo-id="' + entry.event + '"]');
+          if (!item) return;
+
+          var strip = document.createElement('div');
+          strip.className = 'photo-strip';
+
+          var paths = entry.files;
+          paths.forEach(function (src, i) {
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = entry.note || '';
+            img.addEventListener('click', function () { openLightbox(paths, i); });
+            img.addEventListener('error', function () { img.style.display = 'none'; });
+            strip.appendChild(img);
+          });
+
+          item.appendChild(strip);
+        });
+      })
+      .catch(function () {
+        // photos.json not found or invalid — silent fail, site still works
+      });
+
+    // Scroll → map pin pulse
+    // mapMarkers is populated by addPin() inside initMainMap(), which runs on
+    // first Map tab visit. If the map hasn't been opened yet, getElement()
+    // returns null and the pulse is silently skipped — no error.
+    var pinObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.dataset.photoId;
+        if (!id) return;
+        var marker = mapMarkers[id];
+        if (!marker) return;
+        var el = marker.getElement ? marker.getElement() : null;
+        if (!el) return;
+        var pin = el.querySelector('.map-pin');
+        if (!pin) return;
+        pin.classList.remove('pulse');
+        void pin.offsetWidth; // force reflow to restart animation
+        pin.classList.add('pulse');
+        setTimeout(function () { pin.classList.remove('pulse'); }, 2000);
+      });
+    }, { threshold: 0.4, rootMargin: '0px 0px -15% 0px' });
+
+    document.querySelectorAll('.tl-item[data-photo-id]').forEach(function (item) {
+      pinObserver.observe(item);
+    });
+  })();
 </script>
+<!-- Lightbox overlay -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button id="lightbox-close" aria-label="Close">✕</button>
+  <button id="lightbox-prev" aria-label="Previous photo">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button id="lightbox-next" aria-label="Next photo">›</button>
+</div>
 </body>
 </html>
